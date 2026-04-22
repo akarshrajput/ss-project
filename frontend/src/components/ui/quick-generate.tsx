@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useRef, useEffect } from "react";
+import { useRef, useState } from "react";
 
 const PLACEHOLDERS = [
   "A rainy night, a broken heart, a neon sign...",
@@ -15,15 +15,7 @@ export function QuickGenerate() {
   const router = useRouter();
   const [value, setValue] = useState("");
   const [focused, setFocused] = useState(false);
-  // Start with index 0 on both server + client to avoid hydration mismatch,
-  // then pick a random placeholder after the first client render.
-  const [placeholder, setPlaceholder] = useState(PLACEHOLDERS[0]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    setPlaceholder(PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)]);
-  }, []);
-
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -68,7 +60,7 @@ export function QuickGenerate() {
             // Cmd/Ctrl + Enter to submit
             if ((e.metaKey || e.ctrlKey) && e.key === "Enter") handleSubmit(e as unknown as React.FormEvent);
           }}
-          placeholder={placeholder}
+          placeholder={PLACEHOLDERS[0]}
           aria-label="Type your song idea, lyrics, or story"
           style={{
             width: "100%",

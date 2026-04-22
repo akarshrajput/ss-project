@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getAppUserProfile } from "@/lib/app-store";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { createOptionalSupabaseServerClient } from "@/lib/supabase/server";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -17,10 +17,10 @@ const userItems = [
 ];
 
 export async function SiteHeader() {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const supabase = await createOptionalSupabaseServerClient();
+  const user = supabase
+    ? (await supabase.auth.getUser()).data.user
+    : null;
   const profile = user ? await getAppUserProfile(user.id) : null;
 
   return (
