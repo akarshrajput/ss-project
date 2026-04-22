@@ -33,6 +33,9 @@ export default function ContactPage() {
         <p style={{ marginTop: "0.75rem", fontSize: "1rem", color: "var(--text-secondary)", lineHeight: 1.7 }}>
           For support, partnerships, or enterprise deployment planning — reach out and our team will get back to you.
         </p>
+        <p style={{ marginTop: "0.85rem", fontSize: "0.92rem", color: "var(--text-secondary)", lineHeight: 1.75 }}>
+          Please include your use case, timeline, and any workflow constraints in the first message. That helps us route the request faster and keeps the response specific instead of generic.
+        </p>
       </div>
 
       <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", maxWidth: 860 }}>
@@ -51,6 +54,17 @@ export default function ContactPage() {
           </div>
         ))}
       </div>
+
+      <section style={{ maxWidth: 860, marginTop: "2.25rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            What to include in a message
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+            If you are contacting us about a rollout, mention the number of users, the type of audio you want to create, and whether you need a public plan page or custom deployment help. That makes the conversation more useful for both sides.
+          </p>
+        </div>
+      </section>
     </main>
   );
 }

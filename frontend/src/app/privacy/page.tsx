@@ -28,6 +28,24 @@ export default function PrivacyPage() {
             ))}
           </div>
         </div>
+
+        <div className="glass-card" style={{ padding: "1.75rem", marginTop: "1rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Data handled in the product
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+            Depending on how you use Songify, we may process account details, generation prompts, saved outputs, and operational logs. We keep that scope limited to what is needed for product delivery, debugging, and library features.
+          </p>
+        </div>
+
+        <div className="glass-card" style={{ padding: "1.75rem", marginTop: "1rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Your controls
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+            Users can request access, correction, or deletion of their data where applicable. If a future enterprise plan adds custom retention or audit requirements, those terms will be documented separately instead of implied here.
+          </p>
+        </div>
       </div>
     </main>
   );

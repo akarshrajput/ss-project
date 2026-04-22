@@ -53,6 +53,9 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         <p style={{ marginTop: "1rem", fontSize: "1rem", color: "var(--text-secondary)", lineHeight: 1.75 }}>
           {service.intro}
         </p>
+        <p style={{ marginTop: "0.85rem", fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.75 }}>
+          This page is intentionally descriptive so it can stand on its own in search results, avoid redirect chains, and give visitors enough context before they open the Studio.
+        </p>
       </div>
 
       {/* Use cases */}
@@ -81,6 +84,15 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
           Start in Studio to set prompt direction, output style, and duration. Then generate and iterate until you
           reach the desired tone. Authenticated users can save final outputs to the Songify library and reuse
           successful settings across projects.
+        </p>
+      </section>
+
+      <section className="glass-card" style={{ padding: "2rem", maxWidth: 740, marginBottom: "1.25rem" }}>
+        <h2 style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.75rem" }}>
+          Practical fit
+        </h2>
+        <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)", lineHeight: 1.75 }}>
+          These service pages are meant to help a buyer, editor, or product owner understand when to use Songify. The content focuses on the output quality, the workflow, and the kind of project where the service makes the most sense.
         </p>
       </section>
 
