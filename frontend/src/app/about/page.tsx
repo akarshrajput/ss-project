@@ -39,6 +39,9 @@ export default function AboutPage() {
           We focus on practical output quality, reproducibility, and operational reliability so generated audio can
           move from concept to publication with fewer manual steps.
         </p>
+        <p style={{ marginTop: "1rem", fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+          The product is intentionally broad enough for creators and teams, but narrow enough that the core use case stays clear: turn text into useful audio without forcing users through a heavy learning curve.
+        </p>
       </div>
 
       {/* Values */}
@@ -51,6 +54,17 @@ export default function AboutPage() {
           </div>
         ))}
       </div>
+
+      <section style={{ maxWidth: 860, marginTop: "2.25rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            How we think about the product
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+            Songify is designed to make generated audio practical, not experimental. That means clean routes, stable metadata, useful copy on each page, and internal links that help both humans and search engines navigate the product.
+          </p>
+        </div>
+      </section>
     </main>
   );
 }

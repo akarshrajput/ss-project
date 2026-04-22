@@ -77,6 +77,9 @@ export default function FaqPage() {
         <h1 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "2.5rem", fontWeight: 700, color: "var(--text-primary)" }}>
           Frequently asked questions
         </h1>
+        <p style={{ marginTop: "1rem", fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+          This page covers the most common product questions so visitors can understand the workflow before they enter the Studio. It also gives crawlers a clear, text-rich overview of the platform.
+        </p>
       </div>
 
       <div style={{ maxWidth: 740, display: "flex", flexDirection: "column", gap: "0.75rem" }}>
@@ -98,6 +101,17 @@ export default function FaqPage() {
           </article>
         ))}
       </div>
+
+      <section style={{ maxWidth: 740, marginTop: "2.25rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Still need help?
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+            If your question is about a specific workflow, service page, or deployment scenario, use the Contact page and include the relevant route. That keeps support responses focused and makes the content more useful for your team.
+          </p>
+        </div>
+      </section>
     </main>
   );
 }

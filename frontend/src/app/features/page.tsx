@@ -78,6 +78,17 @@ export default function FeaturesPage() {
         <Link href="/studio" prefetch={false} className="btn-primary" style={{ textDecoration: "none" }}>Try Studio</Link>
         <Link href="/services" prefetch={false} className="btn-secondary" style={{ textDecoration: "none" }}>Explore Services</Link>
       </div>
+
+      <section style={{ maxWidth: 860, marginTop: "2.25rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Why these capabilities matter
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+            The feature set is intentionally practical: it supports repeatable generation, clear output controls, and a path from first draft to saved library asset. That makes the platform easier to evaluate for both solo creators and internal teams.
+          </p>
+        </div>
+      </section>
     </main>
   );
 }

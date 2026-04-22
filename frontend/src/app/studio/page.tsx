@@ -21,6 +21,15 @@ export default async function StudioPage() {
 
   return (
     <main className="site-container w-full flex-1 px-4 py-8 sm:px-6 lg:px-8">
+      <div style={{ maxWidth: 760, marginBottom: "1.25rem" }}>
+        <p className="section-eyebrow mb-3">Studio</p>
+        <h1 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "2rem", fontWeight: 700, color: "var(--text-primary)", lineHeight: 1.15 }}>
+          Create and refine audio from one workspace
+        </h1>
+        <p style={{ marginTop: "0.85rem", fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+          The Studio is the operational center of Songify. It keeps generation, preview, and iteration in one place so users can move from prompt to output without bouncing across unrelated pages.
+        </p>
+      </div>
       {!comfyUiOnline && (
         <div style={{ marginBottom: "1.25rem" }}>
           <div style={{
@@ -41,6 +50,17 @@ export default async function StudioPage() {
       }>
         <StudioClient isAuthenticated={Boolean(user)} />
       </Suspense>
+
+      <section style={{ maxWidth: 760, marginTop: "2rem" }}>
+        <div className="glass-card" style={{ padding: "1.5rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Before you generate
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+            Use the Studio when you are ready to test the product hands-on. For plan details, visit Pricing; for use-case context, see the Services pages. That structure gives the site a cleaner internal link map and helps visitors understand the product faster.
+          </p>
+        </div>
+      </section>
     </main>
   );
 }

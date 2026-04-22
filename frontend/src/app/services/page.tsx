@@ -47,6 +47,9 @@ export default function ServicesPage() {
         <p style={{ marginTop: "1rem", fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.7 }}>
           Purpose-built workflows for speech, tone control, music, and narration — each optimized for a specific use case.
         </p>
+        <p style={{ marginTop: "0.85rem", fontSize: "0.92rem", color: "var(--text-secondary)", lineHeight: 1.75 }}>
+          Each service page explains the practical output, common use cases, and how teams can integrate Songify into real production workflows. That gives search engines more context and gives users a clearer path from discovery to Studio.
+        </p>
       </div>
 
       <section style={{ display: "grid", gap: "1.25rem", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
@@ -75,6 +78,17 @@ export default function ServicesPage() {
             </article>
           );
         })}
+      </section>
+
+      <section style={{ maxWidth: 740, marginTop: "2.5rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Why these pages exist
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+            The service routes are designed to be stable landing pages with their own metadata, structured data, and internal links. That helps crawlers understand the product surface without depending on a redirect to another page.
+          </p>
+        </div>
       </section>
     </main>
   );

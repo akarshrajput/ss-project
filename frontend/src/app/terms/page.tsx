@@ -28,6 +28,24 @@ export default function TermsPage() {
             ))}
           </div>
         </div>
+
+        <div className="glass-card" style={{ padding: "1.75rem", marginTop: "1rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Acceptable use
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+            Songify should be used for lawful creative, product, and research work. We may restrict access if a workflow violates platform rules, attempts abuse, or creates unacceptable operational risk for other users.
+          </p>
+        </div>
+
+        <div className="glass-card" style={{ padding: "1.75rem", marginTop: "1rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Service expectations
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+            Public product pages can evolve as the service matures. When a route is meant to be indexed, it should resolve directly and contain enough explanatory copy to be useful without relying on another page.
+          </p>
+        </div>
       </div>
     </main>
   );

@@ -6,6 +6,7 @@ import { absoluteUrl, buildMetadata, siteConfig } from "@/lib/seo";
 import { buildBreadcrumbSchema } from "@/lib/structured-data";
 import { SongDemoSection } from "@/components/ui/song-demo-section";
 import { QuickGenerate } from "@/components/ui/quick-generate";
+import { servicePages } from "@/lib/services";
 
 export const metadata: Metadata = buildMetadata({
   title: "Text to Song — Free AI Song Generator | Songify",
@@ -406,6 +407,50 @@ export default async function Home() {
               </p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {/* SERVICES PREVIEW                                                     */}
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section className="site-container px-4 pt-24 sm:px-6 lg:px-8" aria-labelledby="services-preview-heading">
+        <div className="text-center mb-14">
+          <p className="section-eyebrow">Core Services</p>
+          <h2
+            id="services-preview-heading"
+            className="mt-3 text-3xl font-bold sm:text-4xl"
+            style={{ fontFamily: '"Space Grotesk", sans-serif', color: "var(--text-primary)" }}
+          >
+            Explore the Product Surface
+          </h2>
+          <p className="mt-4 max-w-xl mx-auto text-sm leading-7" style={{ color: "var(--text-secondary)" }}>
+            Each service page describes a distinct workflow inside Songify, from speech generation to music creation. These pages are useful landing points for users and also give search engines clearer topical structure.
+          </p>
+        </div>
+
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {servicePages.map((service) => (
+            <Link
+              key={service.slug}
+              href={`/services/${service.slug}`}
+              prefetch={false}
+              className="glass-card glass-card-glow"
+              style={{ padding: "1.5rem", textDecoration: "none", display: "block" }}
+            >
+              <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.5rem" }}>
+                {service.name}
+              </h3>
+              <p style={{ fontSize: "0.84rem", color: "var(--text-secondary)", lineHeight: 1.7 }}>
+                {service.description}
+              </p>
+            </Link>
+          ))}
+        </div>
+
+        <div className="mt-8 text-center">
+          <Link href="/pricing" prefetch={false} className="btn-secondary" style={{ textDecoration: "none" }}>
+            Review Pricing
+          </Link>
         </div>
       </section>
 
