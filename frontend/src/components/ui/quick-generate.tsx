@@ -298,22 +298,28 @@ export function QuickGenerate() {
                 </div>
 
                 {/* Theme */}
+                {/* 
                 <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.25rem" }}>Theme</p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", marginBottom: "0.75rem" }}>
                   {THEMES.map((t) => (<button key={t} type="button" onClick={() => setTheme(theme === t ? null : t)} style={chipStyle(theme === t)}>{t}</button>))}
                 </div>
+                */}
 
                 {/* Genre */}
+                {/* 
                 <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.25rem" }}>Genre</p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", marginBottom: "0.75rem" }}>
                   {GENRES.map((g) => (<button key={g} type="button" onClick={() => setGenre(genre === g ? null : g)} style={chipStyle(genre === g)}>{g}</button>))}
                 </div>
+                */}
 
                 {/* Mood */}
+                {/* 
                 <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.25rem" }}>Mood</p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", marginBottom: "0.75rem" }}>
                   {MOODS.map((m) => (<button key={m} type="button" onClick={() => setMood(mood === m ? null : m)} style={chipStyle(mood === m)}>{m}</button>))}
                 </div>
+                */}
 
                 {/* Duration */}
                 <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.25rem" }}>Duration</p>
