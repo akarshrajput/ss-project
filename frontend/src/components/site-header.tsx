@@ -4,16 +4,9 @@ import { createOptionalSupabaseServerClient } from "@/lib/supabase/server";
 
 const navItems = [
   { href: "/", label: "Home" },
-  { href: "/studio", label: "Studio" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/explore", label: "Explore" },
   { href: "/services", label: "Services" },
   { href: "/features", label: "Features" },
-];
-
-const userItems = [
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/library", label: "Library" },
-  { href: "/account", label: "Account" },
 ];
 
 export async function SiteHeader() {
@@ -29,7 +22,7 @@ export async function SiteHeader() {
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group" style={{ textDecoration: "none" }}>
-          <div style={{
+          {/* <div style={{
             width: 32, height: 32, borderRadius: 9,
             background: "linear-gradient(135deg, #6366f1, #2dd4bf)",
             display: "flex", alignItems: "center", justifyContent: "center",
@@ -41,30 +34,21 @@ export async function SiteHeader() {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path d="M9 18V5l12-2v13M9 18c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-2c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-          </div>
+          </div> */}
           <span style={{ fontSize: "1.05rem", fontWeight: 700, color: "#f1f5f9", fontFamily: '"Space Grotesk", sans-serif', letterSpacing: "-0.02em" }}>
             Songify
           </span>
         </Link>
 
-        {/* Main Nav */}
-        <nav className="hidden md:flex items-center gap-1">
+        {/* Right side */}
+        <div className="flex items-center gap-2">
           {navItems.map((item) => (
-            <Link key={item.href} className="nav-link" href={item.href} prefetch={false}>
+            <Link key={item.href} className="nav-link hidden md:block" href={item.href} prefetch={false}>
               {item.label}
             </Link>
           ))}
-        </nav>
-
-        {/* Right side */}
-        <div className="flex items-center gap-2">
           {user ? (
             <>
-              {userItems.map((item) => (
-                <Link key={item.href} className="nav-link hidden sm:block" href={item.href} prefetch={false}>
-                  {item.label}
-                </Link>
-              ))}
               {profile?.role === "admin" && (
                 <Link
                   className="nav-link"
@@ -77,19 +61,7 @@ export async function SiteHeader() {
               )}
             </>
           ) : (
-            <>
-              <Link className="nav-link" href="/login" prefetch={false}>
-                Log in
-              </Link>
-              <Link
-                href="/register"
-                prefetch={false}
-                className="btn-primary"
-                style={{ padding: "0.45rem 1rem", fontSize: "0.85rem" }}
-              >
-                Get started
-              </Link>
-            </>
+            <></>
           )}
         </div>
       </div>

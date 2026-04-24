@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { StudioClient } from "@/components/studio/studio-client";
 import type { Metadata } from "next";
-import { getComfyUiOnline } from "@/lib/app-store";
 import { buildMetadata } from "@/lib/seo";
 import { createOptionalSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -14,10 +13,7 @@ export const metadata: Metadata = buildMetadata({
 
 export default async function StudioPage() {
   const supabase = await createOptionalSupabaseServerClient();
-  const user = supabase
-    ? (await supabase.auth.getUser()).data.user
-    : null;
-  const comfyUiOnline = await getComfyUiOnline();
+  const user = supabase ? (await supabase.auth.getUser()).data.user : null;
 
   return (
     <main className="site-container w-full flex-1 px-4 py-8 sm:px-6 lg:px-8">
@@ -30,19 +26,6 @@ export default async function StudioPage() {
           The Studio is the operational center of Songify. It keeps generation, preview, and iteration in one place so users can move from prompt to output without bouncing across unrelated pages.
         </p>
       </div>
-      {!comfyUiOnline && (
-        <div style={{ marginBottom: "1.25rem" }}>
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: "0.6rem",
-            fontSize: "0.8rem", color: "#a5b4fc",
-            background: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.2)",
-            borderRadius: "999px", padding: "0.4rem 1rem",
-          }}>
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#6366f1", display: "inline-block" }} />
-            Studio coming soon — sign up to be notified
-          </div>
-        </div>
-      )}
       <Suspense fallback={
         <div style={{ padding: "4rem", textAlign: "center", color: "var(--text-muted)", fontSize: "0.85rem" }}>
           Loading studio…

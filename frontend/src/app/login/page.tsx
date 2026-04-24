@@ -1,11 +1,10 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import { signInWithPassword } from "@/app/actions/auth";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
   title: "Login",
-  description: "Sign in to Songify to access your audio dashboard and saved library.",
+  description: "Admin sign-in for Songify control panel access.",
   path: "/login",
   noIndex: true,
 });
@@ -19,7 +18,7 @@ function readParam(value: string | string[] | undefined, fallback = "") {
 
 export default async function LoginPage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
-  const nextPath = readParam(params.next, "/dashboard");
+  const nextPath = readParam(params.next, "/admin");
   const error = readParam(params.error);
   const notice = readParam(params.notice);
 
@@ -38,10 +37,10 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
         </div>
 
         <h1 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.9rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.4rem" }}>
-          Welcome back
+          Admin login
         </h1>
         <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)", marginBottom: "2rem" }}>
-          Sign in to access your dashboard, library, and downloads.
+          Sign in to access the admin panel.
         </p>
 
         <form
@@ -73,11 +72,8 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
           </div>
         </form>
 
-        <p style={{ marginTop: "1.25rem", fontSize: "0.875rem", color: "var(--text-muted)", textAlign: "center" }}>
-          New here?{" "}
-          <Link href={`/register?next=${encodeURIComponent(nextPath)}`} style={{ color: "#a5b4fc", fontWeight: 600, textDecoration: "none" }}>
-            Create account →
-          </Link>
+        <p style={{ marginTop: "1.25rem", fontSize: "0.8rem", color: "var(--text-muted)", textAlign: "center" }}>
+          Public registration is disabled.
         </p>
       </div>
     </main>

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/json-ld";
-import { getComfyUiOnline } from "@/lib/app-store";
 import { absoluteUrl, buildMetadata, siteConfig } from "@/lib/seo";
 import { buildBreadcrumbSchema } from "@/lib/structured-data";
 import { SongDemoSection } from "@/components/ui/song-demo-section";
@@ -133,8 +132,6 @@ const steps = [
 
 /* ─── Page ───────────────────────────────────────────────────────────────── */
 export default async function Home() {
-  const comfyUiOnline = await getComfyUiOnline();
-
   /* ─── Structured data ─────────────────────────────────────────────────── */
   const organizationSchema = {
     "@context": "https://schema.org",
@@ -223,23 +220,6 @@ export default async function Home() {
       <JsonLd data={faqSchema} />
       <JsonLd data={breadcrumbSchema} />
 
-      {/* Offline banner */}
-      {!comfyUiOnline && (
-        <div className="site-container px-4 pt-6 sm:px-6 lg:px-8">
-          <div
-            style={{
-              display: "inline-flex", alignItems: "center", gap: "0.6rem",
-              fontSize: "0.8rem", color: "#a5b4fc",
-              background: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.2)",
-              borderRadius: "999px", padding: "0.4rem 1rem",
-            }}
-          >
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#6366f1", display: "inline-block", animation: "pulse-dot 1.5s ease-in-out infinite" }} />
-            Studio Coming Soon · Join the Waitlist
-          </div>
-        </div>
-      )}
-
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       {/* HERO                                                                 */}
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
@@ -266,7 +246,7 @@ export default async function Home() {
           className="fade-up-delay-2 mt-6 text-lg leading-8 max-w-2xl mx-auto"
           style={{ color: "var(--text-secondary)" }}
         >
-          Songify is the most powerful <strong style={{ color: "var(--text-primary)" }}>ai song generator</strong> online — paste any idea and our AI writes the music and lyrics for you. The only <strong style={{ color: "var(--text-primary)" }}>lyrics generator</strong> that also produces a full, production-ready track in seconds.
+          Songify is the most powerful <strong style={{ color: "var(--text-primary)" }}>ai song generator</strong> online — paste any idea and our AI writes the music and lyrics for you. The only <strong style={{ color: "var(--text-primary)" }}>song generator</strong> that produces a full, production-ready track in seconds.
         </p>
 
         {/* ─── Quick Generate input — the tool IS the CTA ────────────── */}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import Link from "next/link";
 
 /* ─── Types ─────────────────────────────────────────────────────────────── */
 interface WavePlayerProps {
@@ -10,6 +11,7 @@ interface WavePlayerProps {
   genre?: string;
   duration?: string;
   accent?: string;
+  titleHref?: string;
 }
 
 /* ─── Helpers ────────────────────────────────────────────────────────────── */
@@ -27,6 +29,7 @@ export function WavePlayer({
   genre,
   duration,
   accent = "#6366f1",
+  titleHref,
 }: WavePlayerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const wsRef = useRef<import("wavesurfer.js").default | null>(null);
@@ -40,6 +43,11 @@ export function WavePlayer({
   const [isMuted, setIsMuted] = useState(false);
   const [showVolume, setShowVolume] = useState(false);
   const [error, setError] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   /* ─── Init WaveSurfer ─────────────────────────────────────────────────── */
   useEffect(() => {
@@ -204,7 +212,11 @@ export function WavePlayer({
 
         <div style={{ flex: 1, minWidth: 0 }}>
           <p style={{ fontSize: "0.92rem", fontWeight: 700, color: "var(--text-primary)", lineHeight: 1.2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-            {title}
+            {titleHref ? (
+              <Link href={titleHref} style={{ color: "inherit", textDecoration: "none" }} onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")} onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}>
+                {title}
+              </Link>
+            ) : title}
           </p>
           <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "0.15rem" }}>
             {artist}{genre ? ` · ${genre}` : ""}
@@ -272,6 +284,7 @@ export function WavePlayer({
           id={`play-${title.replace(/\s+/g, "-").toLowerCase()}`}
           onClick={togglePlay}
           disabled={!isReady && !error}
+          suppressHydrationWarning
           aria-label={isPlaying ? "Pause song" : "Play song"}
           style={{
             flexShrink: 0, width: 38, height: 38, borderRadius: "50%",
@@ -394,14 +407,6 @@ export function WavePlayer({
           MP3
         </button>
       </div>
-
-      {/* Keyframes injected inline once */}
-      <style>{`
-        @keyframes bar-bounce {
-          from { transform: scaleY(0.4); }
-          to   { transform: scaleY(1); }
-        }
-      `}</style>
     </div>
   );
 }
