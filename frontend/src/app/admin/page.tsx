@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
-import { getAppSettings, getAppUserProfile, listAppUserProfiles } from "@/lib/app-store";
+import { getAppSettings, getAppUserProfile } from "@/lib/app-store";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { saveComfyUiUrl, saveUserRole, testComfyUiUrl } from "./actions";
+import { saveComfyUiUrl, testComfyUiUrl } from "./actions";
 
 export const metadata: Metadata = buildMetadata({
   title: "Admin",
-  description: "Manage Songify users, roles, and the Studio backend URL.",
+  description: "Manage Songify Studio backend URL.",
   path: "/admin",
   noIndex: true,
 });
@@ -32,10 +32,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
   const profile = await getAppUserProfile(user.id);
   if (profile?.role !== "admin") redirect("/dashboard");
 
-  const [users, settings] = await Promise.all([
-    listAppUserProfiles(),
-    getAppSettings(),
-  ]);
+  const settings = await getAppSettings();
 
   // ── Shared card style
   const cardStyle: React.CSSProperties = {
@@ -85,7 +82,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
             Admin Panel
           </span>
           <h1 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "2rem", fontWeight: 700, color: "var(--text-primary)" }}>
-            Studio Settings &amp; Users
+            Studio Settings
           </h1>
           <p style={{ marginTop: "0.4rem", fontSize: "0.875rem", color: "var(--text-secondary)" }}>
             Signed in as <span style={{ color: "#a5b4fc", fontWeight: 600 }}>{profile.email ?? user.email}</span> · Role:{" "}
@@ -105,10 +102,49 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
           </div>
         )}
 
-        {/* Two-column layout */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.3fr", gap: "1.25rem", alignItems: "start" }}>
+        {/* Quick links */}
+        <div style={{ display: "grid", gap: "0.75rem", gridTemplateColumns: "1fr 1fr", maxWidth: 560, marginBottom: "1.5rem" }}>
+          <a
+            href="/admin/songs-queue-management"
+            style={{
+              ...cardStyle,
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
+              transition: "border-color 220ms, box-shadow 220ms",
+            }}
+          >
+            <div style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(45,212,191,0.12)", border: "1px solid rgba(45,212,191,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" strokeWidth="1.8" strokeLinecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <div>
+              <p style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--text-primary)" }}>Songs Queue</p>
+              <p style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>Manage pending requests</p>
+            </div>
+          </a>
+          <a
+            href="/explore"
+            style={{
+              ...cardStyle,
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
+              transition: "border-color 220ms, box-shadow 220ms",
+            }}
+          >
+            <div style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(168,85,247,0.12)", border: "1px solid rgba(168,85,247,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="1.8" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            </div>
+            <div>
+              <p style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--text-primary)" }}>Explore Songs</p>
+              <p style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>View all generated songs</p>
+            </div>
+          </a>
+        </div>
 
-          {/* ── Left: Backend config ── */}
+        <div style={{ maxWidth: 560 }}>
           <div style={cardStyle}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.25rem" }}>
               <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -165,109 +201,6 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
                 </button>
               </div>
             </form>
-          </div>
-
-          {/* ── Right: User management ── */}
-          <div style={cardStyle}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.25rem" }}>
-              <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(45,212,191,0.1)", border: "1px solid rgba(45,212,191,0.2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" strokeWidth="1.8" strokeLinecap="round">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-              </div>
-              <div>
-                <h2 style={{ fontSize: "0.95rem", fontWeight: 600, color: "var(--text-primary)" }}>User Management</h2>
-                <p style={{ fontSize: "0.78rem", color: "var(--text-muted)" }}>{users.length} registered account{users.length !== 1 ? "s" : ""}</p>
-              </div>
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", maxHeight: "32rem", overflowY: "auto", paddingRight: "0.25rem" }}>
-              {users.map((item) => (
-                <form
-                  key={item.userId}
-                  action={saveUserRole}
-                  style={{
-                    display: "flex", alignItems: "center", justifyContent: "space-between",
-                    gap: "0.75rem", flexWrap: "wrap",
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.06)",
-                    borderRadius: "0.625rem",
-                    padding: "0.85rem 1rem",
-                  }}
-                >
-                  <input type="hidden" name="userId" value={item.userId} />
-
-                  {/* User info */}
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{ fontSize: "0.875rem", fontWeight: 600, color: "var(--text-primary)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                      {item.fullName ?? item.email ?? item.userId}
-                    </p>
-                    <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "0.15rem" }}>
-                      {item.email ?? "No email saved"}
-                    </p>
-                  </div>
-
-                  {/* Role selector + button */}
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexShrink: 0 }}>
-                    {/* Current role badge */}
-                    <span style={{
-                      fontSize: "0.68rem", fontWeight: 700, padding: "0.2rem 0.55rem",
-                      borderRadius: "999px",
-                      background: item.role === "admin" ? "rgba(239,68,68,0.1)" : "rgba(99,102,241,0.1)",
-                      border: item.role === "admin" ? "1px solid rgba(239,68,68,0.25)" : "1px solid rgba(99,102,241,0.2)",
-                      color: item.role === "admin" ? "#f87171" : "#a5b4fc",
-                    }}>
-                      {item.role ?? "user"}
-                    </span>
-
-                    <select
-                      name="role"
-                      defaultValue={item.role}
-                      style={{
-                        ...inputStyle,
-                        width: "auto",
-                        padding: "0.35rem 1.75rem 0.35rem 0.6rem",
-                        fontSize: "0.78rem",
-                        appearance: "none",
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
-                        backgroundRepeat: "no-repeat",
-                        backgroundPosition: "right 0.5rem center",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <option value="user" style={{ background: "#111827" }}>User</option>
-                      <option value="admin" style={{ background: "#111827" }}>Admin</option>
-                    </select>
-
-                    <button
-                      type="submit"
-                      style={{
-                        padding: "0.35rem 0.75rem",
-                        borderRadius: "0.4rem",
-                        background: "rgba(255,255,255,0.05)",
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        color: "var(--text-secondary)",
-                        fontSize: "0.75rem",
-                        fontWeight: 600,
-                        cursor: "pointer",
-                        whiteSpace: "nowrap",
-                        transition: "all 150ms",
-                      }}
-                    >
-                      Update
-                    </button>
-                  </div>
-                </form>
-              ))}
-
-              {users.length === 0 && (
-                <p style={{ textAlign: "center", padding: "2rem 0", fontSize: "0.83rem", color: "var(--text-muted)" }}>
-                  No users registered yet.
-                </p>
-              )}
-            </div>
           </div>
         </div>
       </div>

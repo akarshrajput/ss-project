@@ -1,15 +1,23 @@
 import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/lib/seo";
+import { listCompletedSongs } from "@/lib/song-queue-store";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  return [
+  // Static routes
+  const routes: MetadataRoute.Sitemap = [
     {
       url: absoluteUrl("/"),
       lastModified: now,
       changeFrequency: "weekly",
       priority: 1,
+    },
+    {
+      url: absoluteUrl("/explore"),
+      lastModified: now,
+      changeFrequency: "always",
+      priority: 0.98,
     },
     {
       url: absoluteUrl("/studio"),
@@ -96,4 +104,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.4,
     },
   ];
+
+  // Dynamic routes (Individual Songs)
+  try {
+    const latestSongs = await listCompletedSongs({ limit: 100 });
+    const songRoutes: MetadataRoute.Sitemap = latestSongs.map((song) => ({
+      url: absoluteUrl(`/song/${song.songId}`),
+      lastModified: song.completedAt ? new Date(song.completedAt) : now,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    }));
+    return [...routes, ...songRoutes];
+  } catch {
+    return routes;
+  }
 }
