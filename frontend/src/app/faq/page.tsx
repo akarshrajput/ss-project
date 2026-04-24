@@ -5,14 +5,14 @@ import { buildBreadcrumbSchema, buildFaqSchema } from "@/lib/structured-data";
 
 export const metadata: Metadata = buildMetadata({
   title: "FAQ — Text to Song & AI Music Generator Questions Answered",
-  description: "Got questions about Songify? Learn how our free AI song generator turns text into songs, how the lyrics generator works, and what makes it the top AI music maker online.",
+  description: "Got questions about Songify? Learn how our free AI song generator turns text into songs, how the music generator works, and what makes it the top AI music maker online.",
   path: "/faq",
 });
 
 const faqs = [
   {
     question: "What is a text to song AI and how does Songify work?",
-    answer: "A text to song AI converts any written input — lyrics, a poem, a story, or even a single sentence — into a fully produced audio track. Songify's AI song generator reads your prompt, writes or adapts lyrics, selects a musical style, and renders a complete song in seconds. No music theory knowledge required.",
+    answer: "A text to song AI converts any written input — a poem, a story, or even a single sentence — into a fully produced audio track. Songify's AI song generator reads your prompt, selects a musical style, and renders a complete song in seconds. No music theory knowledge required.",
   },
   {
     question: "Is Songify really a free AI song generator?",
@@ -20,11 +20,11 @@ const faqs = [
   },
   {
     question: "How is Songify different from other AI music generators?",
-    answer: "Most AI music generators create background music without vocals or lyrics. Songify is a complete AI song maker — it generates both the lyrics and the music together from a single text prompt. Think of it as a lyrics generator and an AI music maker rolled into one tool.",
+    answer: "Most AI music generators create background music without vocals. Songify is a complete AI song maker — it generates fully produced tracks from a single text prompt. Think of it as a comprehensive AI music maker tool.",
   },
   {
-    question: "Can I use Songify as a lyrics generator only?",
-    answer: "Yes. In the Studio, switch the mode to \u2018Story \u2192 Song\u2019 or paste your own lyrics and set mode to \u2018Use as lyrics\u2019. Songify\u2019s AI lyrics generator will adapt your text into a structured song format (verse, chorus, bridge) before producing the final audio.",
+    question: "Can I use Songify for specific musical styles?",
+    answer: "Yes. In the Studio, you can select from various genres and moods. Songify\u2019s AI music generator will adapt your input into a structured song format before producing the final audio.",
   },
   {
     question: "What music genres does the AI song maker support?",
@@ -32,7 +32,7 @@ const faqs = [
   },
   {
     question: "Which languages can the AI music maker produce songs in?",
-    answer: "Currently Songify supports English, Hindi, Spanish, French, and German. Our AI lyrics generator has been tested with all five and produces natural, in-language output. More languages are being added — vote for yours in the community forum.",
+    answer: "Currently Songify supports English, Hindi, Spanish, French, and German. Our AI music generator has been tested with all five and produces natural, high-quality output. More languages are being added — vote for yours in the community forum.",
   },
   {
     question: "How long does it take to generate a song?",
@@ -55,8 +55,8 @@ const faqs = [
     answer: "Yes. The Songify Studio and the homepage song generator are fully responsive and work on iOS and Android browsers. The waveform player, genre controls, and download button are all touch-friendly — create AI songs from your phone anywhere, anytime.",
   },
   {
-    question: "Is Songify the top AI platform for song lyrics?",
-    answer: "Songify is built specifically for the text-to-song use case: you type, AI writes the lyrics and composes the music. Unlike generic AI writing tools, Songify understands song structure (verse, pre-chorus, chorus, bridge) and produces output that sounds like a real track — making it one of the top AI platforms for song lyrics online.",
+    question: "Is Songify the top AI platform for music creation?",
+    answer: "Songify is built specifically for the text-to-song use case: you type, AI composes the music. Unlike generic AI tools, Songify understands song structure and produces output that sounds like a real track — making it one of the top AI platforms for music generation online.",
   },
 ];
 

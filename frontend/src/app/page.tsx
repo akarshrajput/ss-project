@@ -10,24 +10,21 @@ import { servicePages } from "@/lib/services";
 export const metadata: Metadata = buildMetadata({
   title: "Text to Song — Free AI Song Generator | Songify",
   description:
-    "Turn any text into a song instantly. Free AI song generator — create lyrics, melodies and full songs from a prompt. The easiest AI music generator online.",
+    "Turn any text into a song instantly. Free AI song generator — create melodies and full songs from a prompt. The easiest AI music generator online.",
   path: "/",
   keywords: [
     "text to song",
     "ai song generator",
     "ai music generator",
-    "song lyrics generator",
-    "lyric generator",
     "ai song maker",
     "song maker",
     "ai music maker",
-    "lyrics generator",
+    "music generator",
     "song generator",
     "free ai music generator",
-    "ai lyrics generator",
-    "write as music",
-    "top ai platform for songs lyrics",
-    "top ai for lyrics for songs",
+    "ai song maker",
+    "top ai platform for songs",
+    "top ai for songs",
   ],
 });
 
@@ -44,9 +41,9 @@ const faqs = [
       "Yes — Songify is a free AI song generator for everyone. You can generate songs in guest mode without creating an account. Sign up for free to unlock downloads, save tracks to your library, and access higher quality generation. Premium plans are available for unlimited usage and advanced features.",
   },
   {
-    question: "How does the AI lyrics generator work?",
+    question: "How does the AI music generator work?",
     answer:
-      "Our AI lyrics generator uses large language models trained on diverse song structures to craft rhyming, rhythmically-sound lyrics from your prompt. Simply describe your idea, theme, or emotion — the AI lyrics generator handles verse, chorus, and bridge structure automatically, giving you polished song lyrics in moments.",
+      "Our AI music generator uses advanced neural networks trained on diverse musical structures to craft professional-grade melodies and rhythms from your prompt. Simply describe your idea, theme, or emotion — the AI handles the composition, instrumentation, and mastering automatically, giving you polished music in moments.",
   },
   {
     question: "Can I use this as a rap generator?",
@@ -56,7 +53,7 @@ const faqs = [
   {
     question: "What makes this the best AI song maker?",
     answer:
-      "Songify combines an industry-leading song lyrics generator with full AI music production in one seamless platform. Unlike other tools, you get complete songs — not just lyrics. Our AI song maker handles melody, instrumentation, vocals, and mastering together, making it the top AI platform for songs and lyrics from a single prompt.",
+      "Songify combines industry-leading AI music production in one seamless platform. Unlike other tools, you get complete tracks with melody, instrumentation, and mastering together, making it the top AI platform for music from a single prompt.",
   },
 ];
 
@@ -68,10 +65,10 @@ const features = [
         <path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
       </svg>
     ),
-    title: "Song Lyrics Generator",
-    desc: "Describe any mood, theme, or storyline and our song lyrics generator writes polished verses, choruses, and bridges instantly — ready to record or share.",
+    title: "AI Music Maker",
+    desc: "Describe any mood, theme, or storyline and our AI music maker composes professional-grade tracks instantly — ready to use in your projects.",
     accent: "#6366f1",
-    keyword: "song lyrics generator",
+    keyword: "ai music maker",
   },
   {
     icon: (
@@ -90,10 +87,10 @@ const features = [
         <path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" />
       </svg>
     ),
-    title: "Lyric Generator for Every Genre",
-    desc: "From pop and R&B to country, rap, and EDM — our lyric generator adapts its style, vocabulary, and rhyme scheme to match your chosen genre perfectly.",
+    title: "AI Song Maker for Every Genre",
+    desc: "From pop and R&B to country, rap, and EDM — our AI song maker adapts its style, instruments, and rhythm to match your chosen genre perfectly.",
     accent: "#a855f7",
-    keyword: "lyric generator",
+    keyword: "ai song maker",
   },
   {
     icon: (
@@ -125,7 +122,7 @@ const steps = [
   {
     num: "03",
     title: "Get Your Song",
-    desc: "In seconds, receive a fully produced song complete with AI-generated lyrics and music. Download it, share it, or regenerate with tweaks — completely free to try.",
+    desc: "In seconds, receive a fully produced song. Download it, share it, or regenerate with tweaks — completely free to try.",
     accent: "#a855f7",
   },
 ];
@@ -170,14 +167,14 @@ export default async function Home() {
       description: "Free tier available. No credit card required.",
     },
     description:
-      "Songify is a free AI song generator and AI music maker that turns any text prompt into a complete song with lyrics and music. The top AI platform for songs and lyrics.",
+      "Songify is a free AI song generator and AI music maker that turns any text prompt into a complete track. The top AI platform for music generation.",
     featureList: [
       "Text to song conversion",
-      "AI lyrics generator",
-      "Song lyrics generator",
-      "Free AI music generator",
+      "AI music maker",
       "AI song maker",
-      "Lyric generator",
+      "Free AI music generator",
+      "AI song generator",
+      "Music maker",
       "Multiple genre support",
       "Instant audio download",
     ],
@@ -241,12 +238,12 @@ export default async function Home() {
           with AI
         </h1>
 
-        {/* Subheading — naturally includes "ai song generator" + "lyrics generator" */}
+        {/* Subheading — naturally includes "ai song generator" + "ai music maker" */}
         <p
           className="fade-up-delay-2 mt-6 text-lg leading-8 max-w-2xl mx-auto"
           style={{ color: "var(--text-secondary)" }}
         >
-          Songify is the most powerful <strong style={{ color: "var(--text-primary)" }}>ai song generator</strong> online — paste any idea and our AI writes the music and lyrics for you. The only <strong style={{ color: "var(--text-primary)" }}>song generator</strong> that produces a full, production-ready track in seconds.
+          Songify is the most powerful <strong style={{ color: "var(--text-primary)" }}>ai song generator</strong> online — paste any idea and our AI writes the music for you.
         </p>
 
         {/* ─── Quick Generate input — the tool IS the CTA ────────────── */}
@@ -453,7 +450,7 @@ export default async function Home() {
             {[
               { val: "50,000+", label: "Songs Generated", sub: "using our free ai song generator" },
               { val: "120+ Genres", label: "Supported Styles", sub: "from pop to classical to rap" },
-              { val: "4.8 / 5", label: "Average Rating", sub: "top ai for lyrics for songs" },
+              { val: "4.8 / 5", label: "Average Rating", sub: "top ai platform for music" },
             ].map((stat) => (
               <div key={stat.val}>
                 <p

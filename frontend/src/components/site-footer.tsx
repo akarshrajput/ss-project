@@ -49,7 +49,7 @@ export function SiteFooter() {
             </span>
           </Link>
           <p style={{ fontSize: "0.83rem", color: "var(--text-muted)", lineHeight: 1.8, maxWidth: 240 }}>
-            Songify is the leading <strong style={{ color: "var(--text-secondary)" }}>ai song generator</strong> and <strong style={{ color: "var(--text-secondary)" }}>ai music generator</strong> for creators of every level. Use our <strong style={{ color: "var(--text-secondary)" }}>song maker</strong> and <strong style={{ color: "var(--text-secondary)" }}>lyrics generator</strong> to turn any idea into a full track — free, fast, and effortlessly.
+            Songify is the leading <strong style={{ color: "var(--text-secondary)" }}>ai song generator</strong> and <strong style={{ color: "var(--text-secondary)" }}>ai music generator</strong> for creators of every level. Use our <strong style={{ color: "var(--text-secondary)" }}>song maker</strong> to turn any idea into a full track — free, fast, and effortlessly.
           </p>
         </div>
 
