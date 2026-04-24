@@ -22,7 +22,7 @@ export async function SiteHeader() {
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group" style={{ textDecoration: "none" }}>
-          {/* <div style={{
+          <div style={{
             width: 32, height: 32, borderRadius: 9,
             background: "linear-gradient(135deg, #6366f1, #2dd4bf)",
             display: "flex", alignItems: "center", justifyContent: "center",
@@ -32,9 +32,9 @@ export async function SiteHeader() {
             className="group-hover:shadow-[0_0_24px_rgba(99,102,241,0.6)]"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="M9 18V5l12-2v13M9 18c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-2c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M9 18V5l12-2v13M9 18c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-2c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-          </div> */}
+          </div>
           <span style={{ fontSize: "1.05rem", fontWeight: 700, color: "#f1f5f9", fontFamily: '"Space Grotesk", sans-serif', letterSpacing: "-0.02em" }}>
             Songify
           </span>
