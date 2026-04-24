@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useRef, useEffect, useState } from "react";
-import clsx from "clsx";
 import type { SongGenerateInput, SongGenerateResult } from "@/lib/song/types";
 import { WavePlayer } from "@/components/ui/wave-player";
 
@@ -262,7 +261,6 @@ function RangeField({
   max: number;
   onChange: (v: number) => void;
 }) {
-  const pct = ((value - min) / (max - min)) * 100;
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.35rem" }}>
@@ -375,10 +373,6 @@ export function StudioClient({ isAuthenticated }: { isAuthenticated: boolean }) 
         ? p.vocalStyles.filter((s) => s !== style)
         : [...p.vocalStyles, style],
     }));
-  }
-
-  function requireAuthAction(target: "download" | "library") {
-    router.push(`/login?next=/studio&intent=${target}`);
   }
 
   return (

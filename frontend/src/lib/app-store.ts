@@ -1,5 +1,5 @@
 import type { User } from "@supabase/supabase-js";
-import { getMongoDb } from "@/lib/mongodb";
+import { getMongoDb, getMongoDbOrNull, isMongoConfigured } from "@/lib/mongodb";
 
 export const DEFAULT_COMFYUI_URL = "https://e54wgks2f9mg8n-7865.proxy.runpod.net";
 
@@ -48,7 +48,12 @@ function readFullName(user: Pick<User, "email" | "user_metadata">) {
 }
 
 export async function upsertAppUserProfile(user: User) {
-  const db = await getMongoDb();
+  const db = await getMongoDbOrNull();
+
+  if (!db) {
+    return;
+  }
+
   const now = new Date();
 
   await db.collection<AppUserProfile>("users").updateOne(
@@ -70,16 +75,30 @@ export async function upsertAppUserProfile(user: User) {
 }
 
 export async function getAppUserProfile(userId: string) {
-  const db = await getMongoDb();
+  const db = await getMongoDbOrNull();
+
+  if (!db) {
+    return null;
+  }
+
   return db.collection<AppUserProfile>("users").findOne({ userId });
 }
 
 export async function listAppUserProfiles() {
-  const db = await getMongoDb();
+  const db = await getMongoDbOrNull();
+
+  if (!db) {
+    return [];
+  }
+
   return db.collection<AppUserProfile>("users").find({}).sort({ createdAt: -1 }).toArray();
 }
 
 export async function setAppUserRole(userId: string, role: AppUserRole) {
+  if (!isMongoConfigured()) {
+    throw new Error("Missing MongoDB environment value MONGODB_URI.");
+  }
+
   const db = await getMongoDb();
   const now = new Date();
 
@@ -103,7 +122,16 @@ export async function setAppUserRole(userId: string, role: AppUserRole) {
 }
 
 export async function getAppSettings() {
-  const db = await getMongoDb();
+  const db = await getMongoDbOrNull();
+
+  if (!db) {
+    return {
+      comfyUiUrl: DEFAULT_COMFYUI_URL,
+      updatedAt: null,
+      updatedBy: null,
+    };
+  }
+
   const settings = await db.collection<AppSettings>("settings").findOne({ key: "app" });
 
   return {
@@ -142,6 +170,10 @@ export async function getComfyUiOnline() {
 }
 
 export async function setComfyUiBaseUrl(comfyUiUrl: string, updatedBy: string) {
+  if (!isMongoConfigured()) {
+    throw new Error("Missing MongoDB environment value MONGODB_URI.");
+  }
+
   const db = await getMongoDb();
   const now = new Date();
 

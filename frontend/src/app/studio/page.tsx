@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { StudioClient } from "@/components/studio/studio-client";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { createOptionalSupabaseServerClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = buildMetadata({
   title: "AI Song Studio — Text to Music Creation",
@@ -12,10 +12,8 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function StudioPage() {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const supabase = await createOptionalSupabaseServerClient();
+  const user = supabase ? (await supabase.auth.getUser()).data.user : null;
 
   return (
     <main className="site-container w-full flex-1 px-4 py-8 sm:px-6 lg:px-8">
@@ -49,4 +47,3 @@ export default async function StudioPage() {
     </main>
   );
 }
-

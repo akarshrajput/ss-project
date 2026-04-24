@@ -5,6 +5,8 @@ import { JSONLD } from "@/components/json-ld";
 import { absoluteUrl, siteConfig } from "@/lib/seo";
 import "./globals.css";
 
+const deploymentVersion = Date.now().toString();
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
@@ -47,6 +49,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className="h-full antialiased">
       <head>
+        <meta name="deployment-version" content={deploymentVersion} />
         <JSONLD />
       </head>
       <body style={{ minHeight: "100vh", background: "var(--bg-base)", color: "var(--text-primary)" }}>

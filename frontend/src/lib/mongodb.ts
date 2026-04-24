@@ -16,6 +16,23 @@ function createMongoClient() {
   return cachedClient.connect();
 }
 
+export function isMongoConfigured() {
+  return Boolean(mongoUri);
+}
+
+export async function getMongoDbOrNull() {
+  if (!isMongoConfigured()) {
+    return null;
+  }
+
+  try {
+    return await getMongoDb();
+  } catch (error) {
+    console.error("MongoDB connection failed.", error);
+    return null;
+  }
+}
+
 export async function getMongoClient() {
   if (!cachedClientPromise) {
     cachedClientPromise = createMongoClient();
