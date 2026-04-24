@@ -65,6 +65,34 @@ export default function AboutPage() {
           </p>
         </div>
       </section>
+      <section style={{ maxWidth: 860, marginTop: "3rem", display: "grid", gap: "1.5rem", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>
+            Company Information
+          </h2>
+          <div style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.7 }}>
+            NovaVision Consulting FZCO<br />
+            Dubai Digital Park<br />
+            Dubai Silicon Oasis<br />
+            Dubai, UAE
+          </div>
+          <div style={{ marginTop: "1.25rem" }}>
+            <h3 style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.4rem" }}>Contact</h3>
+            <a href="mailto:contact@Novavision-strategy.com" style={{ fontSize: "0.85rem", color: "#6366f1", textDecoration: "underline" }}>
+              contact@Novavision-strategy.com
+            </a>
+          </div>
+        </div>
+
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>
+            Liability Notice
+          </h2>
+          <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: 1.75 }}>
+            Songify provides AI-powered song generation and audio production tools. All generated content is provided for creative and entertainment purposes. Use is at your own risk. We do not guarantee the copyright status, uniqueness, or accuracy of the generated audio tracks and lyrics.
+          </p>
+        </div>
+      </section>
     </main>
   );
 }
