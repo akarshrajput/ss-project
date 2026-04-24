@@ -122,14 +122,14 @@ function ExploreContent() {
   return (
     <div style={{ width: "100%" }}>
       {/* Search & Filters */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginBottom: "3rem" }}>
+      <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: "1.5rem", marginBottom: "3rem" }}>
         
         {/* Search */}
         <div style={{
           position: "relative",
           borderRadius: "0.75rem", border: "1px solid rgba(255,255,255,0.1)",
           background: "rgba(13,17,23,0.8)", backdropFilter: "blur(16px)",
-          maxWidth: 600, width: "100%"
+          flex: "1 1 300px", maxWidth: 600
         }}>
           <div style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "var(--text-muted)" }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
