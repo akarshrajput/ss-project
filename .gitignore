@@ -45,3 +45,5 @@ server/venv/
 server/env/
 server/ENV/
 server/.ipynb_checkpoints/
+.vercel
+.env*.local

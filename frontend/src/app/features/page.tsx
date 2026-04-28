@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Script from "next/script";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 
@@ -38,6 +39,31 @@ const features = [
 export default function FeaturesPage() {
   return (
     <main className="site-container w-full flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
+      {/* Smartlink */}
+      <a href="https://www.profitablecpmratenetwork.com/jj4qu1yn?key=f11165f2ce85aad6894ab21301a2e5de" style={{ display: "none" }} aria-hidden="true" />
+      {/* Native Banner */}
+      <Script
+        async
+        data-cfasync="false"
+        src="https://pl29271017.profitablecpmratenetwork.com/76b5ed1f0b9e813346305b441291dffb/invoke.js"
+        strategy="afterInteractive"
+      />
+      <div id="container-76b5ed1f0b9e813346305b441291dffb" />
+      {/* Adsterra Banner 320x50 */}
+      <Script id="adsterra-banner-opts" strategy="afterInteractive">{`
+        atOptions = {
+          'key': 'fbba0aa8f5128c15c1f80c9627941ec7',
+          'format': 'iframe',
+          'height': 50,
+          'width': 320,
+          'params': {}
+        };
+      `}</Script>
+      <Script
+        src="//www.highperformanceformat.com/fbba0aa8f5128c15c1f80c9627941ec7/invoke.js"
+        strategy="afterInteractive"
+      />
+
 
       {/* Header */}
       <div style={{ maxWidth: 640, marginBottom: "3.5rem" }}>

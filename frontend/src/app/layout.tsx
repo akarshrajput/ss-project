@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { JSONLD } from "@/components/json-ld";
@@ -50,6 +51,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className="h-full antialiased">
       <head>
         <meta name="deployment-version" content={deploymentVersion} />
+                {/* Popunder — disabled (blocks click events sitewide) */}
+        {/* <Script
+          src="https://pl29271015.profitablecpmratenetwork.com/14/8c/bb/148cbbba0250227fb706c1c9ebf0d73c.js"
+          strategy="afterInteractive"
+        /> */}
         <JSONLD />
       </head>
       <body style={{ minHeight: "100vh", background: "var(--bg-base)", color: "var(--text-primary)" }}>
@@ -61,6 +67,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <div className="flex-1">{children}</div>
           <SiteFooter />
         </div>
+        {/* Social Bar — disabled (can intercept pointer events) */}
+        {/* <Script
+          src="https://pl29271018.profitablecpmratenetwork.com/7c/86/9b/7c869bac101a892809e03fa99d34fb9a.js"
+          strategy="lazyOnload"
+        /> */}
       </body>
     </html>
   );
