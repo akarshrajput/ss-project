@@ -3,10 +3,10 @@ import { getAppUserProfile } from "@/lib/app-store";
 import { createOptionalSupabaseServerClient } from "@/lib/supabase/server";
 
 const navItems = [
-  { href: "/", label: "Home" },
+  // { href: "/", label: "Home" },
   { href: "/explore", label: "Explore" },
-  { href: "/services", label: "Services" },
-  { href: "/features", label: "Features" },
+  // { href: "/services", label: "Services" },
+  // { href: "/features", label: "Features" },
 ];
 
 export async function SiteHeader() {
@@ -17,7 +17,7 @@ export async function SiteHeader() {
   const profile = user ? await getAppUserProfile(user.id) : null;
 
   return (
-    <header className="sticky top-0 z-40" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(6,8,16,0.82)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)" }}>
+    <header className="sticky top-0 z-40" style={{ boxShadow: "0 16px 32px -8px var(--bg-base)", background: "rgba(6,8,16,0.82)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)" }}>
       <div className="site-container flex w-full items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
 
         {/* Logo */}

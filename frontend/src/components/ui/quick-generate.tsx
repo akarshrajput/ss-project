@@ -48,6 +48,7 @@ export function QuickGenerate() {
   const [emailLookupStatus, setEmailLookupStatus] = useState<"idle" | "checking" | "found" | "new" | "invalid" | "error">("idle");
   const [emailLookupMessage, setEmailLookupMessage] = useState<string | null>(null);
   const [usernameLocked, setUsernameLocked] = useState(false);
+  const [magicLinkSent, setMagicLinkSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -55,6 +56,62 @@ export function QuickGenerate() {
 
   useEffect(() => {
     setPlaceholder(PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)]);
+
+    // Check localStorage for previous session
+    if (typeof window !== "undefined") {
+      const savedEmail = localStorage.getItem("songify_email");
+      const savedUsername = localStorage.getItem("songify_username");
+      if (savedEmail) {
+        setEmail(savedEmail);
+        if (savedUsername) {
+          setUsername(savedUsername);
+          setEmailLookupStatus("found");
+          setUsernameStatus("available");
+          setUsernameLocked(true);
+        }
+      }
+    }
+
+    // Check for magic link params
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const verifyEmailParam = params.get("verifyEmail");
+      const actionParam = params.get("action");
+      if (verifyEmailParam && actionParam === "quickGen") {
+        setShowModal(true);
+        setStep("details");
+        setEmail(verifyEmailParam);
+        setEmailLookupStatus("new");
+
+        // Restore form state from URL params
+        const lyricsParam = params.get("lyrics");
+        if (lyricsParam) setValue(lyricsParam);
+        const basePromptParam = params.get("basePrompt");
+        if (basePromptParam) setBasePrompt(basePromptParam);
+        const durationParam = params.get("duration");
+        if (durationParam) setDuration(parseInt(durationParam, 10) || 30);
+
+        // Auto-generate username: "akarshrajput.01@gmail.com" -> "akarshrajput"
+        const generatedUname = verifyEmailParam.split("@")[0].split(".")[0].replace(/[^a-zA-Z0-9_]/g, "");
+        setUsername(generatedUname);
+        setUsernameStatus("idle");
+
+        // Clean up URL without refreshing
+        window.history.replaceState({}, document.title, window.location.pathname);
+
+        // Trigger username check after a short delay
+        setTimeout(() => {
+          if (generatedUname.length >= 3) {
+            // Note: In real app, we'd ensure `checkUsername` is stable or handle deps.
+            // But doing it here with the exact same fetch is fine since we can't easily reference the callback here without warnings.
+            fetch(`/api/song-queue/check-username?username=${encodeURIComponent(generatedUname)}`)
+              .then(res => res.json())
+              .then(data => setUsernameStatus(data.available ? "available" : "taken"))
+              .catch(() => setUsernameStatus("idle"));
+          }
+        }, 500);
+      }
+    }
   }, []);
 
   // Real-time username check
@@ -88,6 +145,7 @@ export function QuickGenerate() {
     setUsernameLocked(false);
     setUsername("");
     setUsernameStatus("idle");
+    setMagicLinkSent(false);
   }
 
   async function verifyEmail() {
@@ -117,15 +175,33 @@ export function QuickGenerate() {
         setUsernameLocked(true);
         setUsernameStatus("available");
         setEmailLookupStatus("found");
-        setEmailLookupMessage(`We found an existing request for this email. Username autofilled as @${data.username}.`);
+        setEmailLookupMessage(null);
         return;
+      }
+
+      setEmailLookupMessage("Sending a secure link to your email...");
+      const linkRes = await fetch("/api/song-queue/send-magic-link", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          email: normalizedEmail,
+          lyrics: value.trim(),
+          basePrompt: basePrompt.trim(),
+          duration: duration
+        }),
+      });
+      const linkData = await linkRes.json();
+      
+      if (!linkRes.ok) {
+        throw new Error(linkData.error || "Failed to send link.");
       }
 
       setUsernameLocked(false);
       setUsername("");
       setUsernameStatus("idle");
-      setEmailLookupStatus("new");
-      setEmailLookupMessage("No existing request found. Create a new username below.");
+      setEmailLookupStatus("idle"); 
+      setMagicLinkSent(true);
+      setEmailLookupMessage("We've sent a secure link to your email! Please click it to continue.");
     } catch (err) {
       setEmailLookupStatus("error");
       setEmailLookupMessage(err instanceof Error ? err.message : "Unable to verify email right now.");
@@ -176,6 +252,13 @@ export function QuickGenerate() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong.");
+
+      // Save to localStorage for future requests
+      if (typeof window !== "undefined") {
+        localStorage.setItem("songify_email", email.trim());
+        localStorage.setItem("songify_username", username.trim());
+      }
+
       setStep("success");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
@@ -190,7 +273,7 @@ export function QuickGenerate() {
       setValue("");
       setBasePrompt("");
       setTheme(null); setGenre(null); setMood(null); setDuration(30);
-      setEmail(""); setUsername(""); setUsernameStatus("idle"); setEmailLookupStatus("idle"); setEmailLookupMessage(null); setUsernameLocked(false);
+      setEmail(""); setUsername(""); setUsernameStatus("idle"); setEmailLookupStatus("idle"); setEmailLookupMessage(null); setUsernameLocked(false); setMagicLinkSent(false);
     }
     setStep("options");
     setError(null);
@@ -342,10 +425,22 @@ export function QuickGenerate() {
             {step === "details" && (
               <div>
                 <button type="button" onClick={() => setStep("options")} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", fontSize: "0.8rem", marginBottom: "0.75rem", padding: 0 }}>← Back</button>
-                <h2 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.35rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.4rem" }}>Almost there!</h2>
-                <p style={{ fontSize: "0.84rem", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1.5rem" }}>We&apos;ll notify you by email when your song is ready.</p>
+                
+                {magicLinkSent ? (
+                  <div style={{ textAlign: "center", padding: "1.5rem 0 2rem" }}>
+                    <div style={{ width: 64, height: 64, borderRadius: "50%", background: "rgba(99,102,241,0.15)", border: "2px solid rgba(99,102,241,0.3)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.25rem", fontSize: "1.8rem" }}>✉️</div>
+                    <h2 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.35rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.5rem" }}>Check Your Inbox</h2>
+                    <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
+                      We have sent you a link on email.<br/>Click there to generate song from your email:<br/>
+                      <strong style={{ color: "#f1f5f9" }}>{email}</strong>
+                    </p>
+                  </div>
+                ) : (
+                  <>
+                    <h2 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.35rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.4rem" }}>Almost there!</h2>
+                    <p style={{ fontSize: "0.84rem", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1.5rem" }}>We&apos;ll notify you by email when your song is ready.</p>
 
-                {/* Email */}
+                    {/* Email */}
                 <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Email Address</label>
                 <div style={{ display: "flex", gap: "0.6rem", alignItems: "stretch", marginBottom: "0.75rem" }}>
                   <input type="email" value={email} onChange={(e) => onEmailChange(e.target.value)} placeholder="you@example.com"
@@ -353,17 +448,17 @@ export function QuickGenerate() {
                     onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(99,102,241,0.6)"; }}
                     onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
                   />
-                  <button type="button" onClick={verifyEmail} disabled={emailLookupStatus === "checking"} style={{
+                  <button type="button" onClick={verifyEmail} disabled={emailLookupStatus === "checking" || emailLookupStatus === "found" || magicLinkSent} style={{
                     padding: "0.6rem 1rem", borderRadius: "0.5rem", border: "1px solid rgba(99,102,241,0.45)",
-                    background: emailLookupStatus === "checking" ? "rgba(99,102,241,0.25)" : "rgba(99,102,241,0.16)",
-                    color: "#c7d2fe", fontSize: "0.84rem", fontWeight: 700, cursor: emailLookupStatus === "checking" ? "not-allowed" : "pointer",
+                    background: (emailLookupStatus === "checking" || magicLinkSent || emailLookupStatus === "found") ? "rgba(99,102,241,0.25)" : "rgba(99,102,241,0.16)",
+                    color: "#c7d2fe", fontSize: "0.84rem", fontWeight: 700, cursor: (emailLookupStatus === "checking" || magicLinkSent || emailLookupStatus === "found") ? "not-allowed" : "pointer",
                     whiteSpace: "nowrap",
                   }}>
-                    {emailLookupStatus === "checking" ? "Verifying..." : "Verify"}
+                    {emailLookupStatus === "found" ? "✓" : emailLookupStatus === "checking" ? "Checking..." : magicLinkSent ? "Sent!" : "Continue"}
                   </button>
                 </div>
                 {emailLookupMessage && (
-                  <p style={{ fontSize: "0.75rem", color: emailLookupStatus === "found" ? "#86efac" : emailLookupStatus === "error" || emailLookupStatus === "invalid" ? "#fca5a5" : "var(--text-muted)", marginBottom: "1rem", lineHeight: 1.5 }}>
+                  <p style={{ fontSize: "0.75rem", color: emailLookupStatus === "found" ? "#86efac" : emailLookupStatus === "error" || emailLookupStatus === "invalid" ? "#fca5a5" : magicLinkSent ? "#a5b4fc" : "var(--text-muted)", marginBottom: "1rem", lineHeight: 1.5 }}>
                     {emailLookupMessage}
                   </p>
                 )}
@@ -379,13 +474,19 @@ export function QuickGenerate() {
                       {usernameStatus === "available" && <span style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", fontSize: "0.85rem", color: "#22c55e" }}>✓</span>}
                       {usernameStatus === "taken" && !usernameLocked && <span style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", fontSize: "0.85rem", color: "#ef4444" }}>✗</span>}
                     </div>
-                    <p style={{ fontSize: "0.72rem", color: usernameLocked ? "#86efac" : usernameStatus === "taken" ? "#fca5a5" : usernameStatus === "available" ? "#86efac" : "var(--text-muted)", marginBottom: "1.5rem", lineHeight: 1.4 }}>
-                      {usernameLocked ? "This email already has an associated username. You can submit using the autofilled username." : usernameStatus === "taken" ? "This username is already in use." : usernameStatus === "available" ? "Username is available!" : "Letters, numbers, and underscores only."}
-                    </p>
+                    {!usernameLocked ? (
+                      <p style={{ fontSize: "0.72rem", color: usernameStatus === "taken" ? "#fca5a5" : usernameStatus === "available" ? "#86efac" : "var(--text-muted)", marginBottom: "1.5rem", lineHeight: 1.4 }}>
+                        {usernameStatus === "taken" ? "This username is already in use." : usernameStatus === "available" ? "Username is available!" : "Letters, numbers, and underscores only."}
+                      </p>
+                    ) : (
+                      <p style={{ fontSize: "0.72rem", color: "#86efac", marginBottom: "1.5rem", lineHeight: 1.4 }}>
+                        Your username already exists
+                      </p>
+                    )}
                   </>
                 ) : (
                 <p style={{ fontSize: "0.72rem", color: "var(--text-muted)", marginBottom: "1.5rem", lineHeight: 1.4 }}>
-                  Verify your email to load an existing username or create a new one.
+                  Confirm your email to load an existing username or create a new one.
                 </p>
               )}
 
@@ -402,23 +503,24 @@ export function QuickGenerate() {
               }}>
                 {submitting ? "Submitting…" : "Submit Request"}
               </button>
+                  </>
+                )}
             </div>
           )}
 
           {/* ── Step 3: Success ─────────────────────────── */}
           {step === "success" && (
               <div style={{ textAlign: "center", padding: "1rem 0" }}>
-                <div style={{ width: 72, height: 72, borderRadius: "50%", background: "rgba(34,197,94,0.12)", border: "2px solid rgba(34,197,94,0.3)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.25rem", fontSize: "2rem" }}>🎶</div>
                 <h2 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.4rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.6rem" }}>You&apos;re All Set!</h2>
                 <p style={{ fontSize: "0.92rem", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "0.5rem", maxWidth: 380, margin: "0 auto 1.5rem" }}>
                   Your song request has been submitted successfully.
                 </p>
                 <div style={{ background: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: "0.75rem", padding: "1rem", marginBottom: "1.5rem" }}>
-                  <p style={{ fontSize: "0.85rem", color: "#a5b4fc", lineHeight: 1.7 }}>
-                    We&apos;ll send an email to <strong style={{ color: "#f1f5f9" }}>{email}</strong> as soon as your song is ready. Keep an eye on your inbox!
+                  <p style={{ fontSize: "0.85rem", color: "#a5b4fc", lineHeight: 1.7, fontWeight: 600 }}>
+                    We are making your song @{username}
                   </p>
                   <p style={{ fontSize: "0.85rem", color: "#a5b4fc", lineHeight: 1.7, marginTop: "0.5rem" }}>
-                    You could also check on <Link href="/explore" onClick={closeModal} style={{ color: "#f1f5f9", textDecoration: "underline", fontWeight: 600 }}>/explore</Link> when song available you could search by your username or email
+                    We will send you an email when your song will be ready or you could explore our <Link href="/explore" onClick={closeModal} style={{ color: "#f1f5f9", textDecoration: "underline", fontWeight: 600 }}>explore</Link> page. It will be ready in a few hours.
                   </p>
                 </div>
                 <button type="button" onClick={closeModal} style={{

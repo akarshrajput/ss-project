@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { LibrarySongCard } from "@/components/ui/library-song-card";
+import { getUserSongs } from "@/lib/song-queue-store";
 
 export const metadata: Metadata = buildMetadata({
   title: "Audio Library",
@@ -27,14 +28,25 @@ export default async function LibraryPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data, error } = await supabase
-    .from("songs")
-    .select("id,title,prompt_tags,genre,mood,audio_url,created_at")
-    .eq("user_id", user?.id)
-    .order("created_at", { ascending: false })
-    .limit(24);
+  let songs: SongRow[] = [];
+  let error = null;
 
-  const songs = (data ?? []) as SongRow[];
+  if (user?.email) {
+    try {
+      const data = await getUserSongs(user.email);
+      songs = data.map((s) => ({
+        id: s.songId,
+        title: s.songTitle,
+        prompt_tags: s.promptTags,
+        genre: s.genre,
+        mood: s.mood,
+        audio_url: s.songUrl,
+        created_at: s.createdAt.toISOString(),
+      }));
+    } catch (err) {
+      error = err;
+    }
+  }
 
   return (
     <main className="site-container w-full flex-1 px-4 py-12 sm:px-6 lg:px-8">
@@ -50,14 +62,14 @@ export default async function LibraryPage() {
           </p>
         </div>
         <Link href="/studio" className="btn-primary" style={{ textDecoration: "none" }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
           New Song
         </Link>
       </div>
 
-      {error && (
+      {!!error && (
         <div className="alert-warning mb-6">
-          Could not load songs. Run the SQL migration in README and verify table policies.
+          Could not load songs. Please try again later.
         </div>
       )}
 
@@ -65,7 +77,7 @@ export default async function LibraryPage() {
         <div style={{ textAlign: "center", padding: "5rem 2rem" }}>
           <div style={{ width: 64, height: 64, borderRadius: "50%", background: "rgba(45,212,191,0.08)", border: "1px solid rgba(45,212,191,0.15)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1rem" }}>
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" strokeWidth="1.5">
-              <path d="M9 18V5l12-2v13M9 18c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-2c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/>
+              <path d="M9 18V5l12-2v13M9 18c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-2c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" />
             </svg>
           </div>
           <p style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.4rem" }}>No songs yet</p>

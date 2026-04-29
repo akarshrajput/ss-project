@@ -4,6 +4,7 @@ import { buildLyrics, buildTags, buildWorkflow } from "@/lib/song/prompt";
 import type { SongGenerateInput, SongGenerateResult } from "@/lib/song/types";
 import { getComfyUiBaseUrl } from "@/lib/app-store";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { saveDirectSong } from "@/lib/song-queue-store";
 
 const requestSchema: z.ZodType<SongGenerateInput> = z.object({
   basePrompt: z.string().min(5),
@@ -44,12 +45,12 @@ async function waitForHistory(promptId: string, comfyUrl: string, timeoutMs = 18
       const historyData = (await historyResponse.json()) as Record<string, unknown>;
       const promptEntry = historyData[promptId] as
         | {
-            outputs?: {
-              "107"?: {
-                audio?: Array<{ filename: string; subfolder?: string; type: string }>;
-              };
+          outputs?: {
+            "107"?: {
+              audio?: Array<{ filename: string; subfolder?: string; type: string }>;
             };
-          }
+          };
+        }
         | undefined;
 
       const audio = promptEntry?.outputs?.["107"]?.audio?.[0];
@@ -98,16 +99,19 @@ async function persistSongIfAuthenticated(params: {
     data: { publicUrl },
   } = supabase.storage.from("songs").getPublicUrl(objectPath);
 
-  await supabase.from("songs").insert({
-    user_id: user.id,
-    title: `${params.input.genre ?? "Custom"} ${params.input.length}s`,
-    prompt_tags: params.tags,
+  // Save to MongoDB instead of Supabase DB
+  const username = user.email?.split("@")[0] || `user_${user.id.slice(0, 5)}`;
+
+  await saveDirectSong({
+    userId: user.id,
+    email: user.email || "",
+    username: username,
+    lyrics: params.input.lyrics,
     genre: params.input.genre,
     mood: params.input.moods[0] ?? null,
-    audio_url: publicUrl,
-    seed: params.input.seed,
-    duration_seconds: params.input.length,
-    model_name: "acestep_v1.5_turbo",
+    duration: params.input.length,
+    audioUrl: publicUrl,
+    promptTags: params.tags
   });
 
   return publicUrl;

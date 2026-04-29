@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 type QueueEntry = {
   _id: string;
@@ -36,6 +37,8 @@ export function SongsQueueClient() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState<string | null>(null);
+  const [isQueueProcessing, setIsQueueProcessing] = useState(false);
+  const queueProcessingRef = useRef(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
 
@@ -76,6 +79,7 @@ export function SongsQueueClient() {
   };
 
   async function handleGenerate(id: string) {
+    if (generating && generating !== id) return false;
     setGenerating(id);
     setError(null);
     setNotice(null);
@@ -87,13 +91,49 @@ export function SongsQueueClient() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Generation failed.");
-      setNotice(data.alreadyCompleted ? "This song was already generated." : "Song generated successfully! Email notification sent.");
-      fetchEntries();
+      
+      // Remove from local list for animation
+      setEntries(prev => prev.filter(e => e._id !== id));
+      
+      setNotice(data.alreadyCompleted ? "Already generated." : "Generated successfully!");
+      return true;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Generation failed.");
+      return false;
     } finally {
       setGenerating(null);
     }
+  }
+
+  async function handleGenerateQueueWise() {
+    if (isQueueProcessing) {
+      setIsQueueProcessing(false);
+      queueProcessingRef.current = false;
+      return;
+    }
+
+    const pendingOnPage = entries.filter(e => e.status === "pending");
+    if (pendingOnPage.length === 0) {
+      setError("No pending songs on this page to generate.");
+      return;
+    }
+
+    setIsQueueProcessing(true);
+    queueProcessingRef.current = true;
+    setError(null);
+    setNotice(null);
+
+    for (const entry of pendingOnPage) {
+      if (!queueProcessingRef.current) break;
+      const success = await handleGenerate(entry._id);
+      if (!success) break;
+      // Small pause between items for visual smoothness
+      await new Promise(r => setTimeout(r, 800));
+    }
+
+    setIsQueueProcessing(false);
+    queueProcessingRef.current = false;
+    fetchEntries(); // Refresh at the end to fill the page
   }
 
   const [expandedInfo, setExpandedInfo] = useState<Set<string>>(new Set());
@@ -162,6 +202,41 @@ export function SongsQueueClient() {
             Completed
           </button>
         </div>
+
+        {/* Queue Wise Generation Button */}
+        {statusFilter === "pending" && (
+          <button
+            type="button"
+            onClick={handleGenerateQueueWise}
+            disabled={(generating !== null && !isQueueProcessing) || loading}
+            style={{
+              ...controlBtn(isQueueProcessing),
+              background: isQueueProcessing ? "rgba(239, 68, 68, 0.15)" : "rgba(99,102,241,0.15)",
+              borderColor: isQueueProcessing ? "rgba(239, 68, 68, 0.4)" : "rgba(99,102,241,0.4)",
+              color: isQueueProcessing ? "#fca5a5" : "#a5b4fc",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem"
+            }}
+          >
+            {isQueueProcessing ? (
+              <>
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#ef4444", animation: "pulse 1.5s infinite" }} />
+                Stop Auto-Queue
+              </>
+            ) : (
+              <>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m21 21-6-6m6 6v-4.8m0 4.8h-4.8" />
+                  <path d="M3 16.2V21m0 0h4.8M3 21l6-6" />
+                  <path d="M21 7.8V3m0 0h-4.8M21 3l-6 6" />
+                  <path d="M3 7.8V3m0 0h4.8M3 3l6 6" />
+                </svg>
+                Generate Queue Wise
+              </>
+            )}
+          </button>
+        )}
 
         {/* Search */}
         <div style={{ flex: 1, position: "relative", minWidth: 250 }}>
@@ -285,9 +360,17 @@ export function SongsQueueClient() {
         </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "100%" }}>
-          {entries.map((entry) => (
-            <div key={entry._id} style={cardStyle}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "2rem" }}>
+          <AnimatePresence initial={false}>
+            {entries.map((entry) => (
+              <motion.div
+                key={entry._id}
+                layout
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 50, filter: "blur(10px)", transition: { duration: 0.4 } }}
+                style={cardStyle}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "2rem" }}>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.75rem" }}>
                     <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--text-primary)" }}>@{entry.username}</span>
@@ -391,21 +474,23 @@ export function SongsQueueClient() {
 
                 {entry.status === "pending" && (
                   <div style={{ flexShrink: 0 }}>
-                    <button type="button" onClick={() => handleGenerate(entry._id)} disabled={generating === entry._id}
+                    <button type="button" onClick={() => handleGenerate(entry._id)} disabled={generating !== null}
                       style={{
                         padding: "0.75rem 1.5rem", borderRadius: "0.75rem", border: "none", fontSize: "0.9rem", fontWeight: 700,
-                        background: generating === entry._id ? "rgba(99,102,241,0.3)" : "linear-gradient(135deg, #6366f1, #818cf8)",
-                        color: "#fff", cursor: generating === entry._id ? "not-allowed" : "pointer",
-                        boxShadow: generating === entry._id ? "none" : "0 4px 20px rgba(99,102,241,0.3)",
+                        background: (generating !== null && generating !== entry._id) ? "rgba(255,255,255,0.05)" : generating === entry._id ? "rgba(99,102,241,0.3)" : "linear-gradient(135deg, #6366f1, #818cf8)",
+                        color: (generating !== null && generating !== entry._id) ? "var(--text-muted)" : "#fff",
+                        cursor: generating !== null ? "not-allowed" : "pointer",
+                        boxShadow: generating !== null ? "none" : "0 4px 20px rgba(99,102,241,0.3)",
                         transition: "all 200ms ease", whiteSpace: "nowrap",
                       }}>
-                      {generating === entry._id ? "Generating..." : "Generate Now"}
+                      {generating === entry._id ? "Generating..." : (generating !== null) ? "Queue Busy" : "Generate Now"}
                     </button>
                   </div>
                 )}
               </div>
-            </div>
+            </motion.div>
           ))}
+          </AnimatePresence>
         </div>
       )}
 
@@ -435,6 +520,11 @@ export function SongsQueueClient() {
         @keyframes fade-in {
           from { opacity: 0; transform: translateY(-4px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+          0% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(0.8); }
+          100% { opacity: 1; transform: scale(1); }
         }
       `}</style>
     </div>

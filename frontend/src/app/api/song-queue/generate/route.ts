@@ -23,16 +23,16 @@ async function waitForHistory(
       >;
       const promptEntry = historyData[promptId] as
         | {
-            outputs?: {
-              "107"?: {
-                audio?: Array<{
-                  filename: string;
-                  subfolder?: string;
-                  type: string;
-                }>;
-              };
+          outputs?: {
+            "107"?: {
+              audio?: Array<{
+                filename: string;
+                subfolder?: string;
+                type: string;
+              }>;
             };
-          }
+          };
+        }
         | undefined;
 
       const audio = promptEntry?.outputs?.["107"]?.audio?.[0];

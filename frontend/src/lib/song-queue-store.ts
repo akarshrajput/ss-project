@@ -212,6 +212,44 @@ export async function markSongCompleted(
   );
 }
 
+// ─── Save Direct Song (Authenticated) ──────────────────────────
+export async function saveDirectSong(data: {
+  userId: string;
+  email: string;
+  username: string;
+  lyrics: string;
+  genre: string | null;
+  mood: string | null;
+  duration: number;
+  audioUrl: string;
+  promptTags: string;
+}): Promise<void> {
+  const db = await getMongoDb();
+  const now = new Date();
+  const songId = generateSongId();
+  const songTitle = [data.genre, data.mood].filter(Boolean).join(" ") || "AI Generated Song";
+
+  const entry: SongQueueEntry = {
+    lyrics: data.lyrics,
+    theme: null,
+    genre: data.genre,
+    mood: data.mood,
+    duration: data.duration,
+    email: data.email,
+    username: data.username.toLowerCase().trim(),
+    status: "completed",
+    promptTags: data.promptTags,
+    songUrl: data.audioUrl,
+    songId,
+    songTitle,
+    createdAt: now,
+    updatedAt: now,
+    completedAt: now,
+  };
+
+  await db.collection<SongQueueEntry>(COLLECTION).insertOne(entry);
+}
+
 // ─── List completed (for /explore) ─────────────────────────────
 export async function listCompletedSongs(options: {
   search?: string;
@@ -267,4 +305,18 @@ export async function countCompletedSongs(options: {
   if (mood && mood !== "All") filter.mood = mood;
 
   return db.collection(COLLECTION).countDocuments(filter);
+}
+
+// ─── Get User Songs (Authenticated) ──────────────────────────
+export async function getUserSongs(email: string, limit = 24): Promise<SongQueueEntry[]> {
+  const db = await getMongoDb();
+  return db
+    .collection<SongQueueEntry>(COLLECTION)
+    .find({ 
+      email: { $regex: `^${escapeRegex(email)}$`, $options: "i" },
+      status: "completed" 
+    })
+    .sort({ completedAt: -1 })
+    .limit(limit)
+    .toArray();
 }
