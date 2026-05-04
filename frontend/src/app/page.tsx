@@ -235,7 +235,7 @@ export default async function Home() {
         >
           <span className="gradient-text">Turn Any Text Into a Song</span>
           <br />
-          with AI
+          with AI for FREE
         </h1>
 
         {/* Subheading — naturally includes "ai song generator" + "ai music maker" */}

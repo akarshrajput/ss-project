@@ -5,8 +5,11 @@ import {
   getSongQueueCount,
   markSongCompleted,
   getSongQueueById,
+  getSongQueueByEmail,
+  isUsernameAvailable,
   SongQueueStatus,
 } from "@/lib/song-queue-store";
+import { deriveUsernameFromEmail } from "@/lib/username-utils";
 import { persistRemoteAudioToSupabase } from "@/lib/audio-storage";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getAppUserProfile } from "@/lib/app-store";
@@ -47,6 +50,33 @@ export async function POST(request: Request) {
       );
     }
 
+    // Ensure we reuse the same username for this email if it already exists in the DB
+    let finalUsername = username;
+    const existing = await getSongQueueByEmail(email);
+    if (existing) {
+      finalUsername = existing.username;
+    } else {
+      // If client didn't send a username, derive one from email
+      if (!finalUsername) finalUsername = deriveUsernameFromEmail(email);
+
+      // If chosen username is not available, try suffixes, then random suffix
+      if (!(await isUsernameAvailable(finalUsername))) {
+        let found = false;
+        for (let i = 1; i <= 8; i++) {
+          const cand = `${finalUsername}_${i}`;
+          if (await isUsernameAvailable(cand)) {
+            finalUsername = cand;
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          const randomSuffix = Math.random().toString(36).slice(2, 6);
+          finalUsername = `${finalUsername}_${randomSuffix}`;
+        }
+      }
+    }
+
     const entry = await createSongQueueEntry({
       lyrics,
       theme: body.theme?.trim() || null,
@@ -54,7 +84,7 @@ export async function POST(request: Request) {
       mood: body.mood?.trim() || null,
       duration: body.duration && body.duration >= 10 && body.duration <= 180 ? body.duration : 30,
       email,
-      username,
+      username: finalUsername,
     });
 
     return NextResponse.json({ success: true, songId: entry.songId });

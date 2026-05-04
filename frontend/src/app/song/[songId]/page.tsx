@@ -1,31 +1,120 @@
+"use client";
+
 import Link from "next/link";
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { buildMetadata } from "@/lib/seo";
-import { getSongQueueBySongId } from "@/lib/song-queue-store";
+import { useEffect, useState } from "react";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
 import { WavePlayer } from "@/components/ui/wave-player";
+import type { SongQueueEntry } from "@/lib/song-queue-store";
 
-type Params = Promise<{ songId: string }>;
+export default function SongPage() {
+  const params = useParams();
+  const searchParams = useSearchParams();
+  const songId = params.songId as string;
+  
+    const router = useRouter();
+    const [entry, setEntry] = useState<SongQueueEntry | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [verifying, setVerifying] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-  const { songId } = await params;
-  const entry = await getSongQueueBySongId(songId);
-  if (!entry) return buildMetadata({ title: "Song Not Found", description: "This song does not exist.", path: `/song/${songId}` });
+  useEffect(() => {
+    const init = async () => {
+      try {
+        // Check if this is a verification link
+        const verifyEmail = searchParams.get("verifyEmail");
+        
+        if (verifyEmail) {
+          // User clicked email link - verify and create entry
+          setVerifying(true);
+          
+          const verifyRes = await fetch("/api/song-queue/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: verifyEmail,
+              songId,
+              lyrics: searchParams.get("lyrics") || "",
+              theme: searchParams.get("theme"),
+              genre: searchParams.get("genre"),
+              mood: searchParams.get("mood"),
+              duration: searchParams.get("duration") ? parseInt(searchParams.get("duration")!) : 30,
+            }),
+          });
+          
+          const verifyData = await verifyRes.json();
+          if (!verifyRes.ok) {
+            throw new Error(verifyData.error || "Verification failed");
+          }
+          
+          // Store email and username in localStorage after successful verification
+          if (typeof window !== "undefined") {
+            localStorage.setItem("songify_email", verifyData.email);
+            localStorage.setItem("songify_username", verifyData.username);
+          }
+          
+            setVerifying(false);
+            // Redirect to clean URL without params
+            router.replace(`/song/${songId}`);
+        }
+        
+        // Fetch the song entry via API
+        const songRes = await fetch(`/api/song-queue/${songId}`);
+        const songData = await songRes.json();
+        
+        if (!songRes.ok) {
+          throw new Error(songData.error || "Song not found");
+        }
+        
+        setEntry(songData);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Error loading song");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  return buildMetadata({
-    title: `${entry.songTitle} by @${entry.username} — Songify`,
-    description: `Listen to "${entry.songTitle}" — an AI-generated song by @${entry.username} on Songify. Created with the free AI song generator.`,
-    path: `/song/${songId}`,
-    keywords: ["ai song", entry.songTitle, entry.username, entry.genre ?? "music"].filter(Boolean) as string[],
-  });
-}
+    init();
+  }, [songId, searchParams]);
 
-export default async function SongPage({ params }: { params: Params }) {
-  const { songId } = await params;
-  const entry = await getSongQueueBySongId(songId);
-  if (!entry || entry.status !== "completed" || !entry.songUrl) notFound();
+  if (loading || verifying) {
+    return (
+      <main className="site-container w-full min-h-[100dvh] flex items-center justify-center px-4">
+        <div style={{ textAlign: "center" }}>
+          <p style={{ color: "var(--text-secondary)" }}>Loading your song...</p>
+        </div>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="site-container w-full min-h-[100dvh] flex items-center justify-center px-4">
+        <div style={{ textAlign: "center", maxWidth: 400 }}>
+          <p style={{ color: "#ff6b6b", marginBottom: "1rem" }}>{error}</p>
+          <Link href="/" style={{ color: "#6366f1", textDecoration: "none", fontWeight: 600 }}>
+            Create a new song
+          </Link>
+        </div>
+      </main>
+    );
+  }
+
+  if (!entry) {
+    return (
+      <main className="site-container w-full min-h-[100dvh] flex items-center justify-center px-4">
+        <div style={{ textAlign: "center" }}>
+          <p style={{ color: "var(--text-secondary)", marginBottom: "1rem" }}>Song not found</p>
+          <Link href="/" style={{ color: "#6366f1", textDecoration: "none", fontWeight: 600 }}>
+            Create your own song
+          </Link>
+        </div>
+      </main>
+    );
+  }
 
   const accentColor = entry.genre === "Lo-fi" ? "#a855f7" : entry.genre === "Hip-Hop" ? "#2dd4bf" : "#6366f1";
+  const isCompleted = entry.status === "completed" && Boolean(entry.songUrl);
+  const isRejected = entry.status === "rejected";
 
   return (
     <main className="site-container w-full min-h-[100dvh] lg:h-[100dvh] flex flex-col px-4 py-6 sm:px-6 lg:px-8 overflow-y-auto lg:overflow-hidden">
@@ -62,27 +151,79 @@ export default async function SongPage({ params }: { params: Params }) {
                 {entry.mood && <span style={{ fontSize: "0.75rem", fontWeight: 800, padding: "0.3rem 0.8rem", borderRadius: "999px", background: "rgba(255,255,255,0.05)", color: "var(--text-secondary)", border: "1px solid rgba(255,255,255,0.1)", textTransform: "uppercase" }}>{entry.mood}</span>}
               </div>
               
-              <h1 className="text-4xl md:text-5xl lg:text-6xl" style={{ fontFamily: '"Space Grotesk", sans-serif', fontWeight: 800, color: "var(--text-primary)", lineHeight: 1.1, marginBottom: "1rem" }}>
-                {entry.songTitle}
-              </h1>
+              {entry.songTitle && entry.songTitle !== "AI Generated Song" && (
+                <h1 className="text-4xl md:text-5xl lg:text-6xl" style={{ fontFamily: '"Space Grotesk", sans-serif', fontWeight: 800, color: "var(--text-primary)", lineHeight: 1.1, marginBottom: "1rem" }}>
+                  {entry.songTitle}
+                </h1>
+              )}
               
               <p style={{ fontSize: "1.1rem", color: "var(--text-secondary)", display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 Created by <Link href={`/explore?search=${entry.username}`} style={{ color: accentColor, fontWeight: 700, textDecoration: "none" }}>@{entry.username}</Link>
               </p>
             </div>
 
-            <WavePlayer
-              src={entry.songUrl}
-              title={entry.songTitle}
-              artist={`@${entry.username}`}
-              genre={entry.genre ?? undefined}
-              duration={`${entry.duration}s`}
-              accent={accentColor}
-            />
+            {isCompleted ? (
+              <WavePlayer
+                src={entry.songUrl!}
+                title={entry.songTitle}
+                artist={`@${entry.username}`}
+                genre={entry.genre ?? undefined}
+                duration={`${entry.duration}s`}
+                accent={accentColor}
+              />
+            ) : isRejected ? (
+              <div style={{
+                borderRadius: "1.25rem",
+                border: "1px solid rgba(239,68,68,0.3)",
+                background: "rgba(239,68,68,0.08)",
+                padding: "1.5rem",
+                minHeight: 220,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                gap: "0.75rem",
+              }}>
+                <p style={{ fontSize: "0.75rem", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: "#fca5a5" }}>
+                  Rejected
+                </p>
+                <h2 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.5rem", fontWeight: 700, color: "var(--text-primary)", lineHeight: 1.2 }}>
+                  This song request was not approved.
+                </h2>
+                <p style={{ color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: 480 }}>
+                  You can create a new request with updated lyrics or style settings. Please check your email for the admin update.
+                </p>
+              </div>
+            ) : (
+              <div style={{
+                borderRadius: "1.25rem",
+                border: "1px solid rgba(99,102,241,0.2)",
+                background: "rgba(99,102,241,0.06)",
+                padding: "1.5rem",
+                minHeight: 220,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                gap: "0.75rem",
+              }}>
+                <p style={{ fontSize: "0.75rem", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: "#a5b4fc" }}>
+                  Generating
+                </p>
+                <h2 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.5rem", fontWeight: 700, color: "var(--text-primary)", lineHeight: 1.2 }}>
+                  We are generating your song now.
+                </h2>
+                <p style={{ color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: 420, marginTop: "0.5rem", fontSize: "0.95rem" }}>
+                  We will send you an email notification when your song is ready.
+                </p>
+              </div>
+            )}
 
             <div style={{ marginTop: "2rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0 }} className="lg:mt-auto lg:pb-8">
               <p style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
-                Generated: {entry.completedAt ? new Date(entry.completedAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "Recently"}
+                {isCompleted
+                  ? `Generated: ${entry.completedAt ? new Date(entry.completedAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "Recently"}`
+                  : isRejected
+                    ? "Status: Rejected"
+                    : "Status: Processing"}
               </p>
               
               <div style={{ display: "flex", gap: "1rem" }}>
@@ -109,7 +250,7 @@ export default async function SongPage({ params }: { params: Params }) {
               </div>
             ) : (
                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "var(--text-muted)" }}>
-                 No lyrics available.
+                 {isCompleted ? "No lyrics available." : isRejected ? "This request was rejected by admin." : "Lyrics will appear when the song is ready."}
                </div>
             )}
           </div>

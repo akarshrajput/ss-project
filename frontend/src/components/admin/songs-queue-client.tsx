@@ -12,12 +12,14 @@ type QueueEntry = {
   duration: number;
   email: string;
   username: string;
-  status: "pending" | "completed";
+  status: "pending" | "completed" | "rejected";
   songUrl: string | null;
   songId: string;
   songTitle: string;
   createdAt: string;
   completedAt: string | null;
+  rejectedAt?: string | null;
+  rejectionComment?: string | null;
 };
 
 type Pagination = {
@@ -30,7 +32,7 @@ type Pagination = {
 export function SongsQueueClient() {
   const [entries, setEntries] = useState<QueueEntry[]>([]);
   const [pagination, setPagination] = useState<Pagination | null>(null);
-  const [statusFilter, setStatusFilter] = useState<"pending" | "completed">("pending");
+  const [statusFilter, setStatusFilter] = useState<"pending" | "completed" | "rejected">("pending");
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("createdAt");
   const [sortOrder, setSortOrder] = useState<-1 | 1>(1);
@@ -39,6 +41,10 @@ export function SongsQueueClient() {
   const [generating, setGenerating] = useState<string | null>(null);
   const [isQueueProcessing, setIsQueueProcessing] = useState(false);
   const queueProcessingRef = useRef(false);
+  const [rejectingId, setRejectingId] = useState<string | null>(null);
+  const [showRejectModal, setShowRejectModal] = useState(false);
+  const [rejectTarget, setRejectTarget] = useState<QueueEntry | null>(null);
+  const [rejectComment, setRejectComment] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
 
@@ -136,6 +142,43 @@ export function SongsQueueClient() {
     fetchEntries(); // Refresh at the end to fill the page
   }
 
+  function openRejectModal(entry: QueueEntry) {
+    setRejectTarget(entry);
+    setRejectComment("");
+    setShowRejectModal(true);
+  }
+
+  async function confirmReject() {
+    if (!rejectTarget?._id) return;
+
+    setRejectingId(rejectTarget._id);
+    setError(null);
+    setNotice(null);
+
+    try {
+      const res = await fetch("/api/song-queue/reject", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: rejectTarget._id,
+          comment: rejectComment,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to reject song request.");
+
+      setEntries((prev) => prev.filter((e) => e._id !== rejectTarget._id));
+      setShowRejectModal(false);
+      setRejectTarget(null);
+      setRejectComment("");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to reject song request.");
+    } finally {
+      setRejectingId(null);
+    }
+  }
+
   const [expandedInfo, setExpandedInfo] = useState<Set<string>>(new Set());
 
   const toggleInfo = (id: string) => {
@@ -201,6 +244,9 @@ export function SongsQueueClient() {
           <button type="button" onClick={() => { setStatusFilter("completed"); setPage(1); }} style={controlBtn(statusFilter === "completed")}>
             Completed
           </button>
+          <button type="button" onClick={() => { setStatusFilter("rejected"); setPage(1); }} style={controlBtn(statusFilter === "rejected")}>
+            Rejected
+          </button>
         </div>
 
         {/* Queue Wise Generation Button */}
@@ -208,7 +254,8 @@ export function SongsQueueClient() {
           <button
             type="button"
             onClick={handleGenerateQueueWise}
-            disabled={(generating !== null && !isQueueProcessing) || loading}
+            disabled={Boolean((generating !== null && !isQueueProcessing) || loading)}
+            suppressHydrationWarning
             style={{
               ...controlBtn(isQueueProcessing),
               background: isQueueProcessing ? "rgba(239, 68, 68, 0.15)" : "rgba(99,102,241,0.15)",
@@ -360,14 +407,15 @@ export function SongsQueueClient() {
         </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "100%" }}>
-          <AnimatePresence initial={false}>
+          <AnimatePresence initial={false} mode="popLayout">
             {entries.map((entry) => (
               <motion.div
                 key={entry._id}
-                layout
+                layout="position"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 50, filter: "blur(10px)", transition: { duration: 0.4 } }}
+                transition={{ layout: { type: "spring", stiffness: 480, damping: 40 }, duration: 0.22 }}
                 style={cardStyle}
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "2rem" }}>
@@ -376,9 +424,21 @@ export function SongsQueueClient() {
                     <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--text-primary)" }}>@{entry.username}</span>
                     <span style={{
                       fontSize: "0.7rem", fontWeight: 700, padding: "0.25rem 0.6rem", borderRadius: "999px",
-                      background: entry.status === "pending" ? "rgba(245,158,11,0.1)" : "rgba(34,197,94,0.1)",
-                      color: entry.status === "pending" ? "#fbbf24" : "#86efac",
-                      border: `1px solid ${entry.status === "pending" ? "rgba(245,158,11,0.2)" : "rgba(34,197,94,0.2)"}`,
+                      background: entry.status === "pending"
+                        ? "rgba(245,158,11,0.1)"
+                        : entry.status === "completed"
+                          ? "rgba(34,197,94,0.1)"
+                          : "rgba(239,68,68,0.1)",
+                      color: entry.status === "pending"
+                        ? "#fbbf24"
+                        : entry.status === "completed"
+                          ? "#86efac"
+                          : "#fca5a5",
+                      border: `1px solid ${entry.status === "pending"
+                        ? "rgba(245,158,11,0.2)"
+                        : entry.status === "completed"
+                          ? "rgba(34,197,94,0.2)"
+                          : "rgba(239,68,68,0.2)"}`,
                       textTransform: "uppercase", letterSpacing: "0.05em"
                     }}>
                       {entry.status}
@@ -449,6 +509,7 @@ export function SongsQueueClient() {
                         <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "0.75rem", lineHeight: 1.5 }}>
                           Submitted: {new Date(entry.createdAt).toLocaleString()}
                           {entry.completedAt && ` • Completed: ${new Date(entry.completedAt).toLocaleString()}`}
+                          {entry.rejectedAt && ` • Rejected: ${new Date(entry.rejectedAt).toLocaleString()}`}
                         </p>
 
                         {/* Lyrics */}
@@ -473,8 +534,8 @@ export function SongsQueueClient() {
                 </div>
 
                 {entry.status === "pending" && (
-                  <div style={{ flexShrink: 0 }}>
-                    <button type="button" onClick={() => handleGenerate(entry._id)} disabled={generating !== null}
+                  <div style={{ flexShrink: 0, display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                    <button type="button" onClick={() => handleGenerate(entry._id)} disabled={Boolean(generating !== null)} suppressHydrationWarning
                       style={{
                         padding: "0.75rem 1.5rem", borderRadius: "0.75rem", border: "none", fontSize: "0.9rem", fontWeight: 700,
                         background: (generating !== null && generating !== entry._id) ? "rgba(255,255,255,0.05)" : generating === entry._id ? "rgba(99,102,241,0.3)" : "linear-gradient(135deg, #6366f1, #818cf8)",
@@ -484,6 +545,27 @@ export function SongsQueueClient() {
                         transition: "all 200ms ease", whiteSpace: "nowrap",
                       }}>
                       {generating === entry._id ? "Generating..." : (generating !== null) ? "Queue Busy" : "Generate Now"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => openRejectModal(entry)}
+                      disabled={Boolean(generating !== null || rejectingId !== null)}
+                      suppressHydrationWarning
+                      style={{
+                        padding: "0.7rem 1.5rem",
+                        borderRadius: "0.75rem",
+                        border: "1px solid rgba(239,68,68,0.35)",
+                        fontSize: "0.85rem",
+                        fontWeight: 700,
+                        background: "rgba(239,68,68,0.12)",
+                        color: "#fca5a5",
+                        cursor: (generating !== null || rejectingId !== null) ? "not-allowed" : "pointer",
+                        transition: "all 200ms ease",
+                        whiteSpace: "nowrap",
+                        opacity: (generating !== null || rejectingId !== null) ? 0.7 : 1,
+                      }}
+                    >
+                      {rejectingId === entry._id ? "Rejecting..." : "Reject"}
                     </button>
                   </div>
                 )}
@@ -498,8 +580,9 @@ export function SongsQueueClient() {
       {pagination && pagination.totalPages > 1 && (
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", marginTop: "2rem", paddingBottom: "2rem" }}>
           <button
-            disabled={page === 1 || loading}
+            disabled={Boolean(page === 1 || loading)}
             onClick={() => setPage(p => Math.max(1, p - 1))}
+            suppressHydrationWarning
             style={{ ...controlBtn(false), opacity: page === 1 ? 0.5 : 1, cursor: page === 1 ? "not-allowed" : "pointer" }}
           >
             Previous
@@ -508,14 +591,115 @@ export function SongsQueueClient() {
             Page <strong>{page}</strong> of {pagination.totalPages}
           </span>
           <button
-            disabled={page === pagination.totalPages || loading}
+            disabled={Boolean(page === pagination.totalPages || loading)}
             onClick={() => setPage(p => Math.min(pagination.totalPages, p + 1))}
+            suppressHydrationWarning
             style={{ ...controlBtn(false), opacity: page === pagination.totalPages ? 0.5 : 1, cursor: page === pagination.totalPages ? "not-allowed" : "pointer" }}
           >
             Next
           </button>
         </div>
       )}
+
+      {showRejectModal && rejectTarget && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(2,6,23,0.72)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "1rem",
+            zIndex: 1200,
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              maxWidth: 560,
+              borderRadius: "1rem",
+              border: "1px solid rgba(239,68,68,0.25)",
+              background: "rgba(15,23,42,0.96)",
+              boxShadow: "0 24px 60px rgba(0,0,0,0.45)",
+              padding: "1.25rem",
+            }}
+          >
+            <h3 style={{ margin: 0, fontSize: "1.05rem", fontWeight: 700, color: "#f8fafc" }}>
+              Reject Song Request
+            </h3>
+            <p style={{ margin: "0.5rem 0 0", fontSize: "0.85rem", color: "#94a3b8", lineHeight: 1.6 }}>
+              This will mark the request as rejected and send an email update to @{rejectTarget.username} ({rejectTarget.email}).
+            </p>
+
+            <div style={{ marginTop: "1rem" }}>
+              <label htmlFor="rejectComment" style={{ display: "block", fontSize: "0.78rem", color: "#cbd5e1", marginBottom: "0.45rem", fontWeight: 600 }}>
+                Rejection Comment (Optional)
+              </label>
+              <textarea
+                id="rejectComment"
+                value={rejectComment}
+                onChange={(e) => setRejectComment(e.target.value)}
+                placeholder="Optional note for the user about why this request was rejected..."
+                rows={4}
+                style={{
+                  width: "100%",
+                  resize: "vertical",
+                  borderRadius: "0.7rem",
+                  border: "1px solid rgba(255,255,255,0.14)",
+                  background: "rgba(2,6,23,0.7)",
+                  color: "#e2e8f0",
+                  padding: "0.75rem",
+                  fontSize: "0.85rem",
+                  outline: "none",
+                }}
+              />
+            </div>
+
+            <div style={{ marginTop: "1rem", display: "flex", justifyContent: "flex-end", gap: "0.65rem" }}>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowRejectModal(false);
+                  setRejectTarget(null);
+                  setRejectComment("");
+                }}
+                disabled={Boolean(rejectingId)}
+                style={{
+                  padding: "0.62rem 0.95rem",
+                  borderRadius: "0.65rem",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  background: "transparent",
+                  color: "#cbd5e1",
+                  fontSize: "0.84rem",
+                  fontWeight: 600,
+                  cursor: rejectingId ? "not-allowed" : "pointer",
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmReject}
+                disabled={Boolean(rejectingId)}
+                style={{
+                  padding: "0.62rem 0.95rem",
+                  borderRadius: "0.65rem",
+                  border: "1px solid rgba(239,68,68,0.45)",
+                  background: "rgba(239,68,68,0.18)",
+                  color: "#fecaca",
+                  fontSize: "0.84rem",
+                  fontWeight: 700,
+                  cursor: rejectingId ? "not-allowed" : "pointer",
+                }}
+              >
+                {rejectingId ? "Rejecting..." : "Confirm Reject"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <style>{`
         @keyframes fade-in {
           from { opacity: 0; transform: translateY(-4px); }

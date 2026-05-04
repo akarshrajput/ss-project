@@ -1,7 +1,8 @@
 import { ObjectId } from "mongodb";
 import { getMongoDb } from "@/lib/mongodb";
+import { deriveUsernameFromEmail } from "@/lib/username-utils";
 
-export type SongQueueStatus = "pending" | "completed";
+export type SongQueueStatus = "pending" | "completed" | "rejected";
 
 export type SongQueueEntry = {
   _id?: ObjectId;
@@ -22,6 +23,8 @@ export type SongQueueEntry = {
   createdAt: Date;
   updatedAt: Date;
   completedAt: Date | null;
+  rejectedAt: Date | null;
+  rejectionComment: string | null;
 };
 
 const COLLECTION = "songsQueue";
@@ -57,10 +60,11 @@ export async function createSongQueueEntry(data: {
   duration: number;
   email: string;
   username: string;
+  songId?: string;
 }): Promise<SongQueueEntry> {
   const db = await getMongoDb();
   const now = new Date();
-  const songId = generateSongId();
+  const songId = data.songId || generateSongId();
   const promptTags = buildPromptFromSelections(data);
   const songTitle = [data.genre, data.mood, data.theme].filter(Boolean).join(" ") || "AI Generated Song";
 
@@ -80,6 +84,8 @@ export async function createSongQueueEntry(data: {
     createdAt: now,
     updatedAt: now,
     completedAt: null,
+    rejectedAt: null,
+    rejectionComment: null,
   };
 
   const result = await db.collection<SongQueueEntry>(COLLECTION).insertOne(entry);
@@ -207,6 +213,28 @@ export async function markSongCompleted(
         songUrl,
         updatedAt: now,
         completedAt: now,
+        rejectedAt: null,
+        rejectionComment: null,
+      },
+    },
+  );
+}
+
+// ─── Mark rejected ─────────────────────────────────────────────
+export async function markSongRejected(
+  id: string,
+  rejectionComment?: string,
+): Promise<void> {
+  const db = await getMongoDb();
+  const now = new Date();
+  await db.collection<SongQueueEntry>(COLLECTION).updateOne(
+    { _id: new ObjectId(id) },
+    {
+      $set: {
+        status: "rejected",
+        updatedAt: now,
+        rejectedAt: now,
+        rejectionComment: rejectionComment?.trim() || null,
       },
     },
   );
@@ -245,6 +273,8 @@ export async function saveDirectSong(data: {
     createdAt: now,
     updatedAt: now,
     completedAt: now,
+    rejectedAt: null,
+    rejectionComment: null,
   };
 
   await db.collection<SongQueueEntry>(COLLECTION).insertOne(entry);
