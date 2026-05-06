@@ -16,6 +16,7 @@ export default function SongPage() {
   const [loading, setLoading] = useState(true);
   const [verifying, setVerifying] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [notificationOptedIn, setNotificationOptedIn] = useState(false);
 
   useEffect(() => {
     const init = async () => {
@@ -203,17 +204,50 @@ export default function SongPage() {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                gap: "0.75rem",
+                gap: "1rem",
               }}>
                 <p style={{ fontSize: "0.75rem", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: "#a5b4fc" }}>
                   Generating
                 </p>
                 <h2 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.5rem", fontWeight: 700, color: "var(--text-primary)", lineHeight: 1.2 }}>
-                  We are generating your song now.
+                  Your song is being assembled here.
                 </h2>
-                <p style={{ color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: 420, marginTop: "0.5rem", fontSize: "0.95rem" }}>
-                  We will send you an email notification when your song is ready.
+                <p style={{ color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: 420, fontSize: "0.95rem" }}>
+                  You're in the right place. You can stay here and watch it appear, or we can send you another notification email when it's complete.
                 </p>
+                
+                <div style={{ marginTop: "0.5rem" }}>
+                  {notificationOptedIn ? (
+                    <p style={{ fontSize: "0.9rem", color: "#86efac", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <span>✓</span> We'll send you a notification email when ready
+                    </p>
+                  ) : (
+                    <button
+                      onClick={() => setNotificationOptedIn(true)}
+                      style={{
+                        background: "rgba(99,102,241,0.15)",
+                        border: "1px solid rgba(99,102,241,0.3)",
+                        color: "#a5b4fc",
+                        padding: "0.6rem 1.2rem",
+                        borderRadius: "0.5rem",
+                        fontSize: "0.9rem",
+                        fontWeight: 600,
+                        cursor: "pointer",
+                        transition: "all 200ms ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLButtonElement).style.background = "rgba(99,102,241,0.25)";
+                        (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(99,102,241,0.5)";
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLButtonElement).style.background = "rgba(99,102,241,0.15)";
+                        (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(99,102,241,0.3)";
+                      }}
+                    >
+                      Send me a notification
+                    </button>
+                  )}
+                </div>
               </div>
             )}
 
