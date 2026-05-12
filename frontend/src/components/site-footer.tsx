@@ -23,6 +23,7 @@ const footerLinks = [
     items: [
       { href: "/terms", label: "Terms of Service" },
       { href: "/privacy", label: "Privacy Policy" },
+      { href: "/impressum", label: "Impressum" },
     ],
   },
 ];
@@ -49,7 +50,7 @@ export function SiteFooter() {
             </span>
           </Link>
           <p style={{ fontSize: "0.83rem", color: "var(--text-muted)", lineHeight: 1.8, maxWidth: 240 }}>
-            Songify is the leading <strong style={{ color: "var(--text-secondary)" }}>ai song generator</strong> and <strong style={{ color: "var(--text-secondary)" }}>ai music generator</strong> for creators of every level. Use our <strong style={{ color: "var(--text-secondary)" }}>song maker</strong> to turn any idea into a full track — free, fast, and effortlessly.
+            Songify is the leading <strong style={{ color: "var(--text-secondary)" }}>text to song generator</strong> and <strong style={{ color: "var(--text-secondary)" }}>text to song converter online free</strong> for creators of every level. Use our <strong style={{ color: "var(--text-secondary)" }}>text to song AI</strong> to turn any idea into a full track — <strong style={{ color: "var(--text-secondary)" }}>text to song free</strong>, fast, and effortlessly.
           </p>
         </div>
 
@@ -79,7 +80,7 @@ export function SiteFooter() {
 
       <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }} className="site-container px-4 py-5 sm:px-6 lg:px-8">
         <p style={{ fontSize: "0.78rem", color: "var(--text-muted)" }}>
-          © {new Date().getFullYear()} Songify — Free AI Song Generator &amp; AI Music Maker. All rights reserved.
+          © {new Date().getFullYear()} Songify — Free Text to Song Generator, Text to Song Converter &amp; AI Song Maker. All rights reserved.
         </p>
       </div>
     </footer>

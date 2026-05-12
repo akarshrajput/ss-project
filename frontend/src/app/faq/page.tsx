@@ -4,15 +4,27 @@ import { buildMetadata } from "@/lib/seo";
 import { buildBreadcrumbSchema, buildFaqSchema } from "@/lib/structured-data";
 
 export const metadata: Metadata = buildMetadata({
-  title: "FAQ — Text to Song & AI Music Generator Questions Answered",
-  description: "Got questions about Songify? Learn how our free AI song generator turns text into songs, how the music generator works, and what makes it the top AI music maker online.",
+  title: "FAQ — Text to Song Generator, Text to Song AI & Converter Questions Answered",
+  description: "Got questions about Songify? Learn how our free text to song generator turns text into songs, how the text to song converter online free works, and how to convert text to song, text to rap song, or text to audio song.",
   path: "/faq",
+  keywords: [
+    "text to song generator",
+    "text to song",
+    "text to song ai",
+    "text to song converter",
+    "text to song converter online free",
+    "text to song free",
+    "convert text to song",
+    "text to rap song",
+    "text to audio song",
+    "text to song maker",
+  ],
 });
 
 const faqs = [
   {
     question: "What is a text to song AI and how does Songify work?",
-    answer: "A text to song AI converts any written input — a poem, a story, or even a single sentence — into a fully produced audio track. Songify's AI song generator reads your prompt, selects a musical style, and renders a complete song in seconds. No music theory knowledge required.",
+    answer: "A text to song AI converts any written input — a poem, a story, or even a single sentence — into a fully produced audio track. Songify is the best text to song generator free online. Our text to song converter reads your prompt, selects a musical style, and renders a complete song. Use it as a text to song app right in your browser — no downloads needed.",
   },
   {
     question: "Is Songify really a free AI song generator?",
@@ -24,7 +36,7 @@ const faqs = [
   },
   {
     question: "Can I use Songify for specific musical styles?",
-    answer: "Yes. In the Studio, you can select from various genres and moods. Songify\u2019s AI music generator will adapt your input into a structured song format before producing the final audio.",
+    answer: "Yes. In the Studio, you can select from various genres and moods. Songify’s AI music generator will adapt your input into a structured song format before producing the final audio.",
   },
   {
     question: "What music genres does the AI song maker support?",
@@ -58,6 +70,18 @@ const faqs = [
     question: "Is Songify the top AI platform for music creation?",
     answer: "Songify is built specifically for the text-to-song use case: you type, AI composes the music. Unlike generic AI tools, Songify understands song structure and produces output that sounds like a real track — making it one of the top AI platforms for music generation online.",
   },
+  {
+    question: "Can I collaborate with others on Songify?",
+    answer: "While we don't have real-time collaboration features yet, you can share the links to your saved songs with others. They can listen to your tracks and read the prompts you used. We are planning to introduce shared playlists and collaborative editing in future updates.",
+  },
+  {
+    question: "How do I report a bug or suggest a feature?",
+    answer: "We welcome your feedback! If you encounter any issues or have ideas for new features, please reach out to us via the Contact page or send an email to support@songify.fun. Our development team reviews all suggestions to improve the platform.",
+  },
+  {
+    question: "Is there a limit to how many songs I can create?",
+    answer: "Guest users are limited to one generation per session. Free registered users get a set number of generations per month. For unlimited generations and priority processing, you will need to upgrade to a Pro or Team plan when they become available.",
+  },
 ];
 
 export default function FaqPage() {
@@ -79,6 +103,9 @@ export default function FaqPage() {
         </h1>
         <p style={{ marginTop: "1rem", fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
           This page covers the most common product questions so visitors can understand the workflow before they enter the Studio. It also gives crawlers a clear, text-rich overview of the platform.
+        </p>
+        <p style={{ marginTop: "1rem", fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+          We are committed to making music creation accessible to everyone. Our text to song generator leverages cutting-edge artificial intelligence to break down the barriers of traditional music production. Whether you want to convert text to song, use our text to song converter online free, or explore text to rap song creation, the questions below cover everything you need to know.
         </p>
       </div>
 

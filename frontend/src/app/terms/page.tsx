@@ -2,9 +2,15 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Terms of Service",
-  description: "Read Songify terms for account usage, acceptable use, and platform access conditions.",
+  title: "Terms of Service — Text to Song Generator & Text to Song Converter",
+  description: "Read Songify terms for text to song generator usage, text to song converter online free acceptable use, and text to song AI platform access conditions.",
   path: "/terms",
+  keywords: [
+    "text to song generator",
+    "text to song",
+    "text to song converter",
+    "text to song ai",
+  ],
 });
 
 export default function TermsPage() {
@@ -15,6 +21,7 @@ export default function TermsPage() {
         <h1 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "2.5rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "2rem" }}>
           Terms of Service
         </h1>
+        
         <div className="glass-card" style={{ padding: "2rem" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
             {[
@@ -44,6 +51,34 @@ export default function TermsPage() {
           </h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
             Public product pages can evolve as the service matures. When a route is meant to be indexed, it should resolve directly and contain enough explanatory copy to be useful without relying on another page.
+          </p>
+        </div>
+
+        {/* SEO Content: Additional Terms Sections */}
+        <div className="glass-card" style={{ padding: "1.75rem", marginTop: "1rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            User accounts
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+            When you create an account with us, you must provide information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the terms, which may result in immediate termination of your account on our service. You are responsible for safeguarding the password that you use to access the service and for any activities or actions under your password.
+          </p>
+        </div>
+
+        <div className="glass-card" style={{ padding: "1.75rem", marginTop: "1rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Intellectual property
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+            The service and its original content (excluding content provided by users), features, and functionality are and will remain the exclusive property of Songify and its licensors. Our trademarks and trade dress may not be used in connection with any product or service without the prior written consent of Songify.
+          </p>
+        </div>
+
+        <div className="glass-card" style={{ padding: "1.75rem", marginTop: "1rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Limitation of liability
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+            In no event shall Songify, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the service.
           </p>
         </div>
       </div>

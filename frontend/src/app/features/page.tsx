@@ -4,9 +4,19 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Platform Features",
-  description: "Discover Songify platform features for text to audio, speech tone control, AI music generation, and workflow-friendly asset management.",
+  title: "Platform Features — Text to Song Generator & Text to Song Converter Tools",
+  description: "Discover Songify platform features for text to song generation, text to song converter online free, text to rap song creation, text to audio song, and text to speech songs.",
   path: "/features",
+  keywords: [
+    "text to song generator",
+    "text to song converter",
+    "text to song ai",
+    "text to song maker",
+    "text to rap song",
+    "text to audio song",
+    "text to speech songs",
+    "convert text to song",
+  ],
 });
 
 const features = [
@@ -72,7 +82,10 @@ export default function FeaturesPage() {
           Production-focused features for AI audio
         </h1>
         <p style={{ marginTop: "1rem", fontSize: "1rem", color: "var(--text-secondary)", lineHeight: 1.7 }}>
-          Songify combines speech and music generation in one environment, with controls designed for consistent output and faster iteration.
+          Songify combines speech and music generation in one environment, with controls designed for consistent output and faster iteration. As a <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> and <strong style={{ color: "var(--text-primary)" }}>text to song converter</strong>, our tools let you convert text to song in seconds.
+        </p>
+        <p style={{ marginTop: "1rem", fontSize: "1rem", color: "var(--text-secondary)", lineHeight: 1.7 }}>
+          Whether you are a developer looking to integrate audio into an application, a creator needing background scores, or a business automating voiceovers, our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong> platform provides the tools to do it efficiently. Use it as a <strong style={{ color: "var(--text-primary)" }}>text to song maker</strong>, <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> creator, or <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> generator.
         </p>
       </div>
 
@@ -112,6 +125,21 @@ export default function FeaturesPage() {
           </h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
             The feature set is intentionally practical: it supports repeatable generation, clear output controls, and a path from first draft to saved library asset. That makes the platform easier to evaluate for both solo creators and internal teams.
+          </p>
+        </div>
+      </section>
+
+      {/* SEO Content: Impact Section */}
+      <section style={{ maxWidth: 860, marginTop: "2rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            How to Use These Features for Maximum Impact
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8, marginBottom: "1rem" }}>
+            To get the most out of Songify, we recommend experimenting with different prompt tags and mood settings. Our platform is designed to respond dynamically to your inputs. For example, combining a specific genre like "Lo-fi" with a mood like "Relaxed" will yield a very different result than using "Lo-fi" with "Energetic".
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+            Don't hesitate to use the Vibe Lock feature once you find a sound you like. This allows you to maintain consistency across multiple tracks, which is ideal for creating a cohesive album or background music for a video series. Our metadata indexing makes it easy to find these saved settings in your library later.
           </p>
         </div>
       </section>

@@ -6,9 +6,19 @@ import { buildBreadcrumbSchema, buildServiceListSchema } from "@/lib/structured-
 import { servicePages } from "@/lib/services";
 
 export const metadata: Metadata = buildMetadata({
-  title: "AI Audio Services",
-  description: "Explore Songify services including text to speech, AI music generation, voice generation, poem to audio, and speech tone tools.",
+  title: "AI Audio Services — Text to Song Converter, Text to Speech Songs & More",
+  description: "Explore Songify services: text to song generator, text to song converter online free, text to rap song, text to audio song, text to speech songs, and voice generation tools.",
   path: "/services",
+  keywords: [
+    "text to song generator",
+    "text to song converter",
+    "text to song converter online free",
+    "text to speech songs",
+    "text to audio song",
+    "text to rap song",
+    "convert text to song",
+    "text to song ai",
+  ],
 });
 
 const icons: Record<string, string> = {
@@ -45,10 +55,10 @@ export default function ServicesPage() {
           AI audio services for modern teams
         </h1>
         <p style={{ marginTop: "1rem", fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.7 }}>
-          Purpose-built workflows for speech, tone control, music, and narration — each optimized for a specific use case.
+          Purpose-built workflows for speech, tone control, music, and narration — each optimized for a specific use case. Our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> and <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> tools power every service.
         </p>
         <p style={{ marginTop: "0.85rem", fontSize: "0.92rem", color: "var(--text-secondary)", lineHeight: 1.75 }}>
-          Each service page explains the practical output, common use cases, and how teams can integrate Songify into real production workflows. That gives search engines more context and gives users a clearer path from discovery to Studio.
+          Each service page explains the practical output, common use cases, and how teams can integrate Songify into real production workflows. From <strong style={{ color: "var(--text-primary)" }}>text to speech songs</strong> to <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> creation, from <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> generation to full AI music production — every workflow is covered.
         </p>
       </div>
 
@@ -87,6 +97,21 @@ export default function ServicesPage() {
           </h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
             The service routes are designed to be stable landing pages with their own metadata, structured data, and internal links. That helps crawlers understand the product surface without depending on a redirect to another page.
+          </p>
+        </div>
+      </section>
+
+      {/* SEO Content: Comprehensive Solutions Section */}
+      <section style={{ maxWidth: 740, marginTop: "2rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Comprehensive AI Audio Solutions
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8, marginBottom: "1rem" }}>
+            At Songify, we believe that high-quality audio should be accessible to everyone. Our suite of services is designed to cover all aspects of audio production, from the spoken word to full musical compositions. By breaking down the barriers of traditional production, we empower creators to focus on what matters most: their ideas.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+            Whether you are looking to create a quick voiceover for a demo or a complete soundtrack for a game, our tools are built to scale with your needs. We use advanced machine learning models that are continuously updated to provide the best possible quality and speed.
           </p>
         </div>
       </section>

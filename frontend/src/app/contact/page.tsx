@@ -4,9 +4,15 @@ import { buildMetadata } from "@/lib/seo";
 import { buildBreadcrumbSchema } from "@/lib/structured-data";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Contact",
-  description: "Contact Songify for product support, partnership discussions, and business onboarding.",
+  title: "Contact — Text to Song Generator Support & Partnerships",
+  description: "Contact Songify for text to song generator support, text to song AI partnership discussions, and text to song converter online free onboarding.",
   path: "/contact",
+  keywords: [
+    "text to song generator",
+    "text to song",
+    "text to song ai",
+    "convert text to song",
+  ],
 });
 
 const contacts = [
@@ -63,6 +69,49 @@ export default function ContactPage() {
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
             If you are contacting us about a rollout, mention the number of users, the type of audio you want to create, and whether you need a public plan page or custom deployment help. That makes the conversation more useful for both sides.
           </p>
+        </div>
+      </section>
+
+      {/* SEO Content: FAQ Section */}
+      <section style={{ maxWidth: 860, marginTop: "2.25rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "1.25rem" }}>
+            Frequently Asked Questions
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            <div>
+              <h3 style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.25rem" }}>
+                How long does it take to get a response?
+              </h3>
+              <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
+                Our team typically responds within 24 hours on business days (Monday through Friday). If you contact us over the weekend, we will get back to you on Monday.
+              </p>
+            </div>
+            <div>
+              <h3 style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.25rem" }}>
+                Do you offer phone support?
+              </h3>
+              <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
+                Currently, we only offer support via email and our ticketing system. This allows us to keep a record of your request and provide more accurate and detailed assistance.
+              </p>
+            </div>
+            <div>
+              <h3 style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.25rem" }}>
+                Can I request a custom feature?
+              </h3>
+              <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
+                Yes, we value user feedback! If you have an idea for a feature that would improve your workflow, please send it to support@songify.fun. While we cannot guarantee all requests will be implemented, we review every suggestion.
+              </p>
+            </div>
+            <div>
+              <h3 style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.25rem" }}>
+                Where can I find documentation?
+              </h3>
+              <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
+                We are actively working on a comprehensive documentation site. In the meantime, you can find helpful tips and guides on our blog or by asking our support team directly.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
     </main>

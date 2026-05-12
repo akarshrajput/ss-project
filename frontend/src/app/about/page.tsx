@@ -4,9 +4,18 @@ import { buildMetadata } from "@/lib/seo";
 import { buildBreadcrumbSchema } from "@/lib/structured-data";
 
 export const metadata: Metadata = buildMetadata({
-  title: "About",
-  description: "Learn about Songify, a professional AI audio platform focused on text-to-audio, controllable speech, and artist-free music generation.",
+  title: "About Songify — Free Text to Song Generator & AI Song Maker",
+  description: "Learn about Songify, the leading text to song generator and text to song converter online free. Our text to song AI platform lets you convert text to song, text to rap song, and text to audio song instantly.",
   path: "/about",
+  keywords: [
+    "text to song generator",
+    "text to song",
+    "text to song ai",
+    "convert text to song",
+    "text to song maker",
+    "text to song converter",
+    "text to audio song",
+  ],
 });
 
 const values = [
@@ -31,16 +40,16 @@ export default function AboutPage() {
           Built for fast, controllable audio generation
         </h1>
         <p style={{ marginTop: "1.25rem", fontSize: "1rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
-          Songify is built for teams and creators who need fast, controllable audio generation without sacrificing
-          quality. Our platform combines text to speech, tone-driven narration, and AI music generation into one
-          production-ready workflow.
+          Songify is the ultimate <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> built for teams and creators who need fast, controllable audio generation without sacrificing
+          quality. Our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong> platform combines text to speech, tone-driven narration, and AI music generation into one
+          production-ready workflow. <strong style={{ color: "var(--text-primary)" }}>Convert text to song</strong> in seconds.
         </p>
         <p style={{ marginTop: "1rem", fontSize: "1rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
           We focus on practical output quality, reproducibility, and operational reliability so generated audio can
           move from concept to publication with fewer manual steps.
         </p>
         <p style={{ marginTop: "1rem", fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
-          The product is intentionally broad enough for creators and teams, but narrow enough that the core use case stays clear: turn text into useful audio without forcing users through a heavy learning curve.
+          The product is intentionally broad enough for creators and teams, but narrow enough that the core use case stays clear: use our <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> to turn text into useful audio without forcing users through a heavy learning curve. Whether you need a <strong style={{ color: "var(--text-primary)" }}>text to song maker</strong>, a <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> creator, or a <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> tool, Songify delivers.
         </p>
       </div>
 
@@ -65,7 +74,23 @@ export default function AboutPage() {
           </p>
         </div>
       </section>
-      <section style={{ maxWidth: 860, marginTop: "3rem", display: "grid", gap: "1.5rem", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}>
+
+      {/* SEO Content: Technology Section */}
+      <section style={{ maxWidth: 860, marginTop: "2.25rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            The Technology Behind Songify
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8, marginBottom: "1rem" }}>
+            Songify utilizes state-of-the-art neural networks and machine learning models to analyze text and synthesize high-quality audio. Our systems are trained on diverse datasets to understand rhythm, melody, and linguistic nuances, allowing them to create realistic vocals and rich instrumental tracks.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
+            We are constantly iterating on our models to improve generation speed and quality. Our goal is to provide a seamless bridge between written ideas and polished audio outputs, making professional-grade sound creation accessible to everyone.
+          </p>
+        </div>
+      </section>
+
+      <section style={{ maxWidth: 860, marginTop: "2rem", display: "grid", gap: "1.5rem", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}>
         <div className="glass-card" style={{ padding: "1.75rem" }}>
           <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>
             Company Information

@@ -16,7 +16,20 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!service) {
     return buildMetadata({ title: "Service Not Found", description: "The requested Songify service page was not found.", path: `/services/${resolvedParams.slug}`, noIndex: true });
   }
-  return buildMetadata({ title: service.title, description: service.description, path: `/services/${service.slug}` });
+  return buildMetadata({
+    title: service.title,
+    description: service.description,
+    path: `/services/${service.slug}`,
+    keywords: [
+      "text to song generator",
+      "text to song",
+      "text to song ai",
+      "text to song converter",
+      "convert text to song",
+      "text to song maker",
+      "text to audio song",
+    ],
+  });
 }
 
 export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -54,7 +67,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
           {service.intro}
         </p>
         <p style={{ marginTop: "0.85rem", fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.75 }}>
-          This page is intentionally descriptive so it can stand on its own in search results, avoid redirect chains, and give visitors enough context before they open the Studio.
+          This is part of the Songify <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> platform. Use our <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> tools to <strong style={{ color: "var(--text-primary)" }}>convert text to song</strong>, <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong>, or <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> directly from the Studio.
         </p>
       </div>
 

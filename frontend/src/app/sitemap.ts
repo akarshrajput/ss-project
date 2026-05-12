@@ -1,11 +1,14 @@
 import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/lib/seo";
-import { listCompletedSongs } from "@/lib/song-queue-store";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  // Static routes
+  // Static routes — only pages that are reachable via internal HTML links.
+  // Dynamic /song/* pages are excluded because the explore page renders
+  // song links client-side, so crawlers cannot follow them reliably.
+  // Including them in the sitemap without crawlable links causes
+  // Semrush "orphaned page in sitemap" warnings.
   const routes: MetadataRoute.Sitemap = [
     {
       url: absoluteUrl("/"),
@@ -92,6 +95,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.72,
     },
     {
+      url: absoluteUrl("/impressum"),
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.4,
+    },
+    {
       url: absoluteUrl("/terms"),
       lastModified: now,
       changeFrequency: "yearly",
@@ -105,17 +114,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Dynamic routes (Individual Songs)
-  try {
-    const latestSongs = await listCompletedSongs({ limit: 100 });
-    const songRoutes: MetadataRoute.Sitemap = latestSongs.map((song) => ({
-      url: absoluteUrl(`/song/${song.songId}`),
-      lastModified: song.completedAt ? new Date(song.completedAt) : now,
-      changeFrequency: "monthly",
-      priority: 0.6,
-    }));
-    return [...routes, ...songRoutes];
-  } catch {
-    return routes;
-  }
+  return routes;
 }
