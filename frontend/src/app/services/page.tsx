@@ -6,7 +6,7 @@ import { buildBreadcrumbSchema, buildServiceListSchema } from "@/lib/structured-
 import { servicePages } from "@/lib/services";
 
 export const metadata: Metadata = buildMetadata({
-  title: "AI Audio Services — Text to Song Converter, Text to Speech Songs & More",
+  title: "Songify: AI Audio Services & Text to Song",
   description: "Explore Songify services: text to song generator, text to song converter online free, text to rap song, text to audio song, text to speech songs, and voice generation tools.",
   path: "/services",
   keywords: [
@@ -83,7 +83,7 @@ export default function ServicesPage() {
                 style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", fontSize: "0.8rem", fontWeight: 600, color: accent, textDecoration: "none", transition: "opacity 150ms ease" }}
               >
                 View service
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m9 18 6-6-6-6"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m9 18 6-6-6-6" /></svg>
               </Link>
             </article>
           );
@@ -112,6 +112,35 @@ export default function ServicesPage() {
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
             Whether you are looking to create a quick voiceover for a demo or a complete soundtrack for a game, our tools are built to scale with your needs. We use advanced machine learning models that are continuously updated to provide the best possible quality and speed.
+          </p>
+        </div>
+      </section>
+      <section style={{ maxWidth: 740, marginTop: "2rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>How to Choose the Right Service for Your Project</h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            If you are just getting started with AI audio, the best approach is to think about your end goal first. Do you need a full song with vocals and instrumentation? Our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> and AI Music Generation service is the right starting point. Do you need a professional voiceover or narration? Our Text to Speech service offers tone controls that match formal, casual, and dramatic delivery styles.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            For creative writers and poets, the Poem to Audio service is purpose-built to preserve the rhythm and emotional weight of written verse. For social media creators, the Voice Generation service lets you create consistent, recognizable audio personas that your audience will associate with your brand. And for anyone who needs fine-grained control over how speech is delivered, the Speech Tone Tools service provides the nuance that standard TTS engines miss.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            All of these services are accessible through the same platform and share the same core generation infrastructure. That means switching between workflows is fast — you do not need to re-learn a new interface or re-upload assets. Everything you create is saved to your library and can be referenced across projects. Our unified approach to <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> generation, speech production, and music creation is what makes Songify a comprehensive solution rather than a collection of disconnected tools.
+          </p>
+        </div>
+      </section>
+
+      <section style={{ maxWidth: 740, marginTop: "1.25rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Use Cases Across Industries</h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            Our <strong style={{ color: "var(--text-primary)" }}>text to speech songs</strong> and music generation tools are used across a wide range of industries. E-learning companies use our TTS service to produce course narration in multiple languages. Game developers use our AI Music Generation service to create adaptive soundtracks that respond to gameplay events. Content creators on YouTube, TikTok, and Instagram use our <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> to produce unique background music without licensing costs.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            Advertising agencies use our voice generation tools to prototype commercials before committing to studio recording sessions. Authors and publishers use Poem to Audio to create audio editions of poetry collections. Therapists and meditation coaches use our tone-controlled TTS to produce relaxation guides with exactly the right pacing and warmth. The versatility of our platform means that no matter your industry, there is a workflow that fits your needs.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            If your use case is not listed here, reach out. We regularly add new service templates based on how our users are actually using the platform, and we are always interested in supporting novel applications of <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong>, speech synthesis, and AI music generation technology.
           </p>
         </div>
       </section>

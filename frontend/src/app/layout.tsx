@@ -16,7 +16,6 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   keywords: siteConfig.keywords,
-  alternates: { canonical: absoluteUrl("/") },
   openGraph: {
     type: "website",
     title: "Songify | AI Text to Audio & Music Generation Platform",

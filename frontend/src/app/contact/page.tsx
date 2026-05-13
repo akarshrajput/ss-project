@@ -16,9 +16,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 const contacts = [
-  { label: "General Support", value: "support@songify.fun", icon: "💬", desc: "For product questions, bug reports, and help with your account." },
-  { label: "Sales & Partnerships", value: "sales@songify.fun", icon: "🤝", desc: "For enterprise plans, API access, and custom integration discussions." },
-  { label: "Response Window", value: "Mon – Fri, within 24h", icon: "⏱️", desc: "Our team is available on weekdays and responds within one business day." },
+  { label: "Company Information", value: "NovaVision Consulting FZCO", icon: "🏢", desc: "Dubai Digital Park, Dubai Silicon Oasis, Dubai, UAE. Contact: contact@Novavision-strategy.com" },
 ];
 
 export default function ContactPage() {
@@ -112,6 +110,35 @@ export default function ContactPage() {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+      <section style={{ maxWidth: 860, marginTop: "2rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Working With Us on Enterprise Deployments</h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            If your team is evaluating Songify as part of a larger content production workflow, we are happy to walk through the technical setup, data handling, and output quality expectations before you commit to a plan. Enterprise discussions typically cover generation throughput, custom prompt templates, output file formats, and integration with existing CMS or DAW workflows.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            Our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> powers everything from solo creator projects to production pipelines at media companies. When you reach out for a partnership conversation, letting us know the volume of audio you plan to generate, the target output format, and whether you need a dedicated support contact helps us give you a faster and more relevant answer.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            For individual users and small teams, the free tier is the fastest way to get started. You can <strong style={{ color: "var(--text-primary)" }}>convert text to song</strong> immediately, test different genres and moods, and share outputs without creating an account. If you have questions about how the <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong> works or how to get better results, reach out to our support team — we respond quickly and enjoy helping creators learn the platform.
+          </p>
+        </div>
+      </section>
+
+      <section style={{ maxWidth: 860, marginTop: "1.25rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Support Resources and Self-Help</h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            Before reaching out, you may find answers on our FAQ page, which covers common questions about how the <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> works, what file formats are supported, how to improve generation quality, and how to manage your account and library. The FAQ is updated regularly based on the questions we receive.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            For technical issues — such as audio not generating, downloads failing, or unexpected generation quality — include your browser version, operating system, and the prompt you used when you contact support. This helps our team reproduce the issue and resolve it faster. Screenshots or screen recordings are always welcome.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            We are a small team and we read every message. We may not always be able to respond instantly, but we will always respond thoughtfully. Whether you are a solo creator, a podcast producer, a game developer, or a business exploring AI audio for the first time, we want to make sure Songify works for your specific use case.
+          </p>
         </div>
       </section>
     </main>

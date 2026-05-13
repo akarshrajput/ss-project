@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Terms of Service — Text to Song Generator & Text to Song Converter",
+  title: "Terms of Service — AI Song Generator | Songify",
   description: "Read Songify terms for text to song generator usage, text to song converter online free acceptable use, and text to song AI platform access conditions.",
   path: "/terms",
   keywords: [
@@ -21,7 +21,7 @@ export default function TermsPage() {
         <h1 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "2.5rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "2rem" }}>
           Terms of Service
         </h1>
-        
+
         <div className="glass-card" style={{ padding: "2rem" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
             {[
@@ -79,6 +79,41 @@ export default function TermsPage() {
           </h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
             In no event shall Songify, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the service.
+          </p>
+        </div>
+        <div className="glass-card" style={{ padding: "1.75rem", marginTop: "1rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Generated Content and Ownership
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            When you use our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> to create audio content, you retain ownership of the creative inputs you provide — your lyrics, prompts, and textual ideas. The AI-generated audio output is provided to you for personal and commercial use, subject to the terms outlined here. You are responsible for ensuring that your use of generated content complies with applicable copyright laws in your jurisdiction.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            Songify does not claim ownership over the songs you create using our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong> platform. However, you acknowledge that AI-generated music may have similarities to existing works, and you should perform appropriate due diligence before using generated content commercially or distributing it publicly. We make no warranties regarding the originality or copyright status of generated outputs.
+          </p>
+        </div>
+
+        <div className="glass-card" style={{ padding: "1.75rem", marginTop: "1rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Prohibited Uses
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            You may not use the Songify <strong style={{ color: "var(--text-primary)" }}>text to song converter</strong> for any unlawful purpose or in violation of any international, federal, provincial, or state regulations, rules, laws, or local ordinances. You may not use the service to generate content that is defamatory, obscene, abusive, harassing, or otherwise objectionable.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            Automated scraping, bot-based generation at scale without prior written permission, or attempts to reverse-engineer the AI model are prohibited. Violation of these terms may result in immediate suspension of your account and access to the platform, with or without prior notice.
+          </p>
+        </div>
+
+        <div className="glass-card" style={{ padding: "1.75rem", marginTop: "1rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Changes to Terms and Governing Law
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            We reserve the right to modify these terms at any time. We will notify users of significant changes by posting the new terms on this page with an updated effective date. Your continued use of Songify after any changes constitutes your acceptance of the new terms. We encourage you to review these terms periodically for any updates or changes.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            These terms shall be governed and construed in accordance with the laws of the United Arab Emirates, without regard to its conflict of law provisions. Our failure to enforce any right or provision of these terms will not be considered a waiver of those rights. If any provision of these terms is held to be invalid or unenforceable by a court, the remaining provisions of these terms will remain in effect.
           </p>
         </div>
       </div>

@@ -130,10 +130,37 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
 
       {/* CTAs */}
       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
-        <Link href="/studio" prefetch={false} className="btn-primary" style={{ textDecoration: "none" }}>Open Studio</Link>
+        <Link href="/" prefetch={false} className="btn-primary" style={{ textDecoration: "none" }}>Open Studio</Link>
         <Link href="/services" prefetch={false} className="btn-secondary" style={{ textDecoration: "none" }}>All Services</Link>
         <Link href="/pricing" prefetch={false} className="btn-secondary" style={{ textDecoration: "none" }}>Pricing</Link>
       </div>
+
+      <section style={{ maxWidth: 740, marginTop: "2.5rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Getting the Best Results from This Service</h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            The quality of AI-generated audio is directly related to the quality of your input. When using this service, be as specific as possible about the tone, mood, pace, and intended audience for your content. Instead of a vague prompt like &quot;make a song about summer,&quot; try something like &quot;upbeat pop song about a summer road trip with friends, energetic and nostalgic, 90s style guitars.&quot; The more context you provide, the better the output will match your vision.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            Iteration is a core part of the workflow. Do not expect the first generation to be perfect — use it as a starting point. Listen to the output, note what works and what doesn&apos;t, then adjust your prompt and regenerate. The Songify platform is designed for fast iteration cycles, so you can go from rough idea to polished output in just a few rounds of refinement.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            Once you find a generation you are happy with, save it to your library if you are logged in. This gives you a permanent reference point that you can compare against future generations, share with collaborators, or use as a benchmark for similar projects. Your library is your creative archive — and it grows more valuable the more you use it.
+          </p>
+        </div>
+      </section>
+
+      <section style={{ maxWidth: 740, marginTop: "1.25rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Integration with Your Existing Workflow</h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            Songify is designed to fit into your existing content production process, not replace it. The audio files you generate can be downloaded as MP3s and imported directly into video editors, DAWs, podcast software, or any other tool in your stack. We support standard audio formats that are compatible with all major platforms including Adobe Premiere, Final Cut Pro, GarageBand, Audacity, and DaVinci Resolve.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            For teams with higher-volume needs, we offer API access and custom integration support through our enterprise plan. This allows you to trigger generation programmatically, integrate with content management systems, and build automated audio production pipelines. Contact our sales team to discuss how Songify can be embedded into your specific workflow at scale.
+          </p>
+        </div>
+      </section>
     </main>
   );
 }

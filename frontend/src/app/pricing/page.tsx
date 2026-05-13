@@ -138,13 +138,43 @@ export default function PricingPage() {
       </section>
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "2rem" }}>
-        <Link href="/studio" prefetch={false} className="btn-primary" style={{ textDecoration: "none" }}>
+        <Link href="/" prefetch={false} className="btn-primary" style={{ textDecoration: "none" }}>
           Open Studio
         </Link>
         <Link href="/services" prefetch={false} className="btn-secondary" style={{ textDecoration: "none" }}>
           Explore Services
         </Link>
       </div>
+
+      <section style={{ maxWidth: 760, marginTop: "2.5rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Why Start with the Free Tier?</h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            The free tier of our <strong style={{ color: "var(--text-primary)" }}>text to song generator free</strong> platform is not a limited demo — it is a full-featured entry point designed to let you experience the real quality of Songify before making any financial commitment. Guest access means you can generate your first track in under a minute with no account, no email, and no payment information required.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            We believe the best way to evaluate an AI audio tool is to actually use it. Reading about features or watching demo videos gives you an incomplete picture. When you <strong style={{ color: "var(--text-primary)" }}>convert text to song</strong> with your own creative input and hear the result in real time, you immediately understand whether the platform can serve your needs. That hands-on experience is why we keep the free tier genuinely useful, not artificially limited.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            For teams evaluating Songify for a production deployment, the free tier also gives you a quick way to test prompt strategies, explore genre coverage, and benchmark output quality before committing to a paid plan. Most teams make a go or no-go decision within a few hours of first use — which is exactly how we designed the evaluation experience.
+          </p>
+        </div>
+      </section>
+
+      <section style={{ maxWidth: 760, marginTop: "1.25rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>What the Pro and Team Plans Will Include</h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            Our Pro plan is designed for individual creators who need repeatable, high-volume generation with permanent storage and download access. Key features will include unlimited generations per month, priority processing queue, cloud library with MP3 download, and advanced prompt controls including seed locking and style presets. The Pro plan will be the right choice for content creators, musicians, and developers building AI-powered audio applications.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            The Team plan is designed for businesses and organizations that need multi-user access, custom onboarding, and SLA-backed support. It will include everything in Pro, plus team management features, dedicated account support, custom prompt template libraries, and API access for programmatic generation. Enterprise teams using our <strong style={{ color: "var(--text-primary)" }}>text to song AI free</strong> platform at scale will benefit most from this tier.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            Both paid plans are in active development. We are taking a careful approach to ensure that when they launch, the features are polished, the pricing is fair, and the upgrade path from the free tier is seamless. Sign up for a free account today to be notified when paid plans become available — early registered users will receive a discount on their first subscription month.
+          </p>
+        </div>
+      </section>
     </main>
   );
 }

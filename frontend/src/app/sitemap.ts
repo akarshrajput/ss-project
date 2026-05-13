@@ -22,12 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "always",
       priority: 0.98,
     },
-    {
-      url: absoluteUrl("/studio"),
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.95,
-    },
+
     {
       url: absoluteUrl("/features"),
       lastModified: now,

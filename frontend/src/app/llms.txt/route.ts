@@ -6,7 +6,7 @@ export async function GET() {
     "",
     "## Key pages",
     "- /",
-    "- /studio",
+
     "- /pricing",
     "- /services",
     "- /services/text-to-speech",
@@ -22,7 +22,7 @@ export async function GET() {
     "",
     "## Notes",
     "- Public pages are indexable and contain descriptive copy for crawlers.",
-    "- The Studio is the primary product entry point.",
+
     "- Pricing is a standalone page and should not redirect.",
   ].join("\n");
 

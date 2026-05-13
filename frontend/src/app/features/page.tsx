@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Platform Features — Text to Song Generator & Text to Song Converter Tools",
+  title: "Songify Features: Text to Song Generator AI",
   description: "Discover Songify platform features for text to song generation, text to song converter online free, text to rap song creation, text to audio song, and text to speech songs.",
   path: "/features",
   keywords: [
@@ -50,7 +50,7 @@ export default function FeaturesPage() {
   return (
     <main className="site-container w-full flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
       {/* Smartlink */}
-      <a href="https://www.profitablecpmratenetwork.com/jj4qu1yn?key=f11165f2ce85aad6894ab21301a2e5de" style={{ display: "none" }} aria-hidden="true" />
+      <a href="https://www.profitablecpmratenetwork.com/jj4qu1yn?key=f11165f2ce85aad6894ab21301a2e5de" style={{ display: "none" }} aria-hidden="true">Partner Link</a>
       {/* Native Banner */}
       <Script
         async
@@ -114,7 +114,7 @@ export default function FeaturesPage() {
       </div>
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "3rem" }}>
-        <Link href="/studio" prefetch={false} className="btn-primary" style={{ textDecoration: "none" }}>Try Studio</Link>
+        <Link href="/" prefetch={false} className="btn-primary" style={{ textDecoration: "none" }}>Try Studio</Link>
         <Link href="/services" prefetch={false} className="btn-secondary" style={{ textDecoration: "none" }}>Explore Services</Link>
       </div>
 
@@ -140,6 +140,35 @@ export default function FeaturesPage() {
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
             Don't hesitate to use the Vibe Lock feature once you find a sound you like. This allows you to maintain consistency across multiple tracks, which is ideal for creating a cohesive album or background music for a video series. Our metadata indexing makes it easy to find these saved settings in your library later.
+          </p>
+        </div>
+      </section>
+      <section style={{ maxWidth: 860, marginTop: "2rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Building a Consistent Audio Brand with Songify</h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            One of the most underused capabilities of our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> is the seed control system. When you find a vocal style, instrumental arrangement, or production quality that fits your brand, you can pin that seed and reproduce it across future generations. This is how content creators build a consistent sonic identity — the same warmth, the same energy, the same feel — across every piece of audio they publish.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            Consistent audio branding is increasingly important in a crowded content landscape. Audiences recognize and trust creators whose output sounds coherent and intentional. With our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong>, you can produce that consistency without hiring a composer or sound designer — the AI handles the creative execution while you focus on the concept and the message.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            The metadata indexing feature makes this even more powerful over time. Every generation is tagged with your prompt parameters, so you can search your library by genre, mood, or keyword and instantly find the settings that produced your best work. This turns your generation history into a searchable knowledge base — a reference library of what works for your specific creative style.
+          </p>
+        </div>
+      </section>
+
+      <section style={{ maxWidth: 860, marginTop: "1.25rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>From Free to Professional: Scaling Your Audio Production</h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            Songify is designed to grow with you. The free tier lets you experiment with every feature of our <strong style={{ color: "var(--text-primary)" }}>text to song converter</strong> without any commitment. Guest access means you can generate your first track in under a minute — no account, no credit card, no onboarding. That zero-friction entry point is intentional: we want you to experience the quality of our AI before you decide whether to create an account.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            As your needs grow, the authenticated experience adds library storage, one-click downloads, and generation history. These features transform Songify from a quick creative tool into a full production asset manager. Your generated audio is organized, retrievable, and ready to be dropped into any project at any time.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            For professional teams and enterprise deployments, we offer custom integration support, higher throughput limits, and dedicated account management. Whether you are producing audio for a media company, a game studio, or a global marketing campaign, our platform scales to meet the demand. The same core <strong style={{ color: "var(--text-primary)" }}>text to song maker</strong> technology powers every tier — you just get more control and capacity as you scale.
           </p>
         </div>
       </section>

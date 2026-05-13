@@ -81,6 +81,41 @@ export default function PrivacyPage() {
             We take reasonable measures to help protect information about you from loss, theft, misuse, and unauthorized access, disclosure, alteration, and destruction. We use industry-standard encryption for data in transit and at rest. However, no method of transmission over the internet or electronic storage is 100% secure, so we cannot guarantee absolute security.
           </p>
         </div>
+        <div className="glass-card" style={{ padding: "1.75rem", marginTop: "1rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Cookies and Tracking Technologies
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            Songify uses cookies and similar tracking technologies to track activity on our service and hold certain information. Cookies are files with a small amount of data which may include an anonymous unique identifier. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our service.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            We use session cookies to operate our service, preference cookies to remember your preferences and various settings, and security cookies for security purposes. We may also use third-party analytics tools to understand how our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> is used so we can improve the experience for all users.
+          </p>
+        </div>
+
+        <div className="glass-card" style={{ padding: "1.75rem", marginTop: "1rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Third-Party Services and Sharing
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            We do not sell, trade, or rent your personal information to third parties. We may share generic aggregated demographic information not linked to any personal identification information regarding visitors and users with our business partners, trusted affiliates, and advertisers for the purposes outlined above.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            We may use third-party service providers to help us operate our business, including our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong> infrastructure. These third parties have access to your personal data only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose. All providers are vetted for compliance with applicable data protection laws.
+          </p>
+        </div>
+
+        <div className="glass-card" style={{ padding: "1.75rem", marginTop: "1rem" }}>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+            Children&apos;s Privacy
+          </h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            Our <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> service does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from children under 13. If you are a parent or guardian and you are aware that your child has provided us with personal data, please contact us. If we become aware that we have collected personal data from children without verification of parental consent, we take steps to remove that information from our servers.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            Changes to this privacy policy will be communicated via our website. We encourage users to frequently check this page for any changes to stay informed about how we are helping to protect the personal information we collect. You acknowledge and agree that it is your responsibility to review this privacy policy periodically and become aware of modifications.
+          </p>
+        </div>
       </div>
     </main>
   );

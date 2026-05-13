@@ -4,7 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 import { buildBreadcrumbSchema, buildFaqSchema } from "@/lib/structured-data";
 
 export const metadata: Metadata = buildMetadata({
-  title: "FAQ — Text to Song Generator, Text to Song AI & Converter Questions Answered",
+  title: "Songify FAQ: Text to Song Generator & AI",
   description: "Got questions about Songify? Learn how our free text to song generator turns text into songs, how the text to song converter online free works, and how to convert text to song, text to rap song, or text to audio song.",
   path: "/faq",
   keywords: [
@@ -136,6 +136,36 @@ export default function FaqPage() {
           </h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
             If your question is about a specific workflow, service page, or deployment scenario, use the Contact page and include the relevant route. That keeps support responses focused and makes the content more useful for your team.
+          </p>
+        </div>
+      </section>
+
+      <section style={{ maxWidth: 740, marginTop: "1.25rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Understanding AI Music Generation: A Deeper Dive</h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            Our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> uses a multi-stage AI pipeline to turn your words into music. First, a language model interprets your prompt and extracts key creative signals: genre cues, emotional tone, lyrical themes, tempo suggestions, and mood descriptors. Then a music generation model translates those signals into a musical composition — selecting instruments, setting the key and time signature, building the arrangement, and generating the vocal melody and lyrics if applicable.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            The final stage is audio synthesis and mastering — where the raw musical composition is rendered into a high-quality audio file with balanced levels, clear stereo imaging, and appropriate loudness for streaming. This entire process happens automatically, in the background, in a matter of seconds. You submit a prompt, and you receive a finished song. That is the core promise of the Songify <strong style={{ color: "var(--text-primary)" }}>text to song AI free</strong> platform.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            Understanding this pipeline helps you write better prompts. The more musical context you include — genre, mood, tempo, instruments, vocal style, lyrical theme — the more accurately the AI can fulfill your creative intent. If you leave most of these parameters unspecified, the AI will make its own creative choices, which can produce interesting surprises but may not align with your vision. Experiment with different levels of specificity to find what works best for your workflow.
+          </p>
+        </div>
+      </section>
+
+      <section style={{ maxWidth: 740, marginTop: "1.25rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Tips for Better Prompts and Results</h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            The single most impactful thing you can do to improve your results with our <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> is to be specific. Instead of &quot;a sad song,&quot; try &quot;a slow, melancholic piano ballad about missing someone you love, with a female vocalist and soft strings in the background.&quot; Each additional detail gives the AI more to work with and reduces the gap between what you imagined and what gets generated.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            Reference familiar styles when helpful. Phrases like &quot;90s hip-hop production style,&quot; &quot;lo-fi jazz with a rainy day feel,&quot; or &quot;uplifting gospel choir energy&quot; give the AI strong stylistic anchors. You can also describe the intended use: &quot;background music for a motivational YouTube video&quot; or &quot;intro jingle for a tech podcast&quot; help the AI calibrate the energy and complexity of the output.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            Do not be discouraged by imperfect first outputs. Every generation is a learning opportunity. Listen carefully to what the AI produced, identify what is close to what you wanted and what is not, then refine your prompt accordingly. Most users find that after two or three rounds of refinement, they arrive at something they are genuinely happy with. The <strong style={{ color: "var(--text-primary)" }}>text to song free online</strong> platform is designed for iteration — make the most of it.
           </p>
         </div>
       </section>

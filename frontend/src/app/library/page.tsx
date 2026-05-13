@@ -61,7 +61,7 @@ export default async function LibraryPage() {
             {songs.length} track{songs.length !== 1 ? "s" : ""} saved
           </p>
         </div>
-        <Link href="/studio" className="btn-primary" style={{ textDecoration: "none" }}>
+        <Link href="/" className="btn-primary" style={{ textDecoration: "none" }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
           New Song
         </Link>
@@ -82,7 +82,7 @@ export default async function LibraryPage() {
           </div>
           <p style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.4rem" }}>No songs yet</p>
           <p style={{ fontSize: "0.875rem", color: "var(--text-muted)", marginBottom: "1.5rem" }}>Create your first track in the Studio and it will appear here.</p>
-          <Link href="/studio" className="btn-primary" style={{ textDecoration: "none" }}>Open Studio</Link>
+          <Link href="/" className="btn-primary" style={{ textDecoration: "none" }}>Open Studio</Link>
         </div>
       )}
 

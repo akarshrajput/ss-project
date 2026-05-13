@@ -11,7 +11,7 @@ export function JSONLD() {
       "@type": "SearchAction",
       "target": {
         "@type": "EntryPoint",
-        "urlTemplate": `${siteConfig.url}/studio?q={search_term_string}`
+        "urlTemplate": `${siteConfig.url}/explore?q={search_term_string}`
       },
       "query-input": "required name=search_term_string"
     }
@@ -41,24 +41,18 @@ export function JSONLD() {
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "Studio",
-        "item": `${siteConfig.url}/studio`
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
         "name": "Pricing",
         "item": `${siteConfig.url}/pricing`
       },
       {
         "@type": "ListItem",
-        "position": 4,
+        "position": 3,
         "name": "Features",
         "item": `${siteConfig.url}/features`
       },
       {
         "@type": "ListItem",
-        "position": 5,
+        "position": 4,
         "name": "About",
         "item": `${siteConfig.url}/about`
       }

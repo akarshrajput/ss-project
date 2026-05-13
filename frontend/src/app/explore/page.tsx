@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { ExploreClient } from "@/components/explore/explore-client";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Explore AI Songs — Text to Song Generator Community Creations | Songify",
+  title: "Explore AI Songs: Songify Community Creations",
   description:
     "Browse songs created by the Songify community using our text to song generator, text to song converter online free, and text to song AI. Discover text to rap song, text to audio song, and text to speech songs.",
   path: "/explore",
@@ -37,7 +37,6 @@ export default function ExplorePage() {
 
         <ExploreClient />
 
-        {/* SEO Content Section */}
         <section style={{ marginTop: "4rem", maxWidth: 800, borderTop: "1px solid var(--border-subtle)", paddingTop: "2rem" }}>
           <h2 style={{ fontSize: "1.5rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "1rem" }}>
             Discover What Our Text to Song Generator Can Create
@@ -48,7 +47,7 @@ export default function ExplorePage() {
           <p style={{ fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "1rem" }}>
             By browsing this gallery, you can discover new styles, find inspiration for your own prompts, and see how others are using our <strong style={{ color: "var(--text-primary)" }}>text to song maker</strong> to push the boundaries of AI-assisted music production. From <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> creations to <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> experiments, this community showcase offers a glimpse into the future of music.
           </p>
-          
+
           <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.75rem", marginTop: "1.5rem" }}>
             What you can do on this page:
           </h3>
@@ -63,9 +62,24 @@ export default function ExplorePage() {
             </li>
             <li style={{ fontSize: "0.875rem", color: "var(--text-secondary)", lineHeight: 1.6, display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
               <span style={{ color: "var(--accent-violet)" }}>•</span>
-              <span><strong>Get Inspired:</strong> Use the community's creations as a springboard for your own ideas. Head to the Studio to start making your own music.</span>
+              <span><strong>Get Inspired:</strong> Use the community&apos;s creations as a springboard for your own ideas. Head to the homepage to start making your own music.</span>
             </li>
           </ul>
+        </section>
+
+        <section style={{ marginTop: "2.5rem", maxWidth: 800 }}>
+          <div className="glass-card" style={{ padding: "1.75rem" }}>
+            <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.85rem" }}>The Power of Community-Driven AI Music</h2>
+            <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+              Every song you see on this page was created by a real person using the Songify <strong style={{ color: "var(--text-primary)" }}>text to song AI free</strong> tool. That means this gallery is always growing, always changing, and always reflecting the diverse creative ideas of our global user base. From heartfelt love songs to energetic workout anthems, from lo-fi study beats to cinematic orchestral pieces — the range of what people create with our <strong style={{ color: "var(--text-primary)" }}>text to song generator free</strong> continues to surprise us.
+            </p>
+            <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+              Listening to other creators&apos; work is one of the best ways to understand the full potential of our platform. You might hear a <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> with punchy rhymes that inspire you to write your own verse, or a smooth R&B track that shows you how mood settings affect the vocal style. Each song is a learning opportunity — and a reminder that with the right prompt, anyone can make something worth sharing.
+            </p>
+            <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+              The explore page is also where we surface our most-played and highest-rated tracks. These are the songs that other listeners keep coming back to — which makes them a reliable benchmark for what great AI-generated music can sound like. If you want to understand what separates a good prompt from a great one, start here. Study the inputs, listen to the outputs, and take notes. Then go create something even better.
+            </p>
+          </div>
         </section>
       </div>
     </main>

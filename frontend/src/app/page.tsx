@@ -8,7 +8,7 @@ import { QuickGenerate } from "@/components/ui/quick-generate";
 import { servicePages } from "@/lib/services";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Text to Song — Free AI Song Generator & Text to Song Converter Online | Songify",
+  title: "Songify: Free AI Text to Song Generator Online",
   description:
     "Turn any text into a song instantly with Songify — the best free text to song generator, text to song converter online free, and AI song maker. Convert text to song, text to rap song, or text to audio song in seconds.",
   path: "/",
@@ -229,7 +229,6 @@ export default async function Home() {
 
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: "Home", path: "/" },
-    { name: "Studio", path: "/studio" },
     { name: "Pricing", path: "/pricing" },
     { name: "Features", path: "/features" },
     { name: "About", path: "/about" },
@@ -349,7 +348,7 @@ export default async function Home() {
 
         <div className="mt-10 text-center">
           <Link
-            href="/studio"
+            href="/"
             prefetch={false}
             id="how-it-works-cta"
             className="btn-primary"
@@ -553,7 +552,7 @@ export default async function Home() {
           </p>
           <div className="relative mt-8 flex flex-wrap gap-4 justify-center">
             <Link
-              href="/studio"
+              href="/"
               prefetch={false}
               id="mid-page-cta-generate"
               className="btn-primary"

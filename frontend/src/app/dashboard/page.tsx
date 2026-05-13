@@ -13,9 +13,9 @@ export const metadata: Metadata = buildMetadata({
 
 const quickLinks = [
   {
-    href: "/studio",
+    href: "/",
     title: "Create Song",
-    desc: "Go to Studio and generate your next track using AI.",
+    desc: "Generate your next track using our AI song maker.",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
         <polygon points="5 3 19 12 5 21 5 3"/>

@@ -118,6 +118,38 @@ export default function AboutPage() {
           </p>
         </div>
       </section>
+      <section style={{ maxWidth: 860, marginTop: "2rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Our Mission: Making Music Creation Accessible to Everyone</h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            Songify was founded on a simple belief: creating music should not require years of training, expensive equipment, or a professional studio. Our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> removes every barrier between an idea and a finished track. You write the words — our AI handles the melody, harmony, rhythm, and production. The result is a fully produced song, ready to share or download, in seconds.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            We built Songify as a <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> tool because we wanted the barrier to entry to be zero. No software to install. No account required to try it. No credit card. You visit the site, type your idea, and generate. That philosophy — free, instant, no friction — is built into every decision we make about the product.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            Over time, we have expanded from a simple <strong style={{ color: "var(--text-primary)" }}>text to song maker</strong> into a full AI audio platform. You can <strong style={{ color: "var(--text-primary)" }}>convert text to song</strong> in dozens of genres, generate <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> outputs with real cadence and flow, or produce <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> tracks for podcasts, videos, games, and presentations. Every feature is designed to serve real creative workflows, not just impressive demos.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            Our team is composed of engineers, musicians, and product designers who understand both the technical side of AI music generation and the practical needs of creators. We constantly collect feedback, run experiments, and ship improvements. The platform you use today is faster, more accurate, and more controllable than it was six months ago — and the same will be true six months from now.
+          </p>
+        </div>
+      </section>
+
+      <section style={{ maxWidth: 860, marginTop: "1.25rem" }}>
+        <div className="glass-card" style={{ padding: "1.75rem" }}>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Why Creators Choose Songify</h2>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            There are many AI music tools available today, but Songify stands apart because it is built around the creative workflow, not the technology showcase. When you use our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong>, you are not just running a model — you are working inside a system designed to help you iterate quickly, reproduce great results, and understand what settings produce the output you want.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+            Genre diversity is one of our strongest differentiators. Whether you need a melancholic indie ballad, an upbeat pop anthem, a hard-hitting hip-hop track, or ambient electronic music for focus work, our <strong style={{ color: "var(--text-primary)" }}>text to song creator</strong> engine adapts to your intent. The AI reads not just the words but the emotional context, adjusting instrumentation, vocal style, and tempo accordingly.
+          </p>
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+            We are also committed to transparency. Our pricing is clear, our terms are readable, and our privacy policy is written for humans, not just lawyers. When you generate a song with Songify, you own the creative output. Our <strong style={{ color: "var(--text-primary)" }}>text to song free online</strong> tier gives you full access to generation and browser playback. Premium features like library storage and high-priority processing are available on paid plans as they roll out.
+          </p>
+        </div>
+      </section>
     </main>
   );
 }
