@@ -20,6 +20,8 @@ type QueueEntry = {
   completedAt: string | null;
   rejectedAt?: string | null;
   rejectionComment?: string | null;
+  basePrompt?: string | null;
+  vocalType?: string | null;
 };
 
 type Pagination = {
@@ -501,6 +503,11 @@ export function SongsQueueClient() {
                               {tag}
                             </span>
                           ))}
+                          {entry.vocalType && (
+                            <span style={{ fontSize: "0.75rem", padding: "0.25rem 0.6rem", borderRadius: "0.4rem", background: "rgba(16,185,129,0.1)", color: "#34d399", border: "1px solid rgba(16,185,129,0.2)" }}>
+                              {entry.vocalType}
+                            </span>
+                          )}
                           <span style={{ fontSize: "0.75rem", padding: "0.25rem 0.6rem", borderRadius: "0.4rem", background: "rgba(255,255,255,0.05)", color: "var(--text-muted)", border: "1px solid rgba(255,255,255,0.1)" }}>
                             {entry.duration}s
                           </span>
@@ -511,6 +518,31 @@ export function SongsQueueClient() {
                           {entry.completedAt && ` • Completed: ${new Date(entry.completedAt).toLocaleString()}`}
                           {entry.rejectedAt && ` • Rejected: ${new Date(entry.rejectedAt).toLocaleString()}`}
                         </p>
+
+                        {entry.basePrompt && (
+                          <div style={{
+                            marginBottom: "1rem",
+                            padding: "0.75rem 1rem",
+                            background: "rgba(99,102,241,0.06)",
+                            border: "1px solid rgba(99,102,241,0.18)",
+                            borderRadius: "0.5rem"
+                          }}>
+                            <span style={{
+                              display: "block",
+                              fontSize: "0.7rem",
+                              fontWeight: 700,
+                              textTransform: "uppercase",
+                              letterSpacing: "0.08em",
+                              color: "#a5b4fc",
+                              marginBottom: "0.3rem"
+                            }}>
+                              Base Prompt / Style Details
+                            </span>
+                            <span style={{ fontSize: "0.85rem", color: "var(--text-primary)", lineHeight: 1.5 }}>
+                              {entry.basePrompt}
+                            </span>
+                          </div>
+                        )}
 
                         {/* Lyrics */}
                         <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.6, whiteSpace: "pre-wrap" }}>

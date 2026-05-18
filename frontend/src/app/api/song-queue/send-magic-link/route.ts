@@ -11,6 +11,9 @@ export async function POST(request: Request) {
       genre?: string | null;
       mood?: string | null;
       duration?: number;
+      sessionId?: string;
+      basePrompt?: string | null;
+      vocalType?: string | null;
     };
 
     if (!body.email || !body.songId) {
@@ -27,6 +30,9 @@ export async function POST(request: Request) {
     if (body.genre) params.append("genre", body.genre);
     if (body.mood) params.append("mood", body.mood);
     if (body.duration) params.append("duration", body.duration.toString());
+    if (body.sessionId) params.append("sessionId", body.sessionId);
+    if (body.basePrompt) params.append("basePrompt", body.basePrompt);
+    if (body.vocalType) params.append("vocalType", body.vocalType);
     
     const accessLink = `${siteUrl}/song/${body.songId}?${params.toString()}`;
 

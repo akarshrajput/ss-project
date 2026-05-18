@@ -16,6 +16,7 @@ interface WavePlayerProps {
 
 /* ─── Helpers ────────────────────────────────────────────────────────────── */
 function formatTime(seconds: number) {
+  if (isNaN(seconds)) return "0:00";
   const m = Math.floor(seconds / 60);
   const s = Math.floor(seconds % 60);
   return `${m}:${s.toString().padStart(2, "0")}`;
@@ -31,119 +32,46 @@ export function WavePlayer({
   accent = "#6366f1",
   titleHref,
 }: WavePlayerProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const wsRef = useRef<import("wavesurfer.js").default | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const [isReady, setIsReady] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [totalDuration, setTotalDuration] = useState(0);
   const [volume, setVolume] = useState(0.8);
   const [isMuted, setIsMuted] = useState(false);
   const [showVolume, setShowVolume] = useState(false);
-  const [error, setError] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
+  // Sync volume with audio element
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  /* ─── Init WaveSurfer ─────────────────────────────────────────────────── */
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    // ── React StrictMode runs effects twice. Use a cancellation flag so the
-    //    second async run aborts before it creates a second WaveSurfer instance.
-    let cancelled = false;
-
-    // Destroy any existing instance first (handles src changes)
-    if (wsRef.current) {
-      wsRef.current.destroy();
-      wsRef.current = null;
+    if (audioRef.current) {
+      audioRef.current.volume = isMuted ? 0 : volume;
     }
+  }, [volume, isMuted]);
 
-    // Reset state for this new src
-    setIsReady(false);
-    setIsLoading(true);
-    setError(false);
+  // Sync source change
+  useEffect(() => {
     setIsPlaying(false);
     setCurrentTime(0);
     setTotalDuration(0);
+  }, [src]);
 
-    (async () => {
-      const WaveSurfer = (await import("wavesurfer.js")).default;
-
-      // If cleanup already ran, abort — don't mount a second instance
-      if (cancelled || !containerRef.current) return;
-
-      const ws = WaveSurfer.create({
-        container: containerRef.current,
-        waveColor: `${accent}55`,
-        progressColor: accent,
-        cursorColor: accent,
-        cursorWidth: 2,
-        barWidth: 2.5,
-        barGap: 2,
-        barRadius: 4,
-        height: 56,
-        normalize: true,
-        interact: true,
-        url: src,
-      });
-
-      // If cleanup fired while WaveSurfer was constructing, destroy immediately
-      if (cancelled) { ws.destroy(); return; }
-
-      ws.setVolume(volume);
-      wsRef.current = ws;
-
-      ws.on("ready", () => {
-        if (cancelled) return;
-        setIsReady(true);
-        setIsLoading(false);
-        setTotalDuration(ws.getDuration());
-      });
-      ws.on("timeupdate", (t) => { if (!cancelled) setCurrentTime(t); });
-      ws.on("play", () => { if (!cancelled) setIsPlaying(true); });
-      ws.on("pause", () => { if (!cancelled) setIsPlaying(false); });
-      ws.on("finish", () => { if (!cancelled) setIsPlaying(false); });
-      ws.on("error", () => {
-        if (cancelled) return;
-        setError(true);
-        setIsLoading(false);
-      });
-    })();
-
-    return () => {
-      cancelled = true;
-      if (wsRef.current) {
-        wsRef.current.destroy();
-        wsRef.current = null;
-      }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [src, accent]);
-
-  /* ─── Controls ──────────────────────────────────────────────────────────── */
   const togglePlay = useCallback(() => {
-    wsRef.current?.playPause();
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play().catch(() => {});
+    }
+  }, [isPlaying]);
+
+  const handleVolumeChange = useCallback((v: number) => {
+    setVolume(v);
+    if (v > 0) setIsMuted(false);
   }, []);
 
-  const handleVolumeChange = useCallback(
-    (v: number) => {
-      setVolume(v);
-      wsRef.current?.setVolume(v);
-      if (v > 0) setIsMuted(false);
-    },
-    []
-  );
-
   const toggleMute = useCallback(() => {
-    const next = !isMuted;
-    setIsMuted(next);
-    wsRef.current?.setVolume(next ? 0 : volume);
-  }, [isMuted, volume]);
+    setIsMuted(prev => !prev);
+  }, []);
 
   const handleDownload = useCallback(() => {
     const a = document.createElement("a");
@@ -152,7 +80,6 @@ export function WavePlayer({
     a.click();
   }, [src, title]);
 
-  /* ─── Render ─────────────────────────────────────────────────────────────  */
   return (
     <div
       style={{
@@ -165,6 +92,59 @@ export function WavePlayer({
         overflow: "hidden",
       }}
     >
+      <style dangerouslySetInnerHTML={{__html: `
+        .player-slider::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: #ffffff;
+          box-shadow: 0 0 8px ${accent};
+          cursor: pointer;
+          transition: transform 150ms ease;
+        }
+        .player-slider::-webkit-slider-thumb:hover {
+          transform: scale(1.3);
+        }
+        .player-slider::-moz-range-thumb {
+          width: 10px;
+          height: 10px;
+          border: none;
+          border-radius: 50%;
+          background: #ffffff;
+          box-shadow: 0 0 8px ${accent};
+          cursor: pointer;
+          transition: transform 150ms ease;
+        }
+        .player-slider::-moz-range-thumb:hover {
+          transform: scale(1.3);
+        }
+        @keyframes bar-bounce {
+          0% { height: 6px; }
+          100% { height: 18px; }
+        }
+      `}} />
+
+      {/* Hidden HTML5 Audio Element */}
+      <audio
+        ref={audioRef}
+        src={src}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+        onTimeUpdate={() => {
+          if (audioRef.current) {
+            setCurrentTime(audioRef.current.currentTime);
+          }
+        }}
+        onLoadedMetadata={() => {
+          if (audioRef.current) {
+            setTotalDuration(audioRef.current.duration);
+          }
+        }}
+        onEnded={() => setIsPlaying(false)}
+      />
+
       {/* Glow */}
       <div
         aria-hidden="true"
@@ -175,7 +155,7 @@ export function WavePlayer({
       />
 
       {/* Track info row */}
-      <div style={{ display: "flex", alignItems: "center", gap: "0.85rem", marginBottom: "1rem" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "0.85rem", marginBottom: "0.5rem" }}>
         {/* Album art placeholder */}
         <div
           style={{
@@ -236,74 +216,61 @@ export function WavePlayer({
         </span>
       </div>
 
-      {/* Waveform area — only ONE thing visible at a time */}
-      <div style={{ minHeight: 56 }}>
-        {/* Loading skeleton */}
-        {isLoading && !error && (
-          <div
-            style={{
-              height: 56, display: "flex", alignItems: "center",
-              justifyContent: "center", gap: "0.5rem",
-              borderRadius: "0.5rem",
-              background: "rgba(255,255,255,0.02)",
-            }}
-          >
-            <span style={{ fontSize: "0.72rem", color: "var(--text-muted)", animation: "pulse-dot 1.5s ease-in-out infinite" }}>
-              Loading waveform…
-            </span>
-          </div>
-        )}
-
-        {/* Error fallback */}
-        {error && (
-          <div
-            style={{
-              height: 56, display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "0.78rem", color: "var(--text-muted)",
-              background: "rgba(255,255,255,0.02)", borderRadius: "0.5rem",
-              border: "1px dashed rgba(255,255,255,0.08)",
-            }}
-          >
-            🎵 Audio preview — add a real URL to see the waveform
-          </div>
-        )}
-
-        {/* WaveSurfer container — hidden until ready, never shown alongside error */}
-        <div
-          ref={containerRef}
-          id={`waveform-${title.replace(/\s+/g, "-").toLowerCase()}`}
-          style={{ display: isReady ? "block" : "none" }}
+      {/* Modern, Lightweight Custom Progress Bar Slider */}
+      <div style={{ position: "relative", margin: "0.85rem 0" }}>
+        <input
+          type="range"
+          min={0}
+          max={totalDuration || 100}
+          value={currentTime}
+          onChange={(e) => {
+            const val = parseFloat(e.target.value);
+            setCurrentTime(val);
+            if (audioRef.current) {
+              audioRef.current.currentTime = val;
+            }
+          }}
+          style={{
+            width: "100%",
+            height: "4px",
+            borderRadius: "999px",
+            background: `linear-gradient(to right, ${accent} ${totalDuration ? (currentTime / totalDuration) * 100 : 0}%, rgba(255,255,255,0.08) ${totalDuration ? (currentTime / totalDuration) * 100 : 0}%)`,
+            outline: "none",
+            cursor: "pointer",
+            WebkitAppearance: "none",
+            appearance: "none",
+            display: "block",
+            margin: 0,
+            padding: 0
+          }}
+          className="player-slider"
         />
       </div>
 
-
       {/* Controls row */}
-      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginTop: "0.9rem" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
         {/* Play/Pause */}
         <button
           id={`play-${title.replace(/\s+/g, "-").toLowerCase()}`}
           onClick={togglePlay}
-          disabled={!isReady && !error}
-          suppressHydrationWarning
           aria-label={isPlaying ? "Pause song" : "Play song"}
           style={{
-            flexShrink: 0, width: 38, height: 38, borderRadius: "50%",
+            flexShrink: 0, width: 36, height: 36, borderRadius: "50%",
             background: `linear-gradient(135deg, ${accent}, ${accent}bb)`,
             border: "none", cursor: "pointer",
             display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: `0 0 18px ${accent}50`,
+            boxShadow: `0 0 14px ${accent}40`,
             transition: "transform 180ms ease, box-shadow 180ms ease",
-            opacity: (!isReady && !error) ? 0.5 : 1,
           }}
           onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.transform = "scale(1.08)"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)"; }}
         >
           {isPlaying ? (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
               <rect x="6" y="4" width="4" height="16" rx="1" /><rect x="14" y="4" width="4" height="16" rx="1" />
             </svg>
           ) : (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="white" style={{ marginLeft: "2px" }}>
               <polygon points="5 3 19 12 5 21 5 3" />
             </svg>
           )}

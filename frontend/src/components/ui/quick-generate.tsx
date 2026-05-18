@@ -83,6 +83,7 @@ export function QuickGenerate() {
   const [genre, setGenre] = useState<string | null>(null);
   const [mood, setMood] = useState<string | null>(null);
   const [duration, setDuration] = useState(30);
+  const [vocalType, setVocalType] = useState<string>("Female voice");
 
   // Details step
   const [email, setEmail] = useState("");
@@ -96,6 +97,7 @@ export function QuickGenerate() {
   const [savedEmail, setSavedEmail] = useState<string | null>(null);
   const [savedUsername, setSavedUsername] = useState<string | null>(null);
   const [emailVerifiedFromLink, setEmailVerifiedFromLink] = useState(false);
+  const [sessionId, setSessionId] = useState("");
 
   const inboxAction = getInboxAction(email);
 
@@ -137,6 +139,25 @@ export function QuickGenerate() {
 
         // Auto-generate username from the email local part.
         setUsername(deriveUsernameFromEmail(verifyEmailParam));
+
+        const linkSessionId = typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2) + Date.now().toString(36);
+        setSessionId(linkSessionId);
+
+        fetch("/api/analytics", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sessionId: linkSessionId,
+            status: "email_viewed",
+            lyrics: lyricsParam || value.trim(),
+            duration: durationParam ? parseInt(durationParam, 10) : duration,
+            theme,
+            genre,
+            mood,
+            basePrompt: basePromptParam || basePrompt,
+            email: verifyEmailParam,
+          }),
+        }).catch((err) => console.error("Analytics error", err));
 
         // Clean up URL without refreshing
         window.history.replaceState({}, document.title, window.location.pathname);
@@ -231,6 +252,9 @@ export function QuickGenerate() {
           genre,
           mood,
           duration,
+          sessionId, // Pass the analytics sessionId
+          basePrompt, // Pass the basePrompt style prompt
+          vocalType, // Pass the selected vocalType
         }),
       });
       const linkData = await linkRes.json();
@@ -255,6 +279,24 @@ export function QuickGenerate() {
     setShowModal(true);
     setStep("options");
     setError(null);
+
+    const newSessionId = typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2) + Date.now().toString(36);
+    setSessionId(newSessionId);
+
+    fetch("/api/analytics", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sessionId: newSessionId,
+        status: "started",
+        lyrics: value.trim(),
+        duration,
+        theme,
+        genre,
+        mood,
+        basePrompt,
+      }),
+    }).catch((err) => console.error("Analytics error", err));
   }
 
   async function handleProceed(): Promise<string | null> {
@@ -280,6 +322,8 @@ export function QuickGenerate() {
           duration,
           email: email.trim(),
           username: resolvedUsername,
+          basePrompt,
+          vocalType,
         }),
       });
       const data = await res.json();
@@ -293,12 +337,53 @@ export function QuickGenerate() {
 
       setSubmittedSongId(data.songId ?? null);
       setStep("success");
+
+      if (sessionId) {
+        fetch("/api/analytics", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sessionId,
+            status: "completed",
+            email: email.trim(),
+            lyrics: value.trim(),
+            theme,
+            genre,
+            mood,
+            duration,
+            basePrompt,
+          }),
+        }).catch((err) => console.error("Analytics error", err));
+      }
+
       return data.songId ?? null;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
       return null;
     } finally {
       setSubmitting(false);
+    }
+  }
+
+  function handleProceedToEmail() {
+    setStep("details");
+    setError(null);
+
+    if (sessionId) {
+      fetch("/api/analytics", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sessionId,
+          status: "email_viewed",
+          lyrics: value.trim(),
+          duration,
+          theme,
+          genre,
+          mood,
+          basePrompt,
+        }),
+      }).catch((err) => console.error("Analytics error", err));
     }
   }
 
@@ -358,37 +443,63 @@ export function QuickGenerate() {
           background: "rgba(13,17,23,0.85)", backdropFilter: "blur(20px)",
           boxShadow: focused ? "0 0 0 4px rgba(99,102,241,0.12), 0 8px 40px rgba(0,0,0,0.4)" : "0 4px 24px rgba(0,0,0,0.3)",
           transition: "border-color 180ms ease, box-shadow 180ms ease",
+          display: "flex",
+          flexDirection: "column",
         }}>
-          {value.length === 0 && (
-            <div
-              aria-hidden="true"
+          {/* Textarea and Placeholder wrapper */}
+          <div style={{ position: "relative", width: "100%", flexGrow: 1 }}>
+            {value.length === 0 && (
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  top: "1.1rem",
+                  left: "1.25rem",
+                  right: "1.25rem",
+                  color: "rgba(255,255,255,0.34)",
+                  fontSize: "1rem",
+                  lineHeight: 1.65,
+                  whiteSpace: "pre-wrap",
+                  pointerEvents: "none",
+                  fontFamily: '"Inter", system-ui, sans-serif',
+                  userSelect: "none",
+                  textAlign: "left",
+                }}
+              >
+                {placeholderText}
+                <span style={{ opacity: 0.9, animation: "placeholder-caret 1s steps(1) infinite" }}>▍</span>
+              </div>
+            )}
+            <textarea ref={textareaRef} id="quick-generate-input" rows={3} value={value}
+              onChange={(e) => setValue(e.target.value)} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
+              onKeyDown={(e) => { if ((e.metaKey || e.ctrlKey) && e.key === "Enter") handleSubmit(e as unknown as React.FormEvent); }}
+              placeholder="" aria-label="Type your song idea, lyrics, or story"
               style={{
-                position: "absolute",
-                top: "1.1rem",
-                left: "1.25rem",
-                right: "1.25rem",
-                paddingBottom: "3.5rem",
-                color: "rgba(255,255,255,0.34)",
+                width: "100%",
+                padding: "1.1rem 1.25rem 0.5rem",
+                background: "transparent",
+                border: "none",
+                outline: "none",
+                color: "var(--text-primary)",
                 fontSize: "1rem",
                 lineHeight: 1.65,
-                whiteSpace: "pre-wrap",
-                pointerEvents: "none",
+                resize: "none",
                 fontFamily: '"Inter", system-ui, sans-serif',
-                userSelect: "none",
-                textAlign: "left",
+                borderRadius: "1rem 1rem 0 0",
+                display: "block"
               }}
-            >
-              {placeholderText}
-              <span style={{ opacity: 0.9, animation: "placeholder-caret 1s steps(1) infinite" }}>▍</span>
-            </div>
-          )}
-          <textarea ref={textareaRef} id="quick-generate-input" rows={3} value={value}
-            onChange={(e) => setValue(e.target.value)} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
-            onKeyDown={(e) => { if ((e.metaKey || e.ctrlKey) && e.key === "Enter") handleSubmit(e as unknown as React.FormEvent); }}
-            placeholder="" aria-label="Type your song idea, lyrics, or story"
-            style={{ width: "100%", padding: "1.1rem 1.25rem 3.5rem", background: "transparent", border: "none", outline: "none", color: "var(--text-primary)", fontSize: "1rem", lineHeight: 1.65, resize: "none", fontFamily: '"Inter", system-ui, sans-serif', borderRadius: "1rem" }}
-          />
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 0.85rem 0.75rem" }}>
+            />
+          </div>
+
+          {/* Footer Controls (in normal document flow, absolutely no overlapping possible!) */}
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0.2rem 1.25rem 0.85rem",
+            background: "transparent",
+            borderRadius: "0 0 1rem 1rem",
+          }}>
             <span style={{ fontSize: "0.72rem", color: value.length > 0 ? "var(--text-muted)" : "transparent", fontVariantNumeric: "tabular-nums", transition: "color 200ms" }}>
               {value.length} chars · ⌘↵ to generate
             </span>
@@ -446,7 +557,7 @@ export function QuickGenerate() {
                   <p style={{ fontSize: "0.82rem", color: "var(--text-secondary)", lineHeight: 1.4, maxHeight: 40, overflow: "hidden" }}>{value.slice(0, 200)}{value.length > 200 ? "…" : ""}</p>
                 </div>
 
-                <details className="advanced-dropdown" style={{ marginBottom: "0.75rem" }}>
+                <details className="advanced-dropdown" style={{ marginBottom: "1.25rem" }}>
                   <summary style={{
                     display: "flex",
                     alignItems: "center",
@@ -465,9 +576,22 @@ export function QuickGenerate() {
                     <CaretDown className="advanced-dropdown__icon" size={16} weight="bold" aria-hidden="true" />
                   </summary>
 
-                  <div style={{ padding: "0.75rem", borderRadius: "0.75rem", border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.025)" }}>
-                    <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.25rem" }}>Base Prompt (Optional)</p>
-                    <div style={{ marginBottom: "0.9rem" }}>
+                  <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1.2rem",
+                    maxHeight: "45vh",
+                    overflowY: "auto",
+                    padding: "1rem",
+                    borderRadius: "0.75rem",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    background: "rgba(255,255,255,0.025)",
+                    scrollbarWidth: "thin",
+                  }} className="customize-scrollable">
+                    
+                    {/* Base Prompt */}
+                    <div>
+                      <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Base Prompt (Optional)</p>
                       <textarea
                         value={basePrompt}
                         onChange={(e) => setBasePrompt(e.target.value)}
@@ -481,38 +605,91 @@ export function QuickGenerate() {
                       />
                     </div>
 
-                    <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.25rem" }}>Duration</p>
-                    <div style={{ display: "flex", gap: "0.35rem" }}>
-                      {DURATIONS.map((d) => (<button key={d.value} type="button" onClick={() => setDuration(d.value)} style={chipStyle(duration === d.value)}>{d.label}</button>))}
+                    {/* Vocal Type */}
+                    <div>
+                      <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Vocal Type</p>
+                      <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
+                        {["Female voice", "Male voice", "Children"].map((v) => (
+                          <button
+                            key={v}
+                            type="button"
+                            onClick={() => setVocalType(v)}
+                            style={chipStyle(vocalType === v)}
+                          >
+                            {v}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Duration */}
+                    <div>
+                      <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Duration</p>
+                      <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
+                        {DURATIONS.map((d) => (
+                          <button
+                            key={d.value}
+                            type="button"
+                            onClick={() => setDuration(d.value)}
+                            style={chipStyle(duration === d.value)}
+                          >
+                            {d.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Genre */}
+                    <div>
+                      <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Genre</p>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
+                        <button
+                          type="button"
+                          onClick={() => setGenre(null)}
+                          style={chipStyle(genre === null)}
+                        >
+                          All
+                        </button>
+                        {GENRES.map((g) => (
+                          <button
+                            key={g}
+                            type="button"
+                            onClick={() => setGenre(g)}
+                            style={chipStyle(genre === g)}
+                          >
+                            {g}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Mood */}
+                    <div>
+                      <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Mood</p>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
+                        <button
+                          type="button"
+                          onClick={() => setMood(null)}
+                          style={chipStyle(mood === null)}
+                        >
+                          All
+                        </button>
+                        {MOODS.map((m) => (
+                          <button
+                            key={m}
+                            type="button"
+                            onClick={() => setMood(m)}
+                            style={chipStyle(mood === m)}
+                          >
+                            {m}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </details>
 
-                {/* Theme */}
-                {/* 
-                <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.25rem" }}>Theme</p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", marginBottom: "0.75rem" }}>
-                  {THEMES.map((t) => (<button key={t} type="button" onClick={() => setTheme(theme === t ? null : t)} style={chipStyle(theme === t)}>{t}</button>))}
-                </div>
-                */}
-
-                {/* Genre */}
-                {/* 
-                <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.25rem" }}>Genre</p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", marginBottom: "0.75rem" }}>
-                  {GENRES.map((g) => (<button key={g} type="button" onClick={() => setGenre(genre === g ? null : g)} style={chipStyle(genre === g)}>{g}</button>))}
-                </div>
-                */}
-
-                {/* Mood */}
-                {/* 
-                <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.25rem" }}>Mood</p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", marginBottom: "0.75rem" }}>
-                  {MOODS.map((m) => (<button key={m} type="button" onClick={() => setMood(mood === m ? null : m)} style={chipStyle(mood === m)}>{m}</button>))}
-                </div>
-                */}
-
-                <button type="button" onClick={() => { setStep("details"); setError(null); }} style={{
+                <button type="button" onClick={handleProceedToEmail} style={{
                   width: "100%", padding: "0.75rem", borderRadius: "0.65rem", border: "none",
                   background: "linear-gradient(135deg, #6366f1, #818cf8)", color: "#fff",
                   fontSize: "0.92rem", fontWeight: 700, cursor: "pointer",

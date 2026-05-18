@@ -6,6 +6,16 @@ import { useRouter, useParams, useSearchParams } from "next/navigation";
 import { WavePlayer } from "@/components/ui/wave-player";
 import type { SongQueueEntry } from "@/lib/song-queue-store";
 
+function getLyricsSnippet(lyrics?: string): string {
+  if (!lyrics) return "AI Generated Song";
+  const clean = lyrics.replace(/\[[^\]]+\]/g, "").trim(); // Remove structural brackets like [Verse]
+  const lines = clean.split("\n").map(l => l.trim()).filter(Boolean);
+  if (lines.length === 0) return "AI Generated Song";
+  const firstLine = lines[0];
+  const truncated = firstLine.length > 28 ? firstLine.slice(0, 28) + "..." : firstLine;
+  return `... "${truncated}"`;
+}
+
 export default function SongPage() {
   const params = useParams();
   const searchParams = useSearchParams();
@@ -39,6 +49,8 @@ export default function SongPage() {
               genre: searchParams.get("genre"),
               mood: searchParams.get("mood"),
               duration: searchParams.get("duration") ? parseInt(searchParams.get("duration")!) : 30,
+              basePrompt: searchParams.get("basePrompt"),
+              vocalType: searchParams.get("vocalType"),
             }),
           });
           
@@ -53,6 +65,25 @@ export default function SongPage() {
             localStorage.setItem("songify_username", verifyData.username);
           }
           
+          // Track conversion in statistics only when user successfully verifies and lands!
+          const analyticsSessionId = searchParams.get("sessionId");
+          if (analyticsSessionId) {
+            fetch("/api/analytics", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                sessionId: analyticsSessionId,
+                status: "completed",
+                email: verifyEmail,
+                lyrics: searchParams.get("lyrics") || "",
+                theme: searchParams.get("theme"),
+                genre: searchParams.get("genre"),
+                mood: searchParams.get("mood"),
+                duration: searchParams.get("duration") ? parseInt(searchParams.get("duration")!) : 30,
+              }),
+            }).catch((err) => console.error("Analytics completed error", err));
+          }
+
             setVerifying(false);
             // Redirect to clean URL without params
             router.replace(`/song/${songId}`);
@@ -136,7 +167,7 @@ export default function SongPage() {
           </Link>
 
           <Link href="/" style={{ fontSize: "0.85rem", fontWeight: 700, color: accentColor, textDecoration: "none" }}>
-            Create Your Own
+            Generate new song
           </Link>
         </div>
 
@@ -152,11 +183,9 @@ export default function SongPage() {
                 {entry.mood && <span style={{ fontSize: "0.75rem", fontWeight: 800, padding: "0.3rem 0.8rem", borderRadius: "999px", background: "rgba(255,255,255,0.05)", color: "var(--text-secondary)", border: "1px solid rgba(255,255,255,0.1)", textTransform: "uppercase" }}>{entry.mood}</span>}
               </div>
               
-              {entry.songTitle && entry.songTitle !== "AI Generated Song" && (
-                <h1 className="text-4xl md:text-5xl lg:text-6xl" style={{ fontFamily: '"Space Grotesk", sans-serif', fontWeight: 800, color: "var(--text-primary)", lineHeight: 1.1, marginBottom: "1rem" }}>
-                  {entry.songTitle}
-                </h1>
-              )}
+              <h1 className="text-4xl md:text-5xl lg:text-6xl" style={{ fontFamily: '"Space Grotesk", sans-serif', fontWeight: 800, color: "var(--text-primary)", lineHeight: 1.1, marginBottom: "1rem" }}>
+                {getLyricsSnippet(entry.lyrics)}
+              </h1>
               
               <p style={{ fontSize: "1.1rem", color: "var(--text-secondary)", display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 Created by <Link href={`/explore?search=${entry.username}`} style={{ color: accentColor, fontWeight: 700, textDecoration: "none" }}>@{entry.username}</Link>
@@ -166,7 +195,7 @@ export default function SongPage() {
             {isCompleted ? (
               <WavePlayer
                 src={entry.songUrl!}
-                title={entry.songTitle}
+                title={getLyricsSnippet(entry.lyrics)}
                 artist={`@${entry.username}`}
                 genre={entry.genre ?? undefined}
                 duration={`${entry.duration}s`}
@@ -199,22 +228,86 @@ export default function SongPage() {
                 borderRadius: "1.25rem",
                 border: "1px solid rgba(99,102,241,0.2)",
                 background: "rgba(99,102,241,0.06)",
-                padding: "1.5rem",
-                minHeight: 220,
+                padding: "2.2rem 1.5rem",
+                minHeight: 260,
                 display: "flex",
                 flexDirection: "column",
+                alignItems: "center",
                 justifyContent: "center",
-                gap: "1rem",
+                gap: "1.25rem",
+                position: "relative",
+                overflow: "hidden",
+                textAlign: "center",
               }}>
-                <p style={{ fontSize: "0.75rem", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: "#a5b4fc" }}>
-                  Generating
-                </p>
-                <h2 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.5rem", fontWeight: 700, color: "var(--text-primary)", lineHeight: 1.2 }}>
-                  Your song is being assembled here.
-                </h2>
-                <p style={{ color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: 420, fontSize: "0.95rem" }}>
-                  You're in the right place. You can stay here and watch it appear, or we can send you another notification email when it's complete.
-                </p>
+                {/* Embedded Custom Animations */}
+                <style dangerouslySetInnerHTML={{__html: `
+                  @keyframes pulseGlow {
+                    0%, 100% { opacity: 0.15; transform: scale(0.95); }
+                    50% { opacity: 0.35; transform: scale(1.05); }
+                  }
+                  @keyframes waveBar {
+                    0%, 100% { height: 12px; }
+                    50% { height: 48px; }
+                  }
+                `}} />
+
+                {/* Glowing Background Radial */}
+                <div style={{
+                  position: "absolute",
+                  width: "200px",
+                  height: "200px",
+                  background: "radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%)",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  animation: "pulseGlow 4s infinite ease-in-out",
+                  pointerEvents: "none",
+                  zIndex: 0,
+                }} />
+
+                {/* Animated Equalizer Soundwave */}
+                <div style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "6px",
+                  height: "50px",
+                  zIndex: 1,
+                  marginBottom: "0.25rem",
+                }}>
+                  {[0.7, 1.2, 0.9, 1.5, 0.6, 1.3, 0.8, 1.6, 1.0, 1.4, 0.7].map((speed, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        width: "4px",
+                        borderRadius: "999px",
+                        background: `linear-gradient(to top, #6366f1, ${i % 2 === 0 ? "#a855f7" : "#2dd4bf"})`,
+                        animation: `waveBar ${speed}s infinite ease-in-out`,
+                        animationDelay: `${i * 0.08}s`,
+                        boxShadow: "0 0 12px rgba(99,102,241,0.3)",
+                      }}
+                    />
+                  ))}
+                </div>
+
+                <div style={{ zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
+                  <h2 style={{
+                    fontFamily: '"Space Grotesk", sans-serif',
+                    fontSize: "1.65rem",
+                    fontWeight: 800,
+                    color: "var(--text-primary)",
+                    lineHeight: 1.2,
+                    marginBottom: "0.6rem",
+                    letterSpacing: "-0.015em",
+                    textAlign: "center"
+                  }}>
+                    We are creating your song
+                  </h2>
+                  
+                  <p style={{ color: "var(--text-secondary)", lineHeight: 1.6, maxWidth: 440, fontSize: "0.9rem", textAlign: "center", margin: "0 auto" }}>
+                    We are generating your song, this will take some time. We will let you know when your song is successfully generated.
+                  </p>
+                </div>
                 
                 <div style={{ marginTop: "0.5rem" }}>
                   {notificationOptedIn ? (
@@ -268,16 +361,24 @@ export default function SongPage() {
           </div>
 
           {/* Right Side: Lyrics */}
-          <div className="h-[500px] lg:h-[85%] lg:my-auto bg-white/5 rounded-3xl border border-white/5 p-6 lg:p-10 flex flex-col">
+          <div className="h-[500px] lg:h-[85%] lg:my-auto bg-white/5 rounded-3xl border border-white/5 p-6 lg:p-10 flex flex-col" style={{ minHeight: 0 }}>
             {entry.lyrics ? (
-              <div style={{ display: "flex", flexDirection: "column", height: "100%", overflow: "hidden" }}>
+              <div style={{ display: "flex", flexDirection: "column", height: "100%", overflow: "hidden", minHeight: 0 }}>
                 <h2 style={{ fontSize: "0.85rem", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "1.5rem", flexShrink: 0 }}>
                   Lyrics
                 </h2>
                 <div style={{
-                  fontSize: "1.05rem", color: "var(--text-primary)", lineHeight: 1.9, whiteSpace: "pre-wrap",
-                  fontFamily: '"Outfit", sans-serif', opacity: 0.9,
-                  overflowY: "auto", flexGrow: 1, paddingRight: "0.5rem"
+                  fontSize: "1.05rem",
+                  color: "var(--text-primary)",
+                  lineHeight: 1.9,
+                  whiteSpace: "pre-wrap",
+                  fontFamily: '"Outfit", sans-serif',
+                  opacity: 0.9,
+                  overflowY: "auto",
+                  flexGrow: 1,
+                  paddingRight: "0.5rem",
+                  maxHeight: "100%",
+                  WebkitOverflowScrolling: "touch"
                 }} className="custom-scrollbar">
                   {entry.lyrics}
                 </div>

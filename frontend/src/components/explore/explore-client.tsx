@@ -16,7 +16,18 @@ type ExploreSong = {
   songUrl: string | null;
   completedAt: string | null;
   createdAt: string;
+  lyrics?: string;
 };
+
+function getLyricsSnippet(lyrics?: string): string {
+  if (!lyrics) return "AI Generated Song";
+  const clean = lyrics.replace(/\[[^\]]+\]/g, "").trim(); // Remove structural brackets like [Verse]
+  const lines = clean.split("\n").map(l => l.trim()).filter(Boolean);
+  if (lines.length === 0) return "AI Generated Song";
+  const firstLine = lines[0];
+  const truncated = firstLine.length > 28 ? firstLine.slice(0, 28) + "..." : firstLine;
+  return `${truncated}`;
+}
 
 const GENRES = ["All", "Pop", "Rock", "Hip-Hop", "R&B", "Country", "Jazz", "Lo-fi", "EDM", "Folk", "Classical"];
 const MOODS = ["All", "Happy", "Sad", "Energetic", "Calm", "Dark", "Dreamy", "Upbeat", "Melancholic"];
@@ -98,7 +109,7 @@ function ExploreContent() {
         page: String(page),
         limit: "20"
       }).toString();
-      
+
       const res = await fetch(`/api/song-queue/explore?${query}`);
       if (res.ok) {
         const data = await res.json();
@@ -123,7 +134,7 @@ function ExploreContent() {
     <div style={{ width: "100%" }}>
       {/* Search & Filters */}
       <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: "1.5rem", marginBottom: "3rem" }}>
-        
+
         {/* Search */}
         <div style={{
           position: "relative",
@@ -132,7 +143,7 @@ function ExploreContent() {
           flex: "1 1 300px", maxWidth: 600
         }}>
           <div style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "var(--text-muted)" }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>
           </div>
           <input
             type="text" value={searchInput} onChange={(e) => setSearchInput(e.target.value)}
@@ -146,7 +157,7 @@ function ExploreContent() {
 
         {/* Categories (Dropdown Filters) */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "center" }}>
-          
+
           {/* Genre Dropdown */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", position: "relative" }} ref={genreRef}>
             <span style={{ fontSize: "0.8rem", color: "var(--text-muted)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em" }}>Genre:</span>
@@ -306,13 +317,18 @@ function ExploreContent() {
         </div>
       ) : (
         <>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+            gap: "1.25rem",
+            width: "100%"
+          }}>
             {songs.map((song) => (
               <div key={song.songId}>
                 {song.songUrl && (
                   <WavePlayer
                     src={song.songUrl}
-                    title={song.songTitle}
+                    title={getLyricsSnippet(song.lyrics)}
                     artist={`@${song.username}`}
                     genre={song.genre ?? undefined}
                     duration={`${song.duration}s`}
@@ -339,7 +355,7 @@ function ExploreContent() {
               >
                 ← Previous
               </button>
-              
+
               <div style={{ fontSize: "0.9rem", color: "var(--text-muted)", fontWeight: 600 }}>
                 Page <span style={{ color: "var(--text-primary)" }}>{page}</span> of {totalPages}
               </div>
@@ -358,7 +374,7 @@ function ExploreContent() {
               </button>
             </div>
           )}
-          
+
           <p style={{ textAlign: "center", marginTop: "1.5rem", fontSize: "0.75rem", color: "var(--text-muted)" }}>
             Showing {songs.length} of {total} community songs
           </p>

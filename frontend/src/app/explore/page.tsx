@@ -37,7 +37,7 @@ export default function ExplorePage() {
 
         <ExploreClient />
 
-        <section style={{ marginTop: "4rem", maxWidth: 800, borderTop: "1px solid var(--border-subtle)", paddingTop: "2rem" }}>
+        <section style={{ display: "none" }}>
           <h2 style={{ fontSize: "1.5rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "1rem" }}>
             Discover What Our Text to Song Generator Can Create
           </h2>
@@ -67,7 +67,7 @@ export default function ExplorePage() {
           </ul>
         </section>
 
-        <section style={{ marginTop: "2.5rem", maxWidth: 800 }}>
+        <section style={{ display: "none" }}>
           <div className="glass-card" style={{ padding: "1.75rem" }}>
             <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.85rem" }}>The Power of Community-Driven AI Music</h2>
             <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>

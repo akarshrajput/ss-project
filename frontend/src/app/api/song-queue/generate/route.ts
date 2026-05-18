@@ -105,15 +105,14 @@ export async function POST(request: Request) {
     const seed = Math.floor(Math.random() * 999_999_999);
 
     const fakeInput = {
-      basePrompt:
-        "warm song, high quality production, clear vocal pronunciation",
+      basePrompt: entry.basePrompt || "",
       lyrics: entry.lyrics,
       lyricsMode: "use" as const,
-      genre: entry.genre,
+      genre: entry.genre || "",
       moods: entry.mood ? [entry.mood] : [],
       scene: entry.theme,
-      vocalType: "Female vocal",
-      vocalStyles: ["soft, gentle delivery"],
+      vocalType: entry.vocalType ? (entry.vocalType === "Children" ? "Children vocal" : entry.vocalType === "Male voice" ? "Male vocal" : "Female vocal") : "Female vocal",
+      vocalStyles: [],
       language: "en",
       accent: "US",
       bpm: 90,

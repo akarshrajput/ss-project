@@ -25,6 +25,8 @@ export async function POST(request: Request) {
       duration?: number;
       email?: string;
       username?: string;
+      basePrompt?: string;
+      vocalType?: string;
     };
 
     const lyrics = (body.lyrics ?? "").trim();
@@ -85,6 +87,8 @@ export async function POST(request: Request) {
       duration: body.duration && body.duration >= 10 && body.duration <= 180 ? body.duration : 30,
       email,
       username: finalUsername,
+      basePrompt: body.basePrompt?.trim() || null,
+      vocalType: body.vocalType?.trim() || null,
     });
 
     return NextResponse.json({ success: true, songId: entry.songId });

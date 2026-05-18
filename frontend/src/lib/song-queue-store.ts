@@ -25,6 +25,8 @@ export type SongQueueEntry = {
   completedAt: Date | null;
   rejectedAt: Date | null;
   rejectionComment: string | null;
+  basePrompt: string | null;
+  vocalType: string | null;
 };
 
 const COLLECTION = "songsQueue";
@@ -61,6 +63,8 @@ export async function createSongQueueEntry(data: {
   email: string;
   username: string;
   songId?: string;
+  basePrompt?: string | null;
+  vocalType?: string | null;
 }): Promise<SongQueueEntry> {
   const db = await getMongoDb();
   const now = new Date();
@@ -86,6 +90,8 @@ export async function createSongQueueEntry(data: {
     completedAt: null,
     rejectedAt: null,
     rejectionComment: null,
+    basePrompt: data.basePrompt || null,
+    vocalType: data.vocalType || null,
   };
 
   const result = await db.collection<SongQueueEntry>(COLLECTION).insertOne(entry);
@@ -275,6 +281,8 @@ export async function saveDirectSong(data: {
     completedAt: now,
     rejectedAt: null,
     rejectionComment: null,
+    basePrompt: null,
+    vocalType: null,
   };
 
   await db.collection<SongQueueEntry>(COLLECTION).insertOne(entry);

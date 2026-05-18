@@ -12,6 +12,8 @@ export async function POST(request: Request) {
       genre?: string | null;
       mood?: string | null;
       duration?: number;
+      basePrompt?: string | null;
+      vocalType?: string | null;
     };
 
     if (!body.email || !body.songId) {
@@ -65,6 +67,8 @@ export async function POST(request: Request) {
       email: normalizedEmail,
       username,
       songId: body.songId,
+      basePrompt: body.basePrompt || null,
+      vocalType: body.vocalType || null,
     });
 
     return NextResponse.json({

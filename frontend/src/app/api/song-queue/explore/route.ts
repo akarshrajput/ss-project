@@ -27,6 +27,7 @@ export async function GET(request: Request) {
       songUrl: e.songUrl,
       completedAt: e.completedAt,
       createdAt: e.createdAt,
+      lyrics: e.lyrics,
     }));
 
     return NextResponse.json({

@@ -103,7 +103,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
         )}
 
         {/* Quick links */}
-        <div style={{ display: "grid", gap: "0.75rem", gridTemplateColumns: "1fr 1fr", maxWidth: 560, marginBottom: "1.5rem" }}>
+        <div style={{ display: "grid", gap: "0.75rem", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", maxWidth: 760, marginBottom: "1.5rem" }}>
           <a
             href="/admin/songs-queue-management"
             style={{
@@ -123,6 +123,27 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
               <p style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>Manage pending requests</p>
             </div>
           </a>
+          
+          <a
+            href="/admin/statistics"
+            style={{
+              ...cardStyle,
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
+              transition: "border-color 220ms, box-shadow 220ms",
+            }}
+          >
+            <div style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(245,158,11,0.12)", border: "1px solid rgba(245,158,11,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <div>
+              <p style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--text-primary)" }}>Statistics</p>
+              <p style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>Track user funnel & drop-offs</p>
+            </div>
+          </a>
+
           <a
             href="/explore"
             style={{
