@@ -3,9 +3,12 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/json-ld";
 import { absoluteUrl, buildMetadata, siteConfig } from "@/lib/seo";
 import { buildBreadcrumbSchema } from "@/lib/structured-data";
+import { DemoSongs } from "@/components/ui/demo-songs";
 import { SongDemoSection } from "@/components/ui/song-demo-section";
 import { QuickGenerate } from "@/components/ui/quick-generate";
 import { servicePages } from "@/lib/services";
+
+void SongDemoSection;
 
 export const metadata: Metadata = buildMetadata({
   title: "Songify: Free AI Text to Song Generator Online",
@@ -281,6 +284,8 @@ export default async function Home() {
         <p className="mt-6 text-xs" style={{ color: "var(--text-muted)" }}>
           Free · No account needed · 50,000+ songs created
         </p>
+
+        <DemoSongs />
 
       </section>
 
