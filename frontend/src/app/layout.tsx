@@ -55,6 +55,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           src="https://pl29271015.profitablecpmratenetwork.com/14/8c/bb/148cbbba0250227fb706c1c9ebf0d73c.js"
           strategy="afterInteractive"
         /> */}
+        <meta name="admaven-placement" content="Bqjs5rdCF" />
         <JSONLD />
       </head>
       <body style={{ minHeight: "100vh", background: "var(--bg-base)", color: "var(--text-primary)" }}>
