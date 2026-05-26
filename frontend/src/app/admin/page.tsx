@@ -103,7 +103,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
         )}
 
         {/* Quick links */}
-        <div style={{ display: "grid", gap: "0.75rem", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", maxWidth: 760, marginBottom: "1.5rem" }}>
+        <div style={{ display: "grid", gap: "0.75rem", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", maxWidth: 1020, marginBottom: "1.5rem" }}>
           <a
             href="/admin/songs-queue-management"
             style={{
@@ -141,6 +141,26 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
             <div>
               <p style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--text-primary)" }}>Statistics</p>
               <p style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>Track user funnel & drop-offs</p>
+            </div>
+          </a>
+
+          <a
+            href="/admin/analytics"
+            style={{
+              ...cardStyle,
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
+              transition: "border-color 220ms, box-shadow 220ms",
+            }}
+          >
+            <div style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(244,63,94,0.12)", border: "1px solid rgba(244,63,94,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </div>
+            <div>
+              <p style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--text-primary)" }}>Analytics</p>
+              <p style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>Interactive real-time metrics</p>
             </div>
           </a>
 

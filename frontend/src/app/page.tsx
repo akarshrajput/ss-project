@@ -272,7 +272,7 @@ export default async function Home() {
           className="fade-up-delay-2 mt-6 text-lg leading-8 max-w-2xl mx-auto"
           style={{ color: "var(--text-secondary)" }}
         >
-          Songify is the #1 <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> online — paste any idea and our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong> writes the music for you. <strong style={{ color: "var(--text-primary)" }}>Convert text to song</strong> free, instantly.
+          Songify is the #1 <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> online — paste any idea and our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong> writes the music for you. <strong style={{ color: "var(--text-primary)" }}>Convert text to song</strong> free, instantly — then publish and make money on Spotify.
         </p>
 
         {/* ─── Quick Generate input — the tool IS the CTA ────────────── */}

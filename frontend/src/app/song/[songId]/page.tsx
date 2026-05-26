@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { useRouter, useParams, useSearchParams } from "next/navigation";
 import { WavePlayer } from "@/components/ui/wave-player";
 import type { SongQueueEntry } from "@/lib/song-queue-store";
+import { convertMp3UrlToWav } from "@/lib/audio-converter";
+import { SpotifyLogo } from "@phosphor-icons/react";
 
 function getLyricsSnippet(lyrics?: string): string {
   if (!lyrics) return "AI Generated Song";
@@ -13,31 +15,57 @@ function getLyricsSnippet(lyrics?: string): string {
   if (lines.length === 0) return "AI Generated Song";
   const firstLine = lines[0];
   const truncated = firstLine.length > 28 ? firstLine.slice(0, 28) + "..." : firstLine;
-  return `... "${truncated}"`;
+  return `"${truncated}"`;
 }
 
 export default function SongPage() {
   const params = useParams();
   const searchParams = useSearchParams();
   const songId = params.songId as string;
-  
-    const router = useRouter();
-    const [entry, setEntry] = useState<SongQueueEntry | null>(null);
+
+  const router = useRouter();
+  const [entry, setEntry] = useState<SongQueueEntry | null>(null);
   const [loading, setLoading] = useState(true);
   const [verifying, setVerifying] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notificationOptedIn, setNotificationOptedIn] = useState(false);
+
+  const [wavStatus, setWavStatus] = useState<"idle" | "fetching" | "decoding" | "encoding" | "done" | "error">("idle");
+
+  const handleDownloadForSpotify = async () => {
+    if (!entry || !entry.songUrl) return;
+    try {
+      const rawTitle = entry.songTitle || "AI Song";
+      const cleanTitle = rawTitle.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      const fileName = `${cleanTitle}-for-spotify`;
+
+      await convertMp3UrlToWav(entry.songUrl, fileName, (stage) => {
+        setWavStatus(stage);
+      });
+
+      // Auto-reset state to idle after download completes
+      setTimeout(() => {
+        setWavStatus("idle");
+      }, 4000);
+    } catch (err) {
+      console.error("WAV download failed:", err);
+      setWavStatus("error");
+      setTimeout(() => {
+        setWavStatus("idle");
+      }, 4000);
+    }
+  };
 
   useEffect(() => {
     const init = async () => {
       try {
         // Check if this is a verification link
         const verifyEmail = searchParams.get("verifyEmail");
-        
+
         if (verifyEmail) {
           // User clicked email link - verify and create entry
           setVerifying(true);
-          
+
           const verifyRes = await fetch("/api/song-queue/verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -53,18 +81,18 @@ export default function SongPage() {
               vocalType: searchParams.get("vocalType"),
             }),
           });
-          
+
           const verifyData = await verifyRes.json();
           if (!verifyRes.ok) {
             throw new Error(verifyData.error || "Verification failed");
           }
-          
+
           // Store email and username in localStorage after successful verification
           if (typeof window !== "undefined") {
             localStorage.setItem("songify_email", verifyData.email);
             localStorage.setItem("songify_username", verifyData.username);
           }
-          
+
           // Track conversion in statistics only when user successfully verifies and lands!
           const analyticsSessionId = searchParams.get("sessionId");
           if (analyticsSessionId) {
@@ -84,19 +112,19 @@ export default function SongPage() {
             }).catch((err) => console.error("Analytics completed error", err));
           }
 
-            setVerifying(false);
-            // Redirect to clean URL without params
-            router.replace(`/song/${songId}`);
+          setVerifying(false);
+          // Redirect to clean URL without params
+          router.replace(`/song/${songId}`);
         }
-        
+
         // Fetch the song entry via API
         const songRes = await fetch(`/api/song-queue/${songId}`);
         const songData = await songRes.json();
-        
+
         if (!songRes.ok) {
           throw new Error(songData.error || "Song not found");
         }
-        
+
         setEntry(songData);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Error loading song");
@@ -161,32 +189,73 @@ export default function SongPage() {
           }}
             className="hover:bg-white/5"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m15 18-6-6 6-6"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m15 18-6-6 6-6" /></svg>
             <span className="hidden sm:inline">Explore Community</span>
             <span className="sm:hidden">Explore</span>
           </Link>
 
-          <Link href="/" style={{ fontSize: "0.85rem", fontWeight: 700, color: accentColor, textDecoration: "none" }}>
-            Generate new song
-          </Link>
+          {isCompleted && (
+            <button
+              onClick={handleDownloadForSpotify}
+              disabled={wavStatus !== "idle" && wavStatus !== "done" && wavStatus !== "error"}
+              style={{
+                background: "#1DB954",
+                color: "#000000",
+                border: "none",
+                borderRadius: "9999px",
+                padding: "0.5rem 1.2rem",
+                fontSize: "0.75rem",
+                fontWeight: 800,
+                letterSpacing: "0.03rem",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                transition: "all 150ms ease-in-out",
+                boxShadow: "0 4px 12px rgba(29, 185, 84, 0.25)",
+              }}
+              onMouseEnter={(e) => {
+                const btn = e.currentTarget as HTMLButtonElement;
+                if (!btn.disabled) {
+                  btn.style.background = "#1ED760";
+                  btn.style.transform = "scale(1.04)";
+                  btn.style.boxShadow = "0 6px 16px rgba(29, 185, 84, 0.4)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                const btn = e.currentTarget as HTMLButtonElement;
+                btn.style.background = "#1DB954";
+                btn.style.transform = "none";
+                btn.style.boxShadow = "0 4px 12px rgba(29, 185, 84, 0.25)";
+              }}
+            >
+              <SpotifyLogo size={16} weight="fill" />
+              {wavStatus === "idle" && "Download for Spotify"}
+              {wavStatus === "fetching" && "Downloading..."}
+              {wavStatus === "decoding" && "Decoding..."}
+              {wavStatus === "encoding" && "Converting to WAV..."}
+              {wavStatus === "done" && "Downloaded (.wav)"}
+              {wavStatus === "error" && "Error - Retry"}
+            </button>
+          )}
         </div>
 
         {/* Compact Layout: 1 Column Mobile, 2 Columns Desktop */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 flex-grow min-h-0 pb-8 lg:pb-0">
-          
+
           {/* Left Side: Metadata & Player */}
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", paddingTop: "1rem" }} className="h-auto lg:h-[85%] lg:my-auto">
-            
+
             <div style={{ marginBottom: "2rem" }}>
               <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem" }}>
                 {entry.genre && <span style={{ fontSize: "0.75rem", fontWeight: 800, padding: "0.3rem 0.8rem", borderRadius: "999px", background: "rgba(255,255,255,0.05)", color: "var(--text-secondary)", border: "1px solid rgba(255,255,255,0.1)", textTransform: "uppercase" }}>{entry.genre}</span>}
                 {entry.mood && <span style={{ fontSize: "0.75rem", fontWeight: 800, padding: "0.3rem 0.8rem", borderRadius: "999px", background: "rgba(255,255,255,0.05)", color: "var(--text-secondary)", border: "1px solid rgba(255,255,255,0.1)", textTransform: "uppercase" }}>{entry.mood}</span>}
               </div>
-              
+
               <h1 className="text-4xl md:text-5xl lg:text-6xl" style={{ fontFamily: '"Space Grotesk", sans-serif', fontWeight: 800, color: "var(--text-primary)", lineHeight: 1.1, marginBottom: "1rem" }}>
                 {getLyricsSnippet(entry.lyrics)}
               </h1>
-              
+
               <p style={{ fontSize: "1.1rem", color: "var(--text-secondary)", display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 Created by <Link href={`/explore?search=${entry.username}`} style={{ color: accentColor, fontWeight: 700, textDecoration: "none" }}>@{entry.username}</Link>
               </p>
@@ -240,7 +309,8 @@ export default function SongPage() {
                 textAlign: "center",
               }}>
                 {/* Embedded Custom Animations */}
-                <style dangerouslySetInnerHTML={{__html: `
+                <style dangerouslySetInnerHTML={{
+                  __html: `
                   @keyframes pulseGlow {
                     0%, 100% { opacity: 0.15; transform: scale(0.95); }
                     50% { opacity: 0.35; transform: scale(1.05); }
@@ -303,12 +373,12 @@ export default function SongPage() {
                   }}>
                     We are creating your song
                   </h2>
-                  
+
                   <p style={{ color: "var(--text-secondary)", lineHeight: 1.6, maxWidth: 440, fontSize: "0.9rem", textAlign: "center", margin: "0 auto" }}>
                     We are generating your song, this will take some time. We will let you know when your song is successfully generated.
                   </p>
                 </div>
-                
+
                 <div style={{ marginTop: "0.5rem" }}>
                   {notificationOptedIn ? (
                     <p style={{ fontSize: "0.9rem", color: "#86efac", display: "flex", alignItems: "center", gap: "0.5rem" }}>
@@ -352,7 +422,7 @@ export default function SongPage() {
                     ? "Status: Rejected"
                     : "Status: Processing"}
               </p>
-              
+
               <div style={{ display: "flex", gap: "1rem" }}>
                 <button style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", fontSize: "0.9rem" }}>Share</button>
                 <button style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", fontSize: "0.9rem" }}>Report</button>
@@ -384,9 +454,9 @@ export default function SongPage() {
                 </div>
               </div>
             ) : (
-               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "var(--text-muted)" }}>
-                 {isCompleted ? "No lyrics available." : isRejected ? "This request was rejected by admin." : "Lyrics will appear when the song is ready."}
-               </div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", color: "var(--text-muted)" }}>
+                {isCompleted ? "No lyrics available." : isRejected ? "This request was rejected by admin." : "Lyrics will appear when the song is ready."}
+              </div>
             )}
           </div>
         </div>

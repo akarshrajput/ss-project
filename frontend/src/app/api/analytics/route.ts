@@ -27,6 +27,26 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Valid status is required." }, { status: 400 });
     }
 
+    const userAgent = request.headers.get("user-agent") || null;
+    
+    // Determine country code from Vercel / Cloudflare headers, with fallback to Accept-Language locale
+    let country = request.headers.get("x-vercel-ip-country") || 
+                  request.headers.get("cf-ipcountry") || 
+                  null;
+                  
+    if (!country) {
+      const acceptLanguage = request.headers.get("accept-language");
+      if (acceptLanguage) {
+        // Match language-region code, e.g. "en-US" and extract region "US"
+        const match = acceptLanguage.match(/[a-z]{2}-([A-Z]{2})/);
+        if (match && match[1]) {
+          country = match[1];
+        }
+      }
+    }
+    
+    country = country ? country.toUpperCase().slice(0, 2) : "Unknown";
+
     await trackSessionEvent({
       sessionId,
       status,
@@ -37,6 +57,8 @@ export async function POST(request: Request) {
       duration: body.duration,
       basePrompt: body.basePrompt,
       email: body.email,
+      country,
+      userAgent,
     });
 
     return NextResponse.json({ success: true });
