@@ -62,7 +62,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body style={{ minHeight: "100vh", background: "var(--bg-base)", color: "var(--text-primary)" }}>
         <PageviewTracker />
         <div className="app-bg">
-          <div className="app-bg-grid" />
         </div>
         <div className="relative flex min-h-screen flex-col">
           <SiteHeader />

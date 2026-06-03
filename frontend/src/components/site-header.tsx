@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getAppUserProfile } from "@/lib/app-store";
 import { createOptionalSupabaseServerClient } from "@/lib/supabase/server";
 
@@ -17,24 +18,18 @@ export async function SiteHeader() {
   const profile = user ? await getAppUserProfile(user.id) : null;
 
   return (
-    <header className="sticky top-0 z-40" style={{ boxShadow: "0 16px 32px -8px var(--bg-base)", background: "rgba(6,8,16,0.82)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)" }}>
+    <header className="sticky top-0 z-40" style={{ boxShadow: "0 16px 32px -8px var(--bg-base)", background: "rgba(14, 24, 33, 0.82)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)" }}>
       <div className="site-container flex w-full items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group" style={{ textDecoration: "none" }}>
-          <div style={{
-            width: 32, height: 32, borderRadius: 9,
-            background: "linear-gradient(135deg, #6366f1, #2dd4bf)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: "0 0 16px rgba(99,102,241,0.4)",
-            transition: "box-shadow 200ms ease",
-          }}
-            className="group-hover:shadow-[0_0_24px_rgba(99,102,241,0.6)]"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="M9 18V5l12-2v13M9 18c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-2c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
+          <Image
+            src="/songify-logo.png"
+            alt="Songify"
+            width={32}
+            height={32}
+            className="rounded-[9px] shadow-[0_0_16px_rgba(99,102,241,0.4)] transition-shadow duration-200 group-hover:shadow-[0_0_24px_rgba(99,102,241,0.6)]"
+          />
           <span style={{ fontSize: "1.05rem", fontWeight: 700, color: "#f1f5f9", fontFamily: '"Space Grotesk", sans-serif', letterSpacing: "-0.02em" }}>
             Songify
           </span>

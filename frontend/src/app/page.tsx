@@ -252,7 +252,7 @@ export default async function Home() {
       <section className="site-container px-4 pt-20 pb-12 sm:px-6 lg:px-8 text-center">
         <div className="fade-up">
           <span className="hero-kicker">
-            <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#2dd4bf" /></svg>
+            <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#6366f1" /></svg>
             Free AI Song Generator
           </span>
         </div>
