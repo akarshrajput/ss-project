@@ -10,6 +10,7 @@ export type AppUserProfile = {
   email: string | null;
   fullName: string | null;
   role: AppUserRole;
+  isVerified: boolean;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -47,7 +48,7 @@ function readFullName(user: Pick<User, "email" | "user_metadata">) {
   return null;
 }
 
-export async function upsertAppUserProfile(user: User) {
+export async function upsertAppUserProfile(user: User, isVerified: boolean = true) {
   const db = await getMongoDbOrNull();
 
   if (!db) {
@@ -67,6 +68,7 @@ export async function upsertAppUserProfile(user: User) {
       $setOnInsert: {
         userId: user.id,
         role: "user",
+        isVerified,
         createdAt: now,
       },
     },
@@ -113,7 +115,6 @@ export async function setAppUserRole(userId: string, role: AppUserRole) {
         userId,
         email: null,
         fullName: null,
-        role,
         createdAt: now,
       },
     },
@@ -191,4 +192,98 @@ export async function setComfyUiBaseUrl(comfyUiUrl: string, updatedBy: string) {
     },
     { upsert: true },
   );
+}
+
+import crypto from "crypto";
+
+export type EmailOtp = {
+  _id?: any;
+  userId?: string;
+  email: string;
+  otp: string;
+  expiresAt: Date;
+  createdAt: Date;
+  payload?: string; // encrypted JSON payload
+};
+
+const ENCRYPTION_KEY = process.env.STRIPE_SECRET_KEY 
+  ? process.env.STRIPE_SECRET_KEY.slice(0, 32).padEnd(32, '0') 
+  : "12345678901234567890123456789012";
+
+function encryptPayload(text: string): string {
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipheriv("aes-256-cbc", Buffer.from(ENCRYPTION_KEY), iv);
+  let encrypted = cipher.update(text);
+  encrypted = Buffer.concat([encrypted, cipher.final()]);
+  return iv.toString("hex") + ":" + encrypted.toString("hex");
+}
+
+export function decryptPayload(text: string): string {
+  const textParts = text.split(":");
+  const iv = Buffer.from(textParts.shift()!, "hex");
+  const encryptedText = Buffer.from(textParts.join(":"), "hex");
+  const decipher = crypto.createDecipheriv("aes-256-cbc", Buffer.from(ENCRYPTION_KEY), iv);
+  let decrypted = decipher.update(encryptedText);
+  decrypted = Buffer.concat([decrypted, decipher.final()]);
+  return decrypted.toString();
+}
+
+export async function createEmailOtp(userId: string | undefined, email: string, payload?: any): Promise<string> {
+  const db = await getMongoDb();
+  
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  const now = new Date();
+  const expiresAt = new Date(now.getTime() + 15 * 60 * 1000); // 15 minutes
+  
+  const doc: EmailOtp = {
+    email,
+    otp,
+    expiresAt,
+    createdAt: now,
+  };
+
+  if (userId) doc.userId = userId;
+  if (payload) {
+    doc.payload = encryptPayload(JSON.stringify(payload));
+  }
+
+  // Delete any existing OTPs for this email to prevent spam
+  await db.collection<EmailOtp>("email_otps").deleteMany({ email });
+
+  await db.collection<EmailOtp>("email_otps").insertOne(doc);
+
+  return otp;
+}
+
+export async function verifyEmailOtp(email: string, otp: string): Promise<any | boolean> {
+  const db = await getMongoDb();
+  const now = new Date();
+
+  const record = await db.collection<EmailOtp>("email_otps").findOne({
+    email,
+    otp,
+    expiresAt: { $gt: now }
+  });
+
+  if (record) {
+    if (record.userId) {
+      await db.collection<AppUserProfile>("users").updateOne(
+        { userId: record.userId },
+        { $set: { isVerified: true, updatedAt: now } }
+      );
+    }
+    
+    await db.collection<EmailOtp>("email_otps").deleteOne({ _id: record._id });
+    
+    if (record.payload) {
+      try {
+        return JSON.parse(decryptPayload(record.payload));
+      } catch (e) {
+        return true;
+      }
+    }
+    return true;
+  }
+
+  return false;
 }

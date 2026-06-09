@@ -236,7 +236,7 @@ export function QuickGenerate() {
       });
       const songIdData = await songIdRes.json();
       if (!songIdRes.ok) throw new Error("Failed to generate song ID.");
-      
+
       const songId = songIdData.songId;
       setSubmittedSongId(songId);
 
@@ -510,8 +510,8 @@ export function QuickGenerate() {
               cursor: value.trim() ? "pointer" : "default",
               boxShadow: value.trim() ? "0 0 20px rgba(99,102,241,0.4)" : "none", transition: "all 200ms ease",
             }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3" /></svg>
-              Generate
+              {/* <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3" /></svg> */}
+              Generate free song
             </button>
           </div>
         </div>
@@ -540,239 +540,239 @@ export function QuickGenerate() {
               boxShadow: "0 0 60px rgba(99,102,241,0.15), 0 24px 80px rgba(0,0,0,0.6)",
               animation: "modal-in 0.25s ease",
             }}>
-            {/* Close button */}
-            <button onClick={closeModal} style={{ position: "absolute", top: 16, right: 16, background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", fontSize: "1.2rem", lineHeight: 1 }} aria-label="Close">✕</button>
+              {/* Close button */}
+              <button onClick={closeModal} style={{ position: "absolute", top: 16, right: 16, background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", fontSize: "1.2rem", lineHeight: 1 }} aria-label="Close">✕</button>
 
-            {/* ── Step 1: Options ─────────────────────────── */}
-            {step === "options" && (
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.75rem" }}>
-                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#6366f1", boxShadow: "0 0 8px #6366f1" }} />
-                  <span style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#a5b4fc" }}>Customize Your Song</span>
-                </div>
+              {/* ── Step 1: Options ─────────────────────────── */}
+              {step === "options" && (
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.75rem" }}>
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#6366f1", boxShadow: "0 0 8px #6366f1" }} />
+                    <span style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#a5b4fc" }}>Customize Your Song</span>
+                  </div>
 
-                {/* Lyrics preview */}
-                <div style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "0.6rem", padding: "0.5rem 0.85rem", marginBottom: "0.75rem" }}>
-                  <p style={{ fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--text-muted)", marginBottom: "0.15rem" }}>Your Lyrics</p>
-                  <p style={{ fontSize: "0.82rem", color: "var(--text-secondary)", lineHeight: 1.4, maxHeight: 40, overflow: "hidden" }}>{value.slice(0, 200)}{value.length > 200 ? "…" : ""}</p>
-                </div>
+                  {/* Lyrics preview */}
+                  <div style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "0.6rem", padding: "0.5rem 0.85rem", marginBottom: "0.75rem" }}>
+                    <p style={{ fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--text-muted)", marginBottom: "0.15rem" }}>Your Lyrics</p>
+                    <p style={{ fontSize: "0.82rem", color: "var(--text-secondary)", lineHeight: 1.4, maxHeight: 40, overflow: "hidden" }}>{value.slice(0, 200)}{value.length > 200 ? "…" : ""}</p>
+                  </div>
 
-                <details className="advanced-dropdown" style={{ marginBottom: "1.25rem" }}>
-                  <summary style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    listStyle: "none",
-                    cursor: "pointer",
-                    fontSize: "0.78rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: "#a5b4fc",
-                    marginBottom: "0.75rem",
-                    userSelect: "none",
+                  <details className="advanced-dropdown" style={{ marginBottom: "1.25rem" }}>
+                    <summary style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      listStyle: "none",
+                      cursor: "pointer",
+                      fontSize: "0.78rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      color: "#a5b4fc",
+                      marginBottom: "0.75rem",
+                      userSelect: "none",
+                    }}>
+                      <span>Advanced</span>
+                      <CaretDown className="advanced-dropdown__icon" size={16} weight="bold" aria-hidden="true" />
+                    </summary>
+
+                    <div style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "1.2rem",
+                      maxHeight: "45vh",
+                      overflowY: "auto",
+                      padding: "1rem",
+                      borderRadius: "0.75rem",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      background: "rgba(255,255,255,0.025)",
+                      scrollbarWidth: "thin",
+                    }} className="customize-scrollable">
+
+                      {/* Base Prompt */}
+                      <div>
+                        <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Base Prompt (Optional)</p>
+                        <textarea
+                          value={basePrompt}
+                          onChange={(e) => setBasePrompt(e.target.value)}
+                          placeholder="Describe the style, instruments, or vibe..."
+                          rows={2}
+                          style={{
+                            width: "100%", padding: "0.5rem 0.85rem", borderRadius: "0.5rem", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.04)", color: "var(--text-primary)", fontSize: "0.88rem", outline: "none", fontFamily: "inherit", transition: "border-color 150ms", resize: "none"
+                          }}
+                          onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(99,102,241,0.6)"; }}
+                          onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
+                        />
+                      </div>
+
+                      {/* Vocal Type */}
+                      <div>
+                        <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Vocal Type</p>
+                        <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
+                          {["Female voice", "Male voice", "Children"].map((v) => (
+                            <button
+                              key={v}
+                              type="button"
+                              onClick={() => setVocalType(v)}
+                              style={chipStyle(vocalType === v)}
+                            >
+                              {v}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Duration */}
+                      <div>
+                        <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Duration</p>
+                        <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
+                          {DURATIONS.map((d) => (
+                            <button
+                              key={d.value}
+                              type="button"
+                              onClick={() => setDuration(d.value)}
+                              style={chipStyle(duration === d.value)}
+                            >
+                              {d.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Genre */}
+                      <div>
+                        <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Genre</p>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
+                          <button
+                            type="button"
+                            onClick={() => setGenre(null)}
+                            style={chipStyle(genre === null)}
+                          >
+                            All
+                          </button>
+                          {GENRES.map((g) => (
+                            <button
+                              key={g}
+                              type="button"
+                              onClick={() => setGenre(g)}
+                              style={chipStyle(genre === g)}
+                            >
+                              {g}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Mood */}
+                      <div>
+                        <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Mood</p>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
+                          <button
+                            type="button"
+                            onClick={() => setMood(null)}
+                            style={chipStyle(mood === null)}
+                          >
+                            All
+                          </button>
+                          {MOODS.map((m) => (
+                            <button
+                              key={m}
+                              type="button"
+                              onClick={() => setMood(m)}
+                              style={chipStyle(mood === m)}
+                            >
+                              {m}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+
+                  <button type="button" onClick={handleProceedToEmail} style={{
+                    width: "100%", padding: "0.75rem", borderRadius: "0.65rem", border: "none",
+                    background: "linear-gradient(135deg, #6366f1, #818cf8)", color: "#fff",
+                    fontSize: "0.92rem", fontWeight: 700, cursor: "pointer",
+                    boxShadow: "0 0 20px rgba(99,102,241,0.3)", transition: "opacity 180ms",
                   }}>
-                    <span>Advanced</span>
-                    <CaretDown className="advanced-dropdown__icon" size={16} weight="bold" aria-hidden="true" />
-                  </summary>
-
-                  <div style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "1.2rem",
-                    maxHeight: "45vh",
-                    overflowY: "auto",
-                    padding: "1rem",
-                    borderRadius: "0.75rem",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    background: "rgba(255,255,255,0.025)",
-                    scrollbarWidth: "thin",
-                  }} className="customize-scrollable">
-                    
-                    {/* Base Prompt */}
-                    <div>
-                      <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Base Prompt (Optional)</p>
-                      <textarea
-                        value={basePrompt}
-                        onChange={(e) => setBasePrompt(e.target.value)}
-                        placeholder="Describe the style, instruments, or vibe..."
-                        rows={2}
-                        style={{
-                          width: "100%", padding: "0.5rem 0.85rem", borderRadius: "0.5rem", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.04)", color: "var(--text-primary)", fontSize: "0.88rem", outline: "none", fontFamily: "inherit", transition: "border-color 150ms", resize: "none"
-                        }}
-                        onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(99,102,241,0.6)"; }}
-                        onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
-                      />
-                    </div>
-
-                    {/* Vocal Type */}
-                    <div>
-                      <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Vocal Type</p>
-                      <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
-                        {["Female voice", "Male voice", "Children"].map((v) => (
-                          <button
-                            key={v}
-                            type="button"
-                            onClick={() => setVocalType(v)}
-                            style={chipStyle(vocalType === v)}
-                          >
-                            {v}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Duration */}
-                    <div>
-                      <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Duration</p>
-                      <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
-                        {DURATIONS.map((d) => (
-                          <button
-                            key={d.value}
-                            type="button"
-                            onClick={() => setDuration(d.value)}
-                            style={chipStyle(duration === d.value)}
-                          >
-                            {d.label}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Genre */}
-                    <div>
-                      <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Genre</p>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
-                        <button
-                          type="button"
-                          onClick={() => setGenre(null)}
-                          style={chipStyle(genre === null)}
-                        >
-                          All
-                        </button>
-                        {GENRES.map((g) => (
-                          <button
-                            key={g}
-                            type="button"
-                            onClick={() => setGenre(g)}
-                            style={chipStyle(genre === g)}
-                          >
-                            {g}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Mood */}
-                    <div>
-                      <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Mood</p>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
-                        <button
-                          type="button"
-                          onClick={() => setMood(null)}
-                          style={chipStyle(mood === null)}
-                        >
-                          All
-                        </button>
-                        {MOODS.map((m) => (
-                          <button
-                            key={m}
-                            type="button"
-                            onClick={() => setMood(m)}
-                            style={chipStyle(mood === m)}
-                          >
-                            {m}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </details>
-
-                <button type="button" onClick={handleProceedToEmail} style={{
-                  width: "100%", padding: "0.75rem", borderRadius: "0.65rem", border: "none",
-                  background: "linear-gradient(135deg, #6366f1, #818cf8)", color: "#fff",
-                  fontSize: "0.92rem", fontWeight: 700, cursor: "pointer",
-                  boxShadow: "0 0 20px rgba(99,102,241,0.3)", transition: "opacity 180ms",
-                }}>
-                  Continue →
-                </button>
-              </div>
-            )}
-
-            {/* ── Step 2: Details ─────────────────────────── */}
-            {step === "details" && (
-              <div>
-                <button type="button" onClick={() => setStep("options")} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", fontSize: "0.8rem", marginBottom: "0.75rem", padding: 0 }}>← Back</button>
-                
-                {magicLinkSent ? (
-                  <div style={{ textAlign: "center", padding: "1.5rem 0 2rem" }}>
-                    <div style={{ width: 64, height: 64, borderRadius: "50%", background: "rgba(99,102,241,0.15)", border: "2px solid rgba(99,102,241,0.3)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.25rem", fontSize: "1.8rem" }}>✉️</div>
-                    <h2 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.35rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.5rem" }}>Check Your Inbox</h2>
-                    <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
-                      We sent you a song access link, please check your email.<br/>
-                      <a href={inboxAction.href} target="_blank" rel="noreferrer" style={{ color: "#c7d2fe", fontWeight: 700, textDecoration: "underline" }}>
-                        Click here to {inboxAction.label}
-                      </a>
-                    </p>
-                  </div>
-                ) : (
-                  <>
-                    <h2 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.35rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.4rem" }}>Almost there!</h2>
-                    <p style={{ fontSize: "0.84rem", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1.5rem" }}>We&apos;ll send your finished song to your email address when it&apos;s ready.</p>
-
-                    {/* Email */}
-                <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Email Address</label>
-                <div style={{ display: "flex", gap: "0.6rem", alignItems: "stretch", marginBottom: "0.75rem" }}>
-                  <input type="email" value={email} onChange={(e) => onEmailChange(e.target.value)} placeholder="you@example.com"
-                    style={{ flex: 1, padding: "0.6rem 0.85rem", borderRadius: "0.5rem", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.04)", color: "var(--text-primary)", fontSize: "0.88rem", outline: "none", fontFamily: "inherit", transition: "border-color 150ms" }}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(99,102,241,0.6)"; }}
-                    onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
-                  />
+                    Continue →
+                  </button>
                 </div>
-                {error && (
-                <div style={{ fontSize: "0.82rem", color: "#fca5a5", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: "0.5rem", padding: "0.6rem 0.85rem", marginBottom: "1rem" }}>{error}</div>
               )}
 
-              <button type="button" onClick={handleSubmitRequest} disabled={submitting} style={{
-                width: "100%", padding: "0.75rem", borderRadius: "0.65rem", border: "none",
-                background: (submitting || sendingLink) ? "rgba(99,102,241,0.4)" : "linear-gradient(135deg, #6366f1, #818cf8)",
-                color: "#fff", fontSize: "0.92rem", fontWeight: 700,
-                cursor: (submitting || sendingLink) ? "not-allowed" : "pointer",
-                boxShadow: "0 0 20px rgba(99,102,241,0.3)", transition: "opacity 180ms",
-              }}>
-                {sendingLink ? "Sending a secure link to your email..." : submitting ? "Submitting…" : "Continue"}
-              </button>
-                  </>
-                )}
-            </div>
-          )}
+              {/* ── Step 2: Details ─────────────────────────── */}
+              {step === "details" && (
+                <div>
+                  <button type="button" onClick={() => setStep("options")} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer", fontSize: "0.8rem", marginBottom: "0.75rem", padding: 0 }}>← Back</button>
 
-          {/* ── Step 3: Success ─────────────────────────── */}
-          {step === "success" && (
-              <div style={{ textAlign: "center", padding: "1rem 0" }}>
-                <h2 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.4rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.6rem" }}>You&apos;re All Set!</h2>
-                <p style={{ fontSize: "0.92rem", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "0.5rem", maxWidth: 380, margin: "0 auto 1.5rem" }}>
-                  Your song request has been submitted successfully.
-                </p>
-                <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "0.9rem" }}>
-                  Your song page is ready for @{username}
-                </p>
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.9rem" }}>
-                  {submittedSongId && (
-                    <Link href={`/song/${submittedSongId}`} onClick={closeModal} style={{ color: "#a5b4fc", textDecoration: "underline", fontWeight: 700, fontSize: "0.9rem" }}>
-                      Open song
-                    </Link>
+                  {magicLinkSent ? (
+                    <div style={{ textAlign: "center", padding: "1.5rem 0 2rem" }}>
+                      <div style={{ width: 64, height: 64, borderRadius: "50%", background: "rgba(99,102,241,0.15)", border: "2px solid rgba(99,102,241,0.3)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.25rem", fontSize: "1.8rem" }}>✉️</div>
+                      <h2 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.35rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.5rem" }}>Check Your Inbox</h2>
+                      <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
+                        We sent you a song access link, please check your email.<br />
+                        <a href={inboxAction.href} target="_blank" rel="noreferrer" style={{ color: "#c7d2fe", fontWeight: 700, textDecoration: "underline" }}>
+                          Click here to {inboxAction.label}
+                        </a>
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      <h2 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.35rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.4rem" }}>Almost there!</h2>
+                      <p style={{ fontSize: "0.84rem", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1.5rem" }}>We&apos;ll send your finished song to your email address when it&apos;s ready.</p>
+
+                      {/* Email */}
+                      <label style={{ display: "block", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Email Address</label>
+                      <div style={{ display: "flex", gap: "0.6rem", alignItems: "stretch", marginBottom: "0.75rem" }}>
+                        <input type="email" value={email} onChange={(e) => onEmailChange(e.target.value)} placeholder="you@example.com"
+                          style={{ flex: 1, padding: "0.6rem 0.85rem", borderRadius: "0.5rem", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.04)", color: "var(--text-primary)", fontSize: "0.88rem", outline: "none", fontFamily: "inherit", transition: "border-color 150ms" }}
+                          onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(99,102,241,0.6)"; }}
+                          onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
+                        />
+                      </div>
+                      {error && (
+                        <div style={{ fontSize: "0.82rem", color: "#fca5a5", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: "0.5rem", padding: "0.6rem 0.85rem", marginBottom: "1rem" }}>{error}</div>
+                      )}
+
+                      <button type="button" onClick={handleSubmitRequest} disabled={submitting} style={{
+                        width: "100%", padding: "0.75rem", borderRadius: "0.65rem", border: "none",
+                        background: (submitting || sendingLink) ? "rgba(99,102,241,0.4)" : "linear-gradient(135deg, #6366f1, #818cf8)",
+                        color: "#fff", fontSize: "0.92rem", fontWeight: 700,
+                        cursor: (submitting || sendingLink) ? "not-allowed" : "pointer",
+                        boxShadow: "0 0 20px rgba(99,102,241,0.3)", transition: "opacity 180ms",
+                      }}>
+                        {sendingLink ? "Sending a secure link to your email..." : submitting ? "Submitting…" : "Continue"}
+                      </button>
+                    </>
                   )}
-                  <button type="button" onClick={closeModal} style={{
-                    padding: "0.7rem 2rem", borderRadius: "0.65rem", border: "1px solid rgba(255,255,255,0.1)",
-                    background: "rgba(255,255,255,0.05)", color: "var(--text-primary)",
-                    fontSize: "0.88rem", fontWeight: 600, cursor: "pointer", transition: "all 180ms",
-                  }}>Got it!</button>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+
+              {/* ── Step 3: Success ─────────────────────────── */}
+              {step === "success" && (
+                <div style={{ textAlign: "center", padding: "1rem 0" }}>
+                  <h2 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.4rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.6rem" }}>You&apos;re All Set!</h2>
+                  <p style={{ fontSize: "0.92rem", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "0.5rem", maxWidth: 380, margin: "0 auto 1.5rem" }}>
+                    Your song request has been submitted successfully.
+                  </p>
+                  <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "0.9rem" }}>
+                    Your song page is ready for @{username}
+                  </p>
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.9rem" }}>
+                    {submittedSongId && (
+                      <Link href={`/song/${submittedSongId}`} onClick={closeModal} style={{ color: "#a5b4fc", textDecoration: "underline", fontWeight: 700, fontSize: "0.9rem" }}>
+                        Open song
+                      </Link>
+                    )}
+                    <button type="button" onClick={closeModal} style={{
+                      padding: "0.7rem 2rem", borderRadius: "0.65rem", border: "1px solid rgba(255,255,255,0.1)",
+                      background: "rgba(255,255,255,0.05)", color: "var(--text-primary)",
+                      fontSize: "0.88rem", fontWeight: 600, cursor: "pointer", transition: "all 180ms",
+                    }}>Got it!</button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </>,
         document.body

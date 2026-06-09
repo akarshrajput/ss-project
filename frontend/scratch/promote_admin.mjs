@@ -1,8 +1,37 @@
 import { createClient } from "@supabase/supabase-js";
-import { getMongoDb } from "../src/lib/mongodb.ts";
 
-const supabaseUrl = "https://wrehkhvdxnpqturqquqr.supabase.co";
-const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndyZWhraHZkeG5wcXR1cnFxdXFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNTIyNzAsImV4cCI6MjA5MTgyODI3MH0.daA_vimLnMebXRsybirGi3BwKEh-ks7CDRTTuB6erEw";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const envPath = path.resolve(__dirname, "../.env");
+
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, "utf-8");
+  for (const line of envContent.split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const index = trimmed.indexOf("=");
+    if (index !== -1) {
+      const key = trimmed.substring(0, index).trim();
+      let val = trimmed.substring(index + 1).trim();
+      if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+        val = val.slice(1, -1);
+      }
+      process.env[key] = val;
+    }
+  }
+}
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error("Error: NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY is missing from .env");
+  process.exit(1);
+}
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -12,7 +41,7 @@ async function promoteAdmin(email, password) {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
-      console.log("Sign in failed. Attempting to sign up...");
+      console.log(`Sign in failed (${error.message}). Attempting to sign up...`);
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
@@ -40,6 +69,7 @@ async function promoteAdmin(email, password) {
 }
 
 async function updateMongo(userId, email) {
+  const { getMongoDb } = await import("../src/lib/mongodb.ts");
   const db = await getMongoDb();
   const now = new Date();
   await db.collection("users").updateOne(

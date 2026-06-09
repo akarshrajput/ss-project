@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { signInWithPassword } from "@/app/actions/auth";
 import { buildMetadata } from "@/lib/seo";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = buildMetadata({
   title: "Login",
-  description: "Admin sign-in for Songify control panel access.",
+  description: "Sign in to your Songify account.",
   path: "/login",
   noIndex: true,
 });
@@ -18,9 +21,17 @@ function readParam(value: string | string[] | undefined, fallback = "") {
 
 export default async function LoginPage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
-  const nextPath = readParam(params.next, "/admin");
+  const nextPath = readParam(params.next, "/dashboard");
   const error = readParam(params.error);
   const notice = readParam(params.notice);
+  const plan = readParam(params.plan);
+
+  const supabase = await createSupabaseServerClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (user) {
+    redirect("/me");
+  }
 
   return (
     <main className="site-container flex w-full flex-1 items-center justify-center px-4 py-20 sm:px-6 lg:px-8">
@@ -37,22 +48,24 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
         </div>
 
         <h1 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.9rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.4rem" }}>
-          Admin login
+          Sign in
         </h1>
         <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)", marginBottom: "2rem" }}>
-          Sign in to access the admin panel.
+          {plan === "24h-unlimited"
+            ? "Sign in to get 24-hour unlimited song creation for just $1."
+            : "Sign in to access your account."}
         </p>
 
         <form
           action={signInWithPassword}
           style={{ background: "rgba(17,24,39,0.6)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "1rem", padding: "1.75rem", backdropFilter: "blur(20px)" }}
         >
-          <input type="hidden" name="next" value={nextPath} />
+          <input type="hidden" name="next" value={plan ? `/payment?plan=${plan}` : nextPath} />
 
           <div className="space-y-4">
             <div>
               <label className="input-label">Email</label>
-              <input required name="email" type="email" className="input" placeholder="you@company.com" />
+              <input required name="email" type="email" className="input" placeholder="you@example.com" />
             </div>
             <div>
               <label className="input-label">Password</label>
@@ -73,7 +86,10 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
         </form>
 
         <p style={{ marginTop: "1.25rem", fontSize: "0.8rem", color: "var(--text-muted)", textAlign: "center" }}>
-          Public registration is disabled.
+          Don&apos;t have an account?{" "}
+          <Link href={`/register?next=${encodeURIComponent(nextPath)}${plan ? `&plan=${encodeURIComponent(plan)}` : ""}`} style={{ color: "#a5b4fc", fontWeight: 600, textDecoration: "underline" }}>
+            Register
+          </Link>
         </p>
       </div>
     </main>

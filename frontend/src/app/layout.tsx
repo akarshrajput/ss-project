@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { JSONLD } from "@/components/json-ld";
 import { absoluteUrl, siteConfig } from "@/lib/seo";
 import { PageviewTracker } from "@/components/pageview-tracker";
+import { PromoPopup } from "@/components/ui/promo-popup";
 import "./globals.css";
 
 const deploymentVersion = Date.now().toString();
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <SiteHeader />
           <div className="flex-1">{children}</div>
           <SiteFooter />
+          <PromoPopup />
         </div>
         {/* Social Bar — disabled (can intercept pointer events) */}
         {/* <Script

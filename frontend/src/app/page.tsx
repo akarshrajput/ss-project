@@ -251,10 +251,13 @@ export default async function Home() {
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="site-container px-4 pt-20 pb-12 sm:px-6 lg:px-8 text-center">
         <div className="fade-up">
-          <span className="hero-kicker">
-            <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#6366f1" /></svg>
-            Free AI Song Generator
-          </span>
+          <Link
+            href="/register?plan=24h-unlimited"
+            className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-sm font-semibold text-indigo-300 transition-colors hover:bg-indigo-500/20"
+            style={{ textDecoration: "none" }}
+          >
+            Unlimited Songs creation for 24 hours without delay in just 1$ &rarr;
+          </Link>
         </div>
 
         {/* SEO-specified H1 — exactly one, at the top */}

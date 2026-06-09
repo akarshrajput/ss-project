@@ -183,6 +183,26 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
               <p style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>View all generated songs</p>
             </div>
           </a>
+
+          <a
+            href="/admin/users"
+            style={{
+              ...cardStyle,
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
+              transition: "border-color 220ms, box-shadow 220ms",
+            }}
+          >
+            <div style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div>
+              <p style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--text-primary)" }}>User Management</p>
+              <p style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>Manage users and privileges</p>
+            </div>
+          </a>
         </div>
 
         <div style={{ maxWidth: 560 }}>

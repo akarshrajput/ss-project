@@ -2,6 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { getAppUserProfile } from "@/lib/app-store";
 import { createOptionalSupabaseServerClient } from "@/lib/supabase/server";
+import { hasActiveSubscription } from "@/lib/subscription-store";
+import { UserMenu } from "@/components/ui/user-menu";
+
+import { PromoBanner } from "@/components/ui/promo-banner";
 
 const navItems = [
   // { href: "/", label: "Home" },
@@ -16,9 +20,11 @@ export async function SiteHeader() {
     ? (await supabase.auth.getUser()).data.user
     : null;
   const profile = user ? await getAppUserProfile(user.id) : null;
+  const isSubscribed = user ? await hasActiveSubscription(user.id) : false;
 
   return (
     <header className="sticky top-0 z-40" style={{ boxShadow: "0 16px 32px -8px var(--bg-base)", background: "rgba(14, 24, 33, 0.82)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)" }}>
+      {!isSubscribed && <PromoBanner user={user} />}
       <div className="site-container flex w-full items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
 
         {/* Logo */}
@@ -44,16 +50,25 @@ export async function SiteHeader() {
           ))}
           {user ? (
             <>
+              {isSubscribed && (
+                <Link
+                  className="nav-link hidden md:block"
+                  href="/studio"
+                  prefetch={false}
+                >
+                  Studio
+                </Link>
+              )}
               {profile?.role === "admin" && (
                 <Link
-                  className="nav-link"
+                  className="nav-link hidden md:block"
                   href="/admin"
                   prefetch={false}
-                  style={{ color: "#a5b4fc", background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.2)" }}
                 >
                   Admin
                 </Link>
               )}
+              <UserMenu />
             </>
           ) : (
             <></>
@@ -63,3 +78,4 @@ export async function SiteHeader() {
     </header>
   );
 }
+
