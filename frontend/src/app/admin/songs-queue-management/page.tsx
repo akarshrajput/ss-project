@@ -3,8 +3,9 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { getAppUserProfile } from "@/lib/app-store";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/auth";
 import { SongsQueueClient } from "@/components/admin/songs-queue-client";
+import { CronStatusPanel } from "@/components/admin/cron-status-panel";
 
 export const metadata: Metadata = buildMetadata({
   title: "Songs Queue Management",
@@ -14,8 +15,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function SongsQueueManagementPage() {
-  const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getUser();
   if (!user) redirect("/login?next=/admin/songs-queue-management");
 
   const profile = await getAppUserProfile(user.id);
@@ -46,6 +46,7 @@ export default async function SongsQueueManagementPage() {
           </p>
         </div>
 
+        <CronStatusPanel />
         <SongsQueueClient />
       </div>
     </main>

@@ -81,6 +81,17 @@ export function StudioPremiumClient({ expiresAt }: { expiresAt: string }) {
 
   // Form
   const [lyrics, setLyrics] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const urlLyrics = params.get("lyrics");
+      if (urlLyrics) {
+        setLyrics(urlLyrics);
+        window.history.replaceState({}, "", "/studio");
+      }
+    }
+  }, []);
   const [basePrompt, setBasePrompt] = useState("");
   const [vocalType, setVocalType] = useState("Female voice");
   const [duration, setDuration] = useState(30);
@@ -130,63 +141,45 @@ export function StudioPremiumClient({ expiresAt }: { expiresAt: string }) {
     <section style={{ paddingBottom: "4rem" }}>
 
       {/* Studio header with timer */}
+
+      {/* Timer badge */}
       <div style={{
-        marginBottom: "1.25rem",
-        padding: "1.25rem 1.5rem",
-        borderRadius: "0.875rem",
-        background: "linear-gradient(135deg, rgba(99,102,241,0.14) 0%, rgba(45,212,191,0.07) 100%)",
-        border: "1px solid rgba(99,102,241,0.2)",
+        marginBottom: "1rem",
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
-        flexWrap: "wrap",
-        gap: "1rem",
-      }}>
-        <div>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 8px #22c55e" }} />
-            <span style={{ fontSize: "1.1rem", color: "#86efac", fontWeight: 600 }}>Active (24h Unlimited Plan)</span>
-          </div>
-        </div>
-
-        {/* Timer badge */}
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.5rem",
-          padding: "0.5rem 1rem",
-          borderRadius: "0.6rem",
-          background: timerCritical
-            ? "rgba(239,68,68,0.12)"
-            : timerWarning
+        gap: "0.5rem",
+        padding: "1rem 1rem",
+        borderRadius: "0.6rem",
+        background: timerCritical
+          ? "rgba(239,68,68,0.12)"
+          : timerWarning
             ? "rgba(245,158,11,0.1)"
             : "rgba(34,197,94,0.08)",
-          border: `1px solid ${
-            timerCritical
-              ? "rgba(239,68,68,0.3)"
-              : timerWarning
-              ? "rgba(245,158,11,0.25)"
-              : "rgba(34,197,94,0.2)"
+        border: `1px solid ${timerCritical
+          ? "rgba(239,68,68,0.3)"
+          : timerWarning
+            ? "rgba(245,158,11,0.25)"
+            : "rgba(34,197,94,0.2)"
           }`,
+      }}>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={timerCritical ? "#fca5a5" : timerWarning ? "#fbbf24" : "#ffffff"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+        <span style={{ fontSize: "0.85rem", color: "#ffffff", fontWeight: 500 }}>
+          24-hour Unlimited Access, Time remaining:
+        </span>
+        <span suppressHydrationWarning style={{
+          fontSize: "0.95rem",
+          fontWeight: 700,
+          fontFamily: '"Space Grotesk", monospace',
+          color: timerCritical ? "#fca5a5" : timerWarning ? "#fbbf24" : "#ffffff",
+          fontVariantNumeric: "tabular-nums",
         }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={timerCritical ? "#fca5a5" : timerWarning ? "#fbbf24" : "#86efac"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <polyline points="12 6 12 12 16 14"/>
-          </svg>
-          <span style={{ fontSize: "0.85rem", color: "var(--text-secondary)", fontWeight: 500 }}>
-            Time remaining:
-          </span>
-          <span style={{
-            fontSize: "0.95rem",
-            fontWeight: 700,
-            fontFamily: '"Space Grotesk", monospace',
-            color: timerCritical ? "#fca5a5" : timerWarning ? "#fbbf24" : "#86efac",
-            fontVariantNumeric: "tabular-nums",
-          }}>
-            {formatTime(remaining)}
-          </span>
-        </div>
+          {formatTime(remaining)}
+        </span>
       </div>
+
 
       {/* Song creation form */}
       <div style={{

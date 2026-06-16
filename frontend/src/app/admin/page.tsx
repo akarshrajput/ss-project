@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
 import { getAppSettings, getAppUserProfile } from "@/lib/app-store";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/auth";
 import { saveComfyUiUrl, testComfyUiUrl } from "./actions";
 
 export const metadata: Metadata = buildMetadata({
@@ -24,8 +24,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
   const error = readParam(params.error);
   const notice = readParam(params.notice);
 
-  const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) redirect("/login?next=/admin");
 

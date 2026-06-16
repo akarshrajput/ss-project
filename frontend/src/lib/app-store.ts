@@ -1,4 +1,4 @@
-import type { User } from "@supabase/supabase-js";
+import type { UserProfile as User } from "@/lib/auth";
 import { getMongoDb, getMongoDbOrNull, isMongoConfigured } from "@/lib/mongodb";
 
 export const DEFAULT_COMFYUI_URL = "https://e54wgks2f9mg8n-7865.proxy.runpod.net";
@@ -30,7 +30,7 @@ function buildComfyUiHealthUrl(baseUrl: string) {
   return new URL("system_stats", `${normalizeUrl(baseUrl)}/`).toString();
 }
 
-function readFullName(user: Pick<User, "email" | "user_metadata">) {
+function readFullName(user: { email?: string | null; user_metadata?: any }) {
   const metadata = (user.user_metadata ?? {}) as Record<string, unknown>;
   const fullName =
     (typeof metadata.full_name === "string" && metadata.full_name.trim()) ||
@@ -48,7 +48,7 @@ function readFullName(user: Pick<User, "email" | "user_metadata">) {
   return null;
 }
 
-export async function upsertAppUserProfile(user: User, isVerified: boolean = true) {
+export async function upsertAppUserProfile(user: { id: string; email?: string | null; user_metadata?: any }, isVerified: boolean = true) {
   const db = await getMongoDbOrNull();
 
   if (!db) {

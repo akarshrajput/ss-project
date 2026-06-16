@@ -10,8 +10,8 @@ import {
   SongQueueStatus,
 } from "@/lib/song-queue-store";
 import { deriveUsernameFromEmail } from "@/lib/username-utils";
-import { persistRemoteAudioToSupabase } from "@/lib/audio-storage";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { persistRemoteAudioToS3 } from "@/lib/audio-storage";
+import { getUser } from "@/lib/auth";
 import { getAppUserProfile } from "@/lib/app-store";
 
 // ─── POST — create new queue entry ────────────────────────────────
@@ -101,10 +101,7 @@ export async function POST(request: Request) {
 // ─── GET — list queue entries (admin) ─────────────────────────────
 export async function GET(request: Request) {
   try {
-    const supabase = await createSupabaseServerClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const user = await getUser();
     if (!user) {
       return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
     }
@@ -159,10 +156,7 @@ export async function GET(request: Request) {
 // ─── PATCH — mark as completed (admin) ────────────────────────────
 export async function PATCH(request: Request) {
   try {
-    const supabase = await createSupabaseServerClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const user = await getUser();
     if (!user) {
       return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
     }
@@ -181,8 +175,7 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: "Queue entry not found." }, { status: 404 });
     }
 
-    const stableAudioUrl = await persistRemoteAudioToSupabase({
-      supabase,
+    const stableAudioUrl = await persistRemoteAudioToS3({
       sourceUrl: body.songUrl,
       objectPath: `community/${entry.songId}-${Date.now()}.mp3`,
     });

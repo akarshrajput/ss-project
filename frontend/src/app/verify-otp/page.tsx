@@ -26,9 +26,9 @@ export default async function VerifyOtpPage({
   }
 
   return (
-    <main className="site-container flex min-h-[100dvh] items-center justify-center px-4 py-12">
+    <main className="site-container flex min-h-[100dvh] justify-center px-4 py-16">
       <div style={{ width: "100%", maxWidth: 400 }}>
-        
+
         {/* Logo / Header */}
         <div style={{ textAlign: "center", marginBottom: "2rem" }}>
           <Link href="/" style={{ display: "inline-block", marginBottom: "1rem" }}>

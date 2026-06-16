@@ -3,11 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getAppUserProfile, setAppUserRole, AppUserRole } from "@/lib/app-store";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/auth";
 
 export async function updateUserRole(formData: FormData) {
-  const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     redirect("/login?next=/admin/users");
@@ -36,8 +35,7 @@ export async function updateUserRole(formData: FormData) {
 }
 
 export async function deleteAppUser(formData: FormData) {
-  const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     redirect("/login?next=/admin/users");
@@ -55,20 +53,6 @@ export async function deleteAppUser(formData: FormData) {
 
   if (targetUserId === user.id) {
     throw new Error("You cannot delete yourself.");
-  }
-
-  // Delete from Supabase Auth if service role key is present
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (serviceKey) {
-    const { createClient } = await import("@supabase/supabase-js");
-    const adminClient = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, serviceKey, {
-      auth: {
-        autoRefreshToken: false,
-        persistSession: false
-      }
-    });
-    
-    await adminClient.auth.admin.deleteUser(targetUserId);
   }
 
   // Delete from MongoDB

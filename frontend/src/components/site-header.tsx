@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getAppUserProfile } from "@/lib/app-store";
-import { createOptionalSupabaseServerClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/auth";
 import { hasActiveSubscription } from "@/lib/subscription-store";
 import { UserMenu } from "@/components/ui/user-menu";
 
@@ -15,10 +15,7 @@ const navItems = [
 ];
 
 export async function SiteHeader() {
-  const supabase = await createOptionalSupabaseServerClient();
-  const user = supabase
-    ? (await supabase.auth.getUser()).data.user
-    : null;
+  const user = await getUser();
   const profile = user ? await getAppUserProfile(user.id) : null;
   const isSubscribed = user ? await hasActiveSubscription(user.id) : false;
 

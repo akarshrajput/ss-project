@@ -2,7 +2,7 @@ import { signOut } from "@/app/actions/auth";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { getAppUserProfile } from "@/lib/app-store";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/auth";
 
 export const metadata: Metadata = buildMetadata({
   title: "Account Settings",
@@ -12,10 +12,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function AccountPage() {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
   const profile = user ? await getAppUserProfile(user.id) : null;
   const fullName = profile?.fullName ?? user?.user_metadata?.full_name ?? user?.user_metadata?.name ?? "Name not set";
 

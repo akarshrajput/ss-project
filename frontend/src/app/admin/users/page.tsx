@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
 import { getAppUserProfile, listAppUserProfiles } from "@/lib/app-store";
 import { getAllActiveSubscriptions } from "@/lib/subscription-store";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/auth";
 import { RoleForm } from "./role-form";
 import { SubscriptionInfo, SubscriptionDTO } from "./subscription-info";
 import { DeleteUserForm } from "./delete-form";
@@ -16,8 +16,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function AdminUsersPage() {
-  const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) redirect("/login?next=/admin/users");
 

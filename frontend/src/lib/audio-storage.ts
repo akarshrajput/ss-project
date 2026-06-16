@@ -1,10 +1,18 @@
-export async function persistRemoteAudioToSupabase(params: {
-  supabase: any;
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION!,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+  },
+});
+
+export async function persistRemoteAudioToS3(params: {
   sourceUrl: string;
   objectPath: string;
-  bucketName?: string;
 }): Promise<string | undefined> {
-  const { supabase, sourceUrl, objectPath, bucketName = "songs" } = params;
+  const { sourceUrl, objectPath } = params;
 
   const audioResponse = await fetch(sourceUrl);
   if (!audioResponse.ok) return undefined;
@@ -12,18 +20,27 @@ export async function persistRemoteAudioToSupabase(params: {
   const audioBuffer = await audioResponse.arrayBuffer();
   const contentType = audioResponse.headers.get("content-type") ?? "audio/mpeg";
 
-  const { error: uploadError } = await supabase.storage
-    .from(bucketName)
-    .upload(objectPath, audioBuffer, { contentType, upsert: false });
-
-  if (uploadError) {
-    console.error("Supabase upload error:", uploadError);
+  const bucketName = process.env.AWS_BUCKET_NAME;
+  
+  if (!bucketName) {
+    console.error("AWS_BUCKET_NAME is not configured");
     return undefined;
   }
 
-  const {
-    data: { publicUrl },
-  } = supabase.storage.from(bucketName).getPublicUrl(objectPath);
+  try {
+    const command = new PutObjectCommand({
+      Bucket: bucketName,
+      Key: objectPath,
+      Body: Buffer.from(audioBuffer),
+      ContentType: contentType,
+    });
 
-  return publicUrl;
+    await s3Client.send(command);
+
+    // Construct the public URL
+    return `https://${bucketName}.s3.${process.env.AWS_REGION}.amazonaws.com/${objectPath}`;
+  } catch (uploadError) {
+    console.error("AWS S3 upload error:", uploadError);
+    return undefined;
+  }
 }

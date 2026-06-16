@@ -1,8 +1,8 @@
-import { createClient } from "@supabase/supabase-js";
-
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import crypto from "crypto";
+import { MongoClient } from "mongodb";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,70 +25,64 @@ if (fs.existsSync(envPath)) {
   }
 }
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error("Error: NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY is missing from .env");
+const mongoUri = process.env.MONGODB_URI;
+if (!mongoUri) {
+  console.error("Error: MONGODB_URI is missing from .env");
   process.exit(1);
 }
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+function hashPassword(password) {
+  const salt = crypto.randomBytes(16).toString("hex");
+  const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, "sha512").toString("hex");
+  return `${salt}:${hash}`;
+}
 
 async function promoteAdmin(email, password) {
+  const client = new MongoClient(mongoUri);
   try {
-    console.log(`Attempting to sign in as ${email}...`);
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
-    if (error) {
-      console.log(`Sign in failed (${error.message}). Attempting to sign up...`);
-      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: { data: { full_name: "Admin" } }
-      });
-
-      if (signUpError) {
-        throw new Error(`Sign up failed: ${signUpError.message}`);
-      }
-      
-      console.log("User signed up successfully.");
-      const userId = signUpData.user.id;
-      await updateMongo(userId, email);
-    } else {
-      console.log("Sign in successful.");
-      const userId = data.user.id;
-      await updateMongo(userId, email);
-    }
+    await client.connect();
+    const db = client.db("songify"); // Update DB name if needed based on connection string
     
-    process.exit(0);
+    const normalizedEmail = email.toLowerCase().trim();
+    const existingUser = await db.collection("users").findOne({ email: normalizedEmail });
+
+    const passwordHash = hashPassword(password);
+    const now = new Date();
+
+    if (existingUser) {
+      console.log(`User ${email} found. Promoting to admin and updating password...`);
+      await db.collection("users").updateOne(
+        { _id: existingUser._id },
+        { 
+          $set: { 
+            role: "admin", 
+            passwordHash,
+            updatedAt: now 
+          } 
+        }
+      );
+      console.log(`User ${email} (ID: ${existingUser.userId}) is now an Admin.`);
+    } else {
+      console.log(`User ${email} not found. Creating new admin user...`);
+      const userId = crypto.randomUUID();
+      await db.collection("users").insertOne({
+        userId,
+        email: normalizedEmail,
+        fullName: "Admin",
+        passwordHash,
+        role: "admin",
+        isVerified: true,
+        createdAt: now,
+        updatedAt: now,
+      });
+      console.log(`User ${email} (ID: ${userId}) created as an Admin.`);
+    }
   } catch (err) {
     console.error("Error:", err.message);
     process.exit(1);
+  } finally {
+    await client.close();
   }
-}
-
-async function updateMongo(userId, email) {
-  const { getMongoDb } = await import("../src/lib/mongodb.ts");
-  const db = await getMongoDb();
-  const now = new Date();
-  await db.collection("users").updateOne(
-    { userId },
-    {
-      $set: {
-        userId,
-        email,
-        fullName: "Admin",
-        role: "admin",
-        updatedAt: now,
-      },
-      $setOnInsert: {
-        createdAt: now,
-      }
-    },
-    { upsert: true }
-  );
-  console.log(`User ${email} (ID: ${userId}) is now an Admin in MongoDB.`);
 }
 
 promoteAdmin("admin@songify.fun", "pRh='x8#D{35");

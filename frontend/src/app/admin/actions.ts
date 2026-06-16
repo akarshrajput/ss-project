@@ -4,17 +4,14 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getAppUserProfile, isComfyUiOnline, setAppUserRole, setComfyUiBaseUrl } from "@/lib/app-store";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/auth";
 
 const roleSchema = z.object({
   role: z.enum(["user", "admin"]),
 });
 
 async function requireAdminUser() {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     redirect("/login?next=/admin");

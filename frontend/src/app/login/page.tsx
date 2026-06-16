@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { signInWithPassword } from "@/app/actions/auth";
 import { buildMetadata } from "@/lib/seo";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = buildMetadata({
@@ -26,8 +26,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
   const notice = readParam(params.notice);
   const plan = readParam(params.plan);
 
-  const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (user) {
     redirect("/me");

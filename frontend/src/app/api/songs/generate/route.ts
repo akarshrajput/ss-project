@@ -3,8 +3,9 @@ import { z } from "zod";
 import { buildLyrics, buildTags, buildWorkflow } from "@/lib/song/prompt";
 import type { SongGenerateInput, SongGenerateResult } from "@/lib/song/types";
 import { getComfyUiBaseUrl } from "@/lib/app-store";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/auth";
 import { saveDirectSong } from "@/lib/song-queue-store";
+import { persistRemoteAudioToS3 } from "@/lib/audio-storage";
 
 const requestSchema: z.ZodType<SongGenerateInput> = z.object({
   basePrompt: z.string().min(5),
@@ -70,34 +71,21 @@ async function persistSongIfAuthenticated(params: {
   audioUrl: string;
   tags: string;
 }) {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     return undefined;
   }
 
-  const audioResponse = await fetch(params.audioUrl);
-  if (!audioResponse.ok) {
-    return undefined;
-  }
-
-  const audioBuffer = await audioResponse.arrayBuffer();
   const objectPath = `${user.id}/${Date.now()}-${params.input.seed}.mp3`;
+  const publicUrl = await persistRemoteAudioToS3({
+    sourceUrl: params.audioUrl,
+    objectPath
+  });
 
-  const { error: uploadError } = await supabase.storage
-    .from("songs")
-    .upload(objectPath, audioBuffer, { contentType: "audio/mpeg", upsert: false });
-
-  if (uploadError) {
+  if (!publicUrl) {
     return undefined;
   }
-
-  const {
-    data: { publicUrl },
-  } = supabase.storage.from("songs").getPublicUrl(objectPath);
 
   // Save to MongoDB instead of Supabase DB
   const username = user.email?.split("@")[0] || `user_${user.id.slice(0, 5)}`;

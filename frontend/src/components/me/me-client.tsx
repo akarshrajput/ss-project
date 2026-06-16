@@ -102,7 +102,6 @@ export function MeClient({ email, isSubscribed, expiresAt }: MeClientProps) {
               {isSubscribed && expiresAt ? (
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 8px #22c55e" }} />
                     <span style={{ fontSize: "1.1rem", color: "#86efac", fontWeight: 600 }}>Active (24h Unlimited Plan)</span>
                   </div>
                   <div style={{ fontSize: "0.95rem", color: "var(--text-secondary)", display: "flex", gap: "0.5rem", alignItems: "center" }}>

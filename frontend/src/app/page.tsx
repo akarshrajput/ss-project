@@ -7,6 +7,9 @@ import { DemoSongs } from "@/components/ui/demo-songs";
 import { SongDemoSection } from "@/components/ui/song-demo-section";
 import { QuickGenerate } from "@/components/ui/quick-generate";
 import { servicePages } from "@/lib/services";
+import { getUser } from "@/lib/auth";
+import { getActiveSubscription } from "@/lib/subscription-store";
+import { ActivePlanBadge } from "@/components/ui/active-plan-badge";
 
 void SongDemoSection;
 
@@ -159,6 +162,9 @@ const steps = [
 
 /* ─── Page ───────────────────────────────────────────────────────────────── */
 export default async function Home() {
+  const user = await getUser();
+  const sub = user ? await getActiveSubscription(user.id) : null;
+
   /* ─── Structured data ─────────────────────────────────────────────────── */
   const organizationSchema = {
     "@context": "https://schema.org",
@@ -251,13 +257,17 @@ export default async function Home() {
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="site-container px-4 pt-20 pb-12 sm:px-6 lg:px-8 text-center">
         <div className="fade-up">
-          <Link
-            href="/register?plan=24h-unlimited"
-            className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-sm font-semibold text-indigo-300 transition-colors hover:bg-indigo-500/20"
-            style={{ textDecoration: "none" }}
-          >
-            Unlimited Songs creation for 24 hours without delay in just 1$ &rarr;
-          </Link>
+          {sub ? (
+            <ActivePlanBadge expiresAt={sub.expiresAt} />
+          ) : (
+            <Link
+              href="/register?plan=24h-unlimited"
+              className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-sm font-semibold text-indigo-300 transition-colors hover:bg-indigo-500/20"
+              style={{ textDecoration: "none" }}
+            >
+              Unlimited Songs creation for 24 hours without delay in just 1$ &rarr;
+            </Link>
+          )}
         </div>
 
         {/* SEO-specified H1 — exactly one, at the top */}
@@ -280,7 +290,7 @@ export default async function Home() {
 
         {/* ─── Quick Generate input — the tool IS the CTA ────────────── */}
         <div className="fade-up-delay-3 mt-10 w-full px-2">
-          <QuickGenerate />
+          <QuickGenerate hasActivePlan={!!sub} />
         </div>
 
         {/* Social proof strip */}

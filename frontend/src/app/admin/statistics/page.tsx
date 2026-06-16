@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { getAppUserProfile } from "@/lib/app-store";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/auth";
 import { getAnalyticsStats } from "@/lib/analytics-store";
 
 export const metadata: Metadata = buildMetadata({
@@ -14,8 +14,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function AdminStatisticsPage() {
-  const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getUser();
   if (!user) redirect("/login?next=/admin/statistics");
 
   const profile = await getAppUserProfile(user.id);

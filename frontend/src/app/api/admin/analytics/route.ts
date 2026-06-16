@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
 import { getRichAnalyticsData } from "@/lib/analytics-store";
 import { getAppUserProfile } from "@/lib/app-store";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/auth";
 
 export async function GET(request: Request) {
   try {
-    const supabase = await createSupabaseServerClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const user = await getUser();
     if (!user) {
       return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
     }

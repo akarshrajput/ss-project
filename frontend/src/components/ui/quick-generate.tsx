@@ -67,7 +67,7 @@ async function resolveAvailableUsername(baseUsername: string) {
   return `${base}_${Math.random().toString(36).slice(2, 6)}`;
 }
 
-export function QuickGenerate() {
+export function QuickGenerate({ hasActivePlan = false }: { hasActivePlan?: boolean }) {
   const [value, setValue] = useState("");
   const [focused, setFocused] = useState(false);
   const [placeholderText, setPlaceholderText] = useState("");
@@ -276,6 +276,12 @@ export function QuickGenerate() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!value.trim()) { textareaRef.current?.focus(); return; }
+    
+    if (hasActivePlan) {
+      window.location.href = `/studio?lyrics=${encodeURIComponent(value.trim())}`;
+      return;
+    }
+
     setShowModal(true);
     setStep("options");
     setError(null);
@@ -546,9 +552,23 @@ export function QuickGenerate() {
               {/* ── Step 1: Options ─────────────────────────── */}
               {step === "options" && (
                 <div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.75rem" }}>
-                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#6366f1", boxShadow: "0 0 8px #6366f1" }} />
-                    <span style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#a5b4fc" }}>Customize Your Song</span>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.75rem" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#6366f1", boxShadow: "0 0 8px #6366f1" }} />
+                      <span style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#a5b4fc" }}>Customize Your Song</span>
+                    </div>
+                    <Link
+                      href="/register?plan=24h-unlimited"
+                      style={{
+                        fontSize: "0.75rem",
+                        fontWeight: 600,
+                        color: "#a5b4fc",
+                        textDecoration: "underline",
+                        marginRight: "1.5rem",
+                      }}
+                    >
+                      Generate song without any delay on just 1$
+                    </Link>
                   </div>
 
                   {/* Lyrics preview */}

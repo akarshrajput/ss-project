@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { upsertAppUserProfile } from "@/lib/app-store";
 import { hasActiveSubscription } from "@/lib/subscription-store";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getUser, signInWithPassword as authSignIn, signUp as authSignUp, signOut as authSignOut, updateUser as authUpdateUser } from "@/lib/auth";
 
 function getRedirectPath(formData: FormData, fallback = "/dashboard") {
   const next = String(formData.get("next") ?? fallback);
@@ -28,8 +28,7 @@ function mapAuthError(message: string) {
 }
 
 export async function signOut() {
-  const supabase = await createSupabaseServerClient();
-  await supabase.auth.signOut();
+  await authSignOut();
   redirect("/");
 }
 
@@ -38,19 +37,18 @@ export async function signInWithPassword(formData: FormData) {
   const password = String(formData.get("password") ?? "");
   const nextPath = getRedirectPath(formData);
 
-  const supabase = await createSupabaseServerClient();
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  const { user, error } = await authSignIn({ email, password });
 
   if (error) {
     redirect(`/login?error=${encodeURIComponent(error.message)}&next=${encodeURIComponent(nextPath)}`);
   }
 
-  if (data.user) {
-    await upsertAppUserProfile(data.user);
+  if (user) {
+    await upsertAppUserProfile(user);
     
     // If user is heading to payment but already has an active subscription, send them to studio
     if (nextPath.startsWith("/payment")) {
-      const hasSub = await hasActiveSubscription(data.user.id);
+      const hasSub = await hasActiveSubscription(user.id);
       if (hasSub) {
         redirect("/studio");
       }
@@ -80,8 +78,6 @@ export async function registerWithPassword(formData: FormData) {
     redirect(`/register?error=${encodeURIComponent("Password and confirm password do not match.")}&next=${encodeURIComponent(nextPath)}${plan ? `&plan=${encodeURIComponent(plan)}` : ""}`);
   }
 
-  const supabase = await createSupabaseServerClient();
-
   if (plan === "24h-unlimited") {
     // We do NOT create the account yet. We save the payload and send OTP.
     const { sendVerificationEmail } = await import("@/app/actions/otp");
@@ -94,7 +90,7 @@ export async function registerWithPassword(formData: FormData) {
     ? `${siteUrl}/api/auth/callback?next=${encodeURIComponent(`/payment?plan=${plan}`)}`
     : `${siteUrl}/api/auth/callback?next=${encodeURIComponent(nextPath)}`;
 
-  const { data, error } = await supabase.auth.signUp({
+  const { user, session, error } = await authSignUp({
     email,
     password,
     options: {
@@ -110,13 +106,13 @@ export async function registerWithPassword(formData: FormData) {
     redirect(`/register?error=${encodeURIComponent(safeMessage)}&next=${encodeURIComponent(nextPath)}${plan ? `&plan=${encodeURIComponent(plan)}` : ""}`);
   }
 
-  if (data.user) {
+  if (user) {
     const isVerified = plan !== "24h-unlimited";
-    await upsertAppUserProfile(data.user, isVerified);
+    await upsertAppUserProfile(user, isVerified);
   }
 
   // If email confirmation is enabled globally, the session will be null.
-  if (!data.session && plan !== "24h-unlimited") {
+  if (!session && plan !== "24h-unlimited") {
     redirect(`/register?notice=${encodeURIComponent("Check your email to verify your account. Click the link we sent to continue.")}&next=${encodeURIComponent(nextPath)}${plan ? `&plan=${encodeURIComponent(plan)}` : ""}`);
   }
 
@@ -135,8 +131,7 @@ export async function updatePassword(formData: FormData) {
     redirect(`/me?tab=settings&error=${encodeURIComponent("Passwords do not match.")}`);
   }
 
-  const supabase = await createSupabaseServerClient();
-  const { error } = await supabase.auth.updateUser({ password });
+  const { error } = await authUpdateUser({ password });
 
   if (error) {
     redirect(`/me?tab=settings&error=${encodeURIComponent(error.message)}`);

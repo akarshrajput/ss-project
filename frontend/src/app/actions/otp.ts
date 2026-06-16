@@ -2,7 +2,7 @@
 
 import nodemailer from "nodemailer";
 import { createEmailOtp, verifyEmailOtp, upsertAppUserProfile } from "@/lib/app-store";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getUser, signInWithPassword as authSignIn, signUp as authSignUp } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
 export async function sendVerificationEmail(email: string, payload?: any, userId?: string) {
@@ -23,16 +23,16 @@ export async function sendVerificationEmail(email: string, payload?: any, userId
     to: email,
     subject: "Verify your email - Songify AI",
     html: `
-      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #0d1117; color: #fff; border-radius: 8px;">
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #ffffff; color: #1e293b; border: 1px solid #e2e8f0; border-radius: 8px;">
         <div style="text-align: center; margin-bottom: 30px;">
-          <h1 style="color: #6366f1; margin: 0;">Songify AI</h1>
+          <h1 style="color: #4f46e5; margin: 0;">Songify AI</h1>
         </div>
-        <h2 style="margin-bottom: 20px;">Verify your email</h2>
-        <p style="font-size: 16px; color: #94a3b8; line-height: 1.5; margin-bottom: 30px;">
+        <h2 style="margin-bottom: 20px; color: #0f172a;">Verify your email</h2>
+        <p style="font-size: 16px; color: #475569; line-height: 1.5; margin-bottom: 30px;">
           Please use the verification code below to complete your registration. This code will expire in 15 minutes.
         </p>
-        <div style="background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.3); padding: 20px; text-align: center; border-radius: 8px; margin-bottom: 30px;">
-          <h2 style="margin: 0; font-size: 32px; letter-spacing: 0.2em; color: #a5b4fc;">${otp}</h2>
+        <div style="background: rgba(99,102,241,0.05); border: 1px solid rgba(99,102,241,0.2); padding: 20px; text-align: center; border-radius: 8px; margin-bottom: 30px;">
+          <h2 style="margin: 0; font-size: 32px; letter-spacing: 0.2em; color: #4f46e5;">${otp}</h2>
         </div>
         <p style="font-size: 12px; color: #64748b; line-height: 1.5; text-align: center;">
           If you didn't request this, you can safely ignore this email.
@@ -67,26 +67,24 @@ export async function submitOtpForm(formData: FormData) {
 
   // ── Step 2: If OTP carried a registration payload, create the account ─────
   if (typeof result === "object" && result !== null && result.password) {
-    const supabase = await createSupabaseServerClient();
-
     // Try to sign in first — handles the case where a Supabase account already
     // exists (e.g. a previous failed registration attempt that seeded the user
     // into Supabase but not MongoDB).
-    const { data: signInData, error: signInError } =
-      await supabase.auth.signInWithPassword({
+    const { session: signInSession, user: signInUser, error: signInError } =
+      await authSignIn({
         email: result.email,
         password: result.password,
       });
 
-    if (signInData?.session) {
+    if (signInSession) {
       // Account already existed — make sure MongoDB profile is marked verified
-      await upsertAppUserProfile(signInData.user, true);
+      if (signInUser) await upsertAppUserProfile(signInUser, true);
       redirect(nextPath);
     }
 
     // Sign-in failed → user doesn't exist yet → create them in Supabase
     // (MongoDB already has the verified flag from verifyEmailOtp above)
-    const { data, error: signUpError } = await supabase.auth.signUp({
+    const { user: signUpUser, error: signUpError } = await authSignUp({
       email: result.email,
       password: result.password,
       options: {
@@ -102,17 +100,17 @@ export async function submitOtpForm(formData: FormData) {
       );
     }
 
-    if (data?.user) {
+    if (signUpUser) {
       // Create the MongoDB profile for the brand-new user
-      await upsertAppUserProfile(data.user, true);
+      await upsertAppUserProfile(signUpUser, true);
 
       // Immediately sign them in so they have an active session
-      const { data: newSession } = await supabase.auth.signInWithPassword({
+      const { session: newSession } = await authSignIn({
         email: result.email,
         password: result.password,
       });
 
-      if (newSession?.session) {
+      if (newSession) {
         redirect(nextPath);
       }
     }

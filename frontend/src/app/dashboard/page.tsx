@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { getAppUserProfile } from "@/lib/app-store";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/auth";
 
 export const metadata: Metadata = buildMetadata({
   title: "User Dashboard",
@@ -49,10 +49,7 @@ const quickLinks = [
 ];
 
 export default async function DashboardPage() {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
   const profile = user ? await getAppUserProfile(user.id) : null;
   const displayName = profile?.fullName ?? user?.user_metadata?.full_name ?? "there";
 

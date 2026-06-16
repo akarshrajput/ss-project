@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/auth";
 import { getActiveSubscription } from "@/lib/subscription-store";
 import { StudioPremiumClient } from "@/components/studio/studio-premium-client";
 
@@ -13,8 +13,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function StudioPage() {
-  const supabase = await createSupabaseServerClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     redirect("/login?next=/studio&plan=24h-unlimited");
