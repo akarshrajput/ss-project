@@ -2,9 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createSubscription, getSubscriptionByStripeSession } from "@/lib/subscription-store";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
 export async function GET(request: NextRequest) {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   const { searchParams, origin } = new URL(request.url);
   const sessionId = searchParams.get("session_id");
 
