@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/song-queue/cron",
-      "schedule": "1 * * * *"
+      "schedule": "0 0 1 * *"
     }
   ]
 }
