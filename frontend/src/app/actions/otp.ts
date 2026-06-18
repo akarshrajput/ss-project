@@ -19,7 +19,7 @@ export async function sendVerificationEmail(email: string, payload?: any, userId
   });
 
   const mailOptions = {
-    from: '"Songify AI" <noreply@songify.ai>',
+    from: `"Songify AI" <${process.env.GMAIL_FROM || process.env.EMAIL_USER || process.env.GMAIL_USER}>`,
     to: email,
     subject: "Verify your email - Songify AI",
     html: `
