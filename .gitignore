@@ -1,6 +1,12 @@
 .DS_Store
 Thumbs.db
 
+# Local scratch tooling & handover notes
+scratch/
+frontend/scratch/
+HANDOVER.md
+frontend/HANDOVER.md
+
 # Environment and secrets
 .env
 .env.*
