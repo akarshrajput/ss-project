@@ -213,3 +213,58 @@ export async function updateUser({ password }: any) {
     return { user: null, error: { message: e instanceof Error ? e.message : String(e) } };
   }
 }
+
+export async function signInWithGoogle({ email, name }: { email: string; name: string }) {
+  try {
+    const db = await getMongoDb();
+    const normalizedEmail = email.toLowerCase().trim();
+    let userProfile = await db.collection("users").findOne({ email: normalizedEmail });
+    
+    if (!userProfile) {
+      // User doesn't exist, create a new one
+      const userId = crypto.randomUUID();
+      const now = new Date();
+      await db.collection("users").insertOne({
+        userId,
+        email: normalizedEmail,
+        fullName: name,
+        role: "user",
+        isVerified: true,
+        authProvider: "google",
+        createdAt: now,
+        updatedAt: now,
+      });
+      userProfile = await db.collection("users").findOne({ userId });
+    }
+
+    if (!userProfile) {
+      return { user: null, session: null, error: { message: "Failed to create user profile" } };
+    }
+
+    const token = await signJwt({ userId: userProfile.userId });
+    const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
+
+    const cookieStore = await cookies();
+    cookieStore.set("session_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      expires: expiresAt,
+    });
+
+    const user: UserProfile = {
+      id: userProfile.userId,
+      email: userProfile.email || "",
+      user_metadata: {
+        full_name: userProfile.fullName || "",
+      },
+    };
+
+    return { user, session: { access_token: token }, error: null };
+  } catch (e) {
+    console.error("Error in signInWithGoogle:", e);
+    return { user: null, session: null, error: { message: e instanceof Error ? e.message : String(e) } };
+  }
+}
+
