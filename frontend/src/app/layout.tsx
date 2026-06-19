@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   icons: { icon: [{ url: "/favicon.ico" }], shortcut: [{ url: "/favicon.ico" }], apple: [{ url: "/favicon.ico" }] },
   manifest: "/manifest.webmanifest",
   verification: {
-    google: "-yzuAlZ4A0mkD6E27JJXkhRS2J6E-hqmOYoPkz-jN04",
+    google: ["-yzuAlZ4A0mkD6E27JJXkhRS2J6E-hqmOYoPkz-jN04", "imv8oXJGrRVcO0YW2Qa_12naEilosYhoECUOK1RuCh8"],
   },
 };
 
