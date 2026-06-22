@@ -109,7 +109,7 @@ export function StudioPremiumClient({ expiresAt }: { expiresAt: string }) {
     setSuccess(false);
 
     try {
-      const res = await fetch("/api/song-queue", {
+      const res = await fetch("/api/studio/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -119,11 +119,17 @@ export function StudioPremiumClient({ expiresAt }: { expiresAt: string }) {
           duration,
           genre,
           mood,
-          source: "studio",
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Generation failed");
+
+      // Redirect to the song page
+      if (data.songId) {
+        router.push(`/song/${data.songId}`);
+        return;
+      }
+
       setSuccess(true);
       setLyrics("");
       setBasePrompt("");
@@ -132,7 +138,7 @@ export function StudioPremiumClient({ expiresAt }: { expiresAt: string }) {
     } finally {
       setGenerating(false);
     }
-  }, [lyrics, basePrompt, vocalType, duration, genre, mood]);
+  }, [lyrics, basePrompt, vocalType, duration, genre, mood, router]);
 
   const timerWarning = remaining < 60 * 60 * 1000; // less than 1 hour
   const timerCritical = remaining < 10 * 60 * 1000; // less than 10 minutes
@@ -351,7 +357,7 @@ export function StudioPremiumClient({ expiresAt }: { expiresAt: string }) {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                   <polygon points="5 3 19 12 5 21 5 3" />
                 </svg>
-                Continue →
+                Generate Song →
               </>
             )}
           </button>
