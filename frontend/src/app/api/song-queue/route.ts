@@ -13,6 +13,7 @@ import { deriveUsernameFromEmail } from "@/lib/username-utils";
 import { persistRemoteAudioToS3 } from "@/lib/audio-storage";
 import { getUser } from "@/lib/auth";
 import { getAppUserProfile } from "@/lib/app-store";
+import { getActiveSubscription } from "@/lib/subscription-store";
 
 // ─── POST — create new queue entry ────────────────────────────────
 export async function POST(request: Request) {
@@ -27,15 +28,35 @@ export async function POST(request: Request) {
       username?: string;
       basePrompt?: string;
       vocalType?: string;
+      source?: string;
     };
 
     const lyrics = (body.lyrics ?? "").trim();
-    const email = (body.email ?? "").trim();
-    const username = (body.username ?? "").trim();
+    let email = (body.email ?? "").trim().toLowerCase();
+    let username = (body.username ?? "").trim();
 
     if (!lyrics) {
       return NextResponse.json({ error: "Lyrics are required." }, { status: 400 });
     }
+
+    if (body.source === "studio") {
+      const user = await getUser();
+      if (!user) {
+        return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
+      }
+
+      const subscription = await getActiveSubscription(user.id);
+      if (!subscription) {
+        return NextResponse.json(
+          { error: "An active subscription is required." },
+          { status: 403 },
+        );
+      }
+
+      email = user.email.trim().toLowerCase();
+      username = deriveUsernameFromEmail(email);
+    }
+
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ error: "A valid email is required." }, { status: 400 });
     }
