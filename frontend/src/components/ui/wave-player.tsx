@@ -12,6 +12,7 @@ interface WavePlayerProps {
   duration?: string;
   accent?: string;
   titleHref?: string;
+  isPremium?: boolean;
 }
 
 /* ─── Helpers ────────────────────────────────────────────────────────────── */
@@ -31,6 +32,7 @@ export function WavePlayer({
   duration,
   accent = "#6366f1",
   titleHref,
+  isPremium = false,
 }: WavePlayerProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -203,16 +205,18 @@ export function WavePlayer({
           </p>
         </div>
 
-        {/* AI badge */}
+        {/* Tag badge */}
         <span
           style={{
             flexShrink: 0, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.1em",
             padding: "0.2rem 0.55rem", borderRadius: 999,
-            background: `${accent}18`, border: `1px solid ${accent}40`, color: accent,
+            background: isPremium ? "rgba(234, 179, 8, 0.15)" : `${accent}18`, 
+            border: isPremium ? "1px solid rgba(234, 179, 8, 0.4)" : `1px solid ${accent}40`, 
+            color: isPremium ? "#eab308" : accent,
             textTransform: "uppercase",
           }}
         >
-          AI Song
+          {isPremium ? "PREMIUM" : "PUBLIC"}
         </span>
       </div>
 

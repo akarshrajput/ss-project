@@ -64,6 +64,23 @@ export function UserMenu() {
           zIndex: 50
         }}>
           <Link
+            href="/library"
+            onClick={() => setOpen(false)}
+            style={{
+              padding: "0.5rem 0.75rem",
+              borderRadius: "0.4rem",
+              color: "var(--text-primary)",
+              fontSize: "0.85rem",
+              textDecoration: "none",
+              display: "block",
+              transition: "background 150ms"
+            }}
+            onMouseOver={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.05)")}
+            onMouseOut={(e) => (e.currentTarget.style.background = "transparent")}
+          >
+            Library
+          </Link>
+          <Link
             href="/me"
             onClick={() => setOpen(false)}
             style={{

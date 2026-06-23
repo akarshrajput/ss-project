@@ -1,94 +1,87 @@
-import { getUser } from "@/lib/auth";
-import Link from "next/link";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
-import { LibrarySongCard } from "@/components/ui/library-song-card";
-import { getUserSongs } from "@/lib/song-queue-store";
+import { LibraryClient } from "@/components/library/library-client";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Audio Library",
-  description: "Private Songify audio library for authenticated users.",
+  title: "Your Library: Songify",
+  description:
+    "Listen to your generated songs and view your library.",
   path: "/library",
-  noIndex: true,
+  keywords: [
+    "text to song generator",
+    "text to song",
+    "text to song ai",
+    "text to song converter online free",
+    "text to rap song",
+    "text to audio song",
+    "text to speech songs",
+    "convert text to song",
+    "ai songs",
+    "songify community",
+  ],
 });
 
-type SongRow = {
-  id: string;
-  title: string | null;
-  prompt_tags: string | null;
-  genre: string | null;
-  mood: string | null;
-  audio_url: string | null;
-  created_at: string;
-};
-
-export default async function LibraryPage() {
-  const user = await getUser();
-
-  let songs: SongRow[] = [];
-  let error = null;
-
-  if (user?.email) {
-    try {
-      const data = await getUserSongs(user.email);
-      songs = data.map((s) => ({
-        id: s.songId,
-        title: s.songTitle,
-        prompt_tags: s.promptTags,
-        genre: s.genre,
-        mood: s.mood,
-        audio_url: s.songUrl,
-        created_at: s.createdAt.toISOString(),
-      }));
-    } catch (err) {
-      error = err;
-    }
-  }
-
+export default function LibraryPage() {
   return (
     <main className="site-container w-full flex-1 px-4 py-12 sm:px-6 lg:px-8">
-
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem", marginBottom: "2rem" }}>
-        <div>
-          <span className="badge badge-teal mb-3">Library</span>
-          <h1 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "2rem", fontWeight: 700, color: "var(--text-primary)" }}>
-            Your Audio Library
+      <div style={{ width: "100%" }}>
+        {/* Header */}
+        <div style={{ marginBottom: "2rem" }}>
+          <h1 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "2.25rem", fontWeight: 700, color: "var(--text-primary)", lineHeight: 1.15 }}>
+            Your <span className="gradient-text">Library</span>
           </h1>
-          <p style={{ marginTop: "0.4rem", fontSize: "0.875rem", color: "var(--text-secondary)" }}>
-            {songs.length} track{songs.length !== 1 ? "s" : ""} saved
+          <p style={{ marginTop: "0.5rem", fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: 560 }}>
+            Listen to your generated songs. Premium songs are private and only visible here.
           </p>
         </div>
-        <Link href="/" className="btn-primary" style={{ textDecoration: "none" }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-          New Song
-        </Link>
-      </div>
 
-      {!!error && (
-        <div className="alert-warning mb-6">
-          Could not load songs. Please try again later.
-        </div>
-      )}
+        <LibraryClient />
 
-      {!error && songs.length === 0 && (
-        <div style={{ textAlign: "center", padding: "5rem 2rem" }}>
-          <div style={{ width: 64, height: 64, borderRadius: "50%", background: "rgba(45,212,191,0.08)", border: "1px solid rgba(45,212,191,0.15)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1rem" }}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" strokeWidth="1.5">
-              <path d="M9 18V5l12-2v13M9 18c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-2c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" />
-            </svg>
+        <section style={{ display: "none" }}>
+          <h2 style={{ fontSize: "1.5rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "1rem" }}>
+            Discover What Our Text to Song Generator Can Create
+          </h2>
+          <p style={{ fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "1rem" }}>
+            Welcome to the Songify community explore page. This space is dedicated to showcasing the incredible creativity of our users who use our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> and <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong>. Here, you can find a diverse collection of songs generated from text prompts, spanning various genres, moods, and themes. Our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong> empowers anyone, regardless of musical background, to become a creator.
+          </p>
+          <p style={{ fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "1rem" }}>
+            By browsing this gallery, you can discover new styles, find inspiration for your own prompts, and see how others are using our <strong style={{ color: "var(--text-primary)" }}>text to song maker</strong> to push the boundaries of AI-assisted music production. From <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> creations to <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> experiments, this community showcase offers a glimpse into the future of music.
+          </p>
+
+          <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.75rem", marginTop: "1.5rem" }}>
+            What you can do on this page:
+          </h3>
+          <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            <li style={{ fontSize: "0.875rem", color: "var(--text-secondary)", lineHeight: 1.6, display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+              <span style={{ color: "var(--accent-violet)" }}>•</span>
+              <span><strong>Search and Filter:</strong> Easily find songs by searching for specific usernames or browsing through the latest creations.</span>
+            </li>
+            <li style={{ fontSize: "0.875rem", color: "var(--text-secondary)", lineHeight: 1.6, display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+              <span style={{ color: "var(--accent-violet)" }}>•</span>
+              <span><strong>Listen and Learn:</strong> Play tracks directly in your browser and read the prompts used to create them to understand how different inputs affect the output.</span>
+            </li>
+            <li style={{ fontSize: "0.875rem", color: "var(--text-secondary)", lineHeight: 1.6, display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
+              <span style={{ color: "var(--accent-violet)" }}>•</span>
+              <span><strong>Get Inspired:</strong> Use the community&apos;s creations as a springboard for your own ideas. Head to the homepage to start making your own music.</span>
+            </li>
+          </ul>
+        </section>
+
+        <section style={{ display: "none" }}>
+          <div className="glass-card" style={{ padding: "1.75rem" }}>
+            <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.85rem" }}>The Power of Community-Driven AI Music</h2>
+            <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+              Every song you see on this page was created by a real person using the Songify <strong style={{ color: "var(--text-primary)" }}>text to song AI free</strong> tool. That means this gallery is always growing, always changing, and always reflecting the diverse creative ideas of our global user base. From heartfelt love songs to energetic workout anthems, from lo-fi study beats to cinematic orchestral pieces — the range of what people create with our <strong style={{ color: "var(--text-primary)" }}>text to song generator free</strong> continues to surprise us.
+            </p>
+            <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
+              Listening to other creators&apos; work is one of the best ways to understand the full potential of our platform. You might hear a <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> with punchy rhymes that inspire you to write your own verse, or a smooth R&B track that shows you how mood settings affect the vocal style. Each song is a learning opportunity — and a reminder that with the right prompt, anyone can make something worth sharing.
+            </p>
+            <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
+              The explore page is also where we surface our most-played and highest-rated tracks. These are the songs that other listeners keep coming back to — which makes them a reliable benchmark for what great AI-generated music can sound like. If you want to understand what separates a good prompt from a great one, start here. Study the inputs, listen to the outputs, and take notes. Then go create something even better.
+            </p>
           </div>
-          <p style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.4rem" }}>No songs yet</p>
-          <p style={{ fontSize: "0.875rem", color: "var(--text-muted)", marginBottom: "1.5rem" }}>Create your first track in the Studio and it will appear here.</p>
-          <Link href="/" className="btn-primary" style={{ textDecoration: "none" }}>Open Studio</Link>
-        </div>
-      )}
-
-      <section style={{ display: "grid", gap: "1.25rem", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}>
-        {songs.map((song, i) => (
-          <LibrarySongCard key={song.id} song={song} index={i} />
-        ))}
-      </section>
+        </section>
+      </div>
     </main>
   );
 }
-

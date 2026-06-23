@@ -27,6 +27,7 @@ export type SongQueueEntry = {
   rejectionComment: string | null;
   basePrompt: string | null;
   vocalType: string | null;
+  isPremium?: boolean;
 };
 
 const COLLECTION = "songsQueue";
@@ -65,6 +66,7 @@ export async function createSongQueueEntry(data: {
   songId?: string;
   basePrompt?: string | null;
   vocalType?: string | null;
+  isPremium?: boolean;
 }): Promise<SongQueueEntry> {
   const db = await getMongoDb();
   const now = new Date();
@@ -92,6 +94,7 @@ export async function createSongQueueEntry(data: {
     rejectionComment: null,
     basePrompt: data.basePrompt || null,
     vocalType: data.vocalType || null,
+    isPremium: data.isPremium || false,
   };
 
   const result = await db.collection<SongQueueEntry>(COLLECTION).insertOne(entry);
@@ -257,6 +260,7 @@ export async function saveDirectSong(data: {
   duration: number;
   audioUrl: string;
   promptTags: string;
+  isPremium?: boolean;
 }): Promise<void> {
   const db = await getMongoDb();
   const now = new Date();
@@ -283,6 +287,7 @@ export async function saveDirectSong(data: {
     rejectionComment: null,
     basePrompt: null,
     vocalType: null,
+    isPremium: data.isPremium || false,
   };
 
   await db.collection<SongQueueEntry>(COLLECTION).insertOne(entry);
@@ -299,7 +304,7 @@ export async function listCompletedSongs(options: {
   const db = await getMongoDb();
   const { search, genre, mood, page = 1, limit = 20 } = options;
 
-  const filter: Record<string, any> = { status: "completed" };
+  const filter: Record<string, any> = { status: "completed", isPremium: { $ne: true } };
 
   if (search) {
     const searchRegex = new RegExp(search.toLowerCase().trim(), "i");
@@ -329,7 +334,7 @@ export async function countCompletedSongs(options: {
   const db = await getMongoDb();
   const { search, genre, mood } = options;
 
-  const filter: Record<string, any> = { status: "completed" };
+  const filter: Record<string, any> = { status: "completed", isPremium: { $ne: true } };
 
   if (search) {
     const searchRegex = new RegExp(search.toLowerCase().trim(), "i");
@@ -357,4 +362,61 @@ export async function getUserSongs(email: string, limit = 24): Promise<SongQueue
     .sort({ completedAt: -1 })
     .limit(limit)
     .toArray();
+}
+
+// ─── List user songs (for /library) ────────────────────────────
+export async function listUserSongs(options: {
+  email: string;
+  search?: string;
+  page?: number;
+  limit?: number;
+}): Promise<SongQueueEntry[]> {
+  const db = await getMongoDb();
+  const { email, search, page = 1, limit = 20 } = options;
+
+  const filter: Record<string, any> = { 
+    email: { $regex: `^${escapeRegex(email)}$`, $options: "i" },
+    status: "completed",
+    isPremium: true
+  };
+
+  if (search) {
+    const searchRegex = new RegExp(search.toLowerCase().trim(), "i");
+    filter.$or = [
+      { songTitle: searchRegex },
+      { lyrics: searchRegex },
+    ];
+  }
+
+  return db
+    .collection<SongQueueEntry>(COLLECTION)
+    .find(filter)
+    .sort({ completedAt: -1 })
+    .skip((page - 1) * limit)
+    .limit(limit)
+    .toArray();
+}
+
+export async function countUserSongs(options: {
+  email: string;
+  search?: string;
+}): Promise<number> {
+  const db = await getMongoDb();
+  const { email, search } = options;
+
+  const filter: Record<string, any> = { 
+    email: { $regex: `^${escapeRegex(email)}$`, $options: "i" },
+    status: "completed",
+    isPremium: true
+  };
+
+  if (search) {
+    const searchRegex = new RegExp(search.toLowerCase().trim(), "i");
+    filter.$or = [
+      { songTitle: searchRegex },
+      { lyrics: searchRegex },
+    ];
+  }
+
+  return db.collection(COLLECTION).countDocuments(filter);
 }

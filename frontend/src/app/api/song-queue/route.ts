@@ -39,14 +39,21 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Lyrics are required." }, { status: 400 });
     }
 
+    let isPremium = false;
+    const user = await getUser();
+    if (user) {
+      const subscription = await getActiveSubscription(user.id);
+      if (subscription) {
+        isPremium = true;
+      }
+    }
+
     if (body.source === "studio") {
-      const user = await getUser();
       if (!user) {
         return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
       }
 
-      const subscription = await getActiveSubscription(user.id);
-      if (!subscription) {
+      if (!isPremium) {
         return NextResponse.json(
           { error: "An active subscription is required." },
           { status: 403 },
@@ -110,6 +117,7 @@ export async function POST(request: Request) {
       username: finalUsername,
       basePrompt: body.basePrompt?.trim() || null,
       vocalType: body.vocalType?.trim() || null,
+      isPremium,
     });
 
     return NextResponse.json({ success: true, songId: entry.songId });

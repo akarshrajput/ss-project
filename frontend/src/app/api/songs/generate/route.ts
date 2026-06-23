@@ -4,6 +4,7 @@ import { buildLyrics, buildTags, buildWorkflow } from "@/lib/song/prompt";
 import type { SongGenerateInput, SongGenerateResult } from "@/lib/song/types";
 import { getComfyUiBaseUrl } from "@/lib/app-store";
 import { getUser } from "@/lib/auth";
+import { hasActiveSubscription } from "@/lib/subscription-store";
 import { saveDirectSong } from "@/lib/song-queue-store";
 import { persistRemoteAudioToS3 } from "@/lib/audio-storage";
 
@@ -87,6 +88,8 @@ async function persistSongIfAuthenticated(params: {
     return undefined;
   }
 
+  const isPremium = await hasActiveSubscription(user.id);
+
   // Save to MongoDB instead of Supabase DB
   const username = user.email?.split("@")[0] || `user_${user.id.slice(0, 5)}`;
 
@@ -99,7 +102,8 @@ async function persistSongIfAuthenticated(params: {
     mood: params.input.moods[0] ?? null,
     duration: params.input.length,
     audioUrl: publicUrl,
-    promptTags: params.tags
+    promptTags: params.tags,
+    isPremium
   });
 
   return publicUrl;

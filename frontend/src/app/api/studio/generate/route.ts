@@ -59,6 +59,7 @@ export async function POST(request: Request) {
       username,
       basePrompt: body.basePrompt?.trim() || null,
       vocalType: body.vocalType?.trim() || null,
+      isPremium: true,
     });
 
     // 6. Use the exact same processing pipeline as admin generate
