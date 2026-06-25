@@ -223,6 +223,10 @@ export function SongsQueueClient() {
   const activeSortLabel = sortOptions.find(o => o.value === `${sortBy}:${sortOrder}`)?.label || "Sort By";
 
   const controlBtn = (active: boolean): React.CSSProperties => ({
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "0.4rem",
     padding: "0.5rem 1rem",
     borderRadius: "0.6rem",
     fontSize: "0.85rem",
@@ -234,6 +238,12 @@ export function SongsQueueClient() {
     transition: "all 200ms ease",
   });
 
+  const Spinner = () => (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ animation: "spin 1s linear infinite" }}>
+      <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+    </svg>
+  );
+
   return (
     <div style={{ width: "100%" }}>
       {/* Search and Filters Bar */}
@@ -241,13 +251,13 @@ export function SongsQueueClient() {
         {/* Status Filters */}
         <div style={{ display: "flex", gap: "0.5rem" }}>
           <button type="button" onClick={() => { setStatusFilter("pending"); setPage(1); }} style={controlBtn(statusFilter === "pending")}>
-            Pending
+            {loading && statusFilter === "pending" && <Spinner />} Pending
           </button>
           <button type="button" onClick={() => { setStatusFilter("completed"); setPage(1); }} style={controlBtn(statusFilter === "completed")}>
-            Completed
+            {loading && statusFilter === "completed" && <Spinner />} Completed
           </button>
           <button type="button" onClick={() => { setStatusFilter("rejected"); setPage(1); }} style={controlBtn(statusFilter === "rejected")}>
-            Rejected
+            {loading && statusFilter === "rejected" && <Spinner />} Rejected
           </button>
         </div>
 
@@ -569,6 +579,7 @@ export function SongsQueueClient() {
                   <div style={{ flexShrink: 0, display: "flex", flexDirection: "column", gap: "0.6rem" }}>
                     <button type="button" onClick={() => handleGenerate(entry._id)} disabled={Boolean(generating !== null)} suppressHydrationWarning
                       style={{
+                        display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.4rem",
                         padding: "0.75rem 1.5rem", borderRadius: "0.75rem", border: "none", fontSize: "0.9rem", fontWeight: 700,
                         background: (generating !== null && generating !== entry._id) ? "rgba(255,255,255,0.05)" : generating === entry._id ? "rgba(99,102,241,0.3)" : "linear-gradient(135deg, #6366f1, #818cf8)",
                         color: (generating !== null && generating !== entry._id) ? "var(--text-muted)" : "#fff",
@@ -576,7 +587,7 @@ export function SongsQueueClient() {
                         boxShadow: generating !== null ? "none" : "0 4px 20px rgba(99,102,241,0.3)",
                         transition: "all 200ms ease", whiteSpace: "nowrap",
                       }}>
-                      {generating === entry._id ? "Generating..." : (generating !== null) ? "Queue Busy" : "Generate Now"}
+                      {generating === entry._id ? <><Spinner /> Generating...</> : (generating !== null) ? "Queue Busy" : "Generate Now"}
                     </button>
                     <button
                       type="button"
@@ -594,10 +605,14 @@ export function SongsQueueClient() {
                         cursor: (generating !== null || rejectingId !== null) ? "not-allowed" : "pointer",
                         transition: "all 200ms ease",
                         whiteSpace: "nowrap",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "0.4rem",
                         opacity: (generating !== null || rejectingId !== null) ? 0.7 : 1,
                       }}
                     >
-                      {rejectingId === entry._id ? "Rejecting..." : "Reject"}
+                      {rejectingId === entry._id ? <><Spinner /> Rejecting...</> : "Reject"}
                     </button>
                   </div>
                 )}
@@ -722,10 +737,14 @@ export function SongsQueueClient() {
                   color: "#fecaca",
                   fontSize: "0.84rem",
                   fontWeight: 700,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "0.4rem",
                   cursor: rejectingId ? "not-allowed" : "pointer",
                 }}
               >
-                {rejectingId ? "Rejecting..." : "Confirm Reject"}
+                {rejectingId ? <><Spinner /> Rejecting...</> : "Confirm Reject"}
               </button>
             </div>
           </div>
@@ -741,6 +760,9 @@ export function SongsQueueClient() {
           0% { opacity: 1; transform: scale(1); }
           50% { opacity: 0.5; transform: scale(0.8); }
           100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes spin {
+          100% { transform: rotate(360deg); }
         }
       `}</style>
     </div>

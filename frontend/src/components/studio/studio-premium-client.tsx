@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 /* ─── Constants ────────────────────────────────────────────────── */
 const GENRES = ["Pop", "Rock", "Hip-Hop", "R&B", "Country", "Jazz", "Lo-fi", "EDM", "Folk", "Classical"];
@@ -134,7 +135,7 @@ export function StudioPremiumClient({ expiresAt }: { expiresAt: string }) {
       setLyrics("");
       setBasePrompt("");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError("Our servers are busy. Please try again in a few minutes, or report the issue.");
     } finally {
       setGenerating(false);
     }
@@ -308,8 +309,24 @@ export function StudioPremiumClient({ expiresAt }: { expiresAt: string }) {
 
           {/* Errors and success */}
           {error && (
-            <div style={{ fontSize: "0.82rem", color: "#fca5a5", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: "0.5rem", padding: "0.6rem 0.85rem" }}>
-              {error}
+            <div style={{ fontSize: "0.82rem", color: "#fca5a5", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: "0.5rem", padding: "0.6rem 0.85rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.5rem" }}>
+              <span>{error}</span>
+              {error.includes("servers are busy") && (
+                <Link href="/contact" style={{
+                  padding: "0.35rem 0.75rem",
+                  background: "rgba(239,68,68,0.15)",
+                  border: "1px solid rgba(239,68,68,0.3)",
+                  borderRadius: "0.4rem",
+                  color: "#fca5a5",
+                  textDecoration: "none",
+                  fontWeight: 600,
+                  fontSize: "0.75rem",
+                  whiteSpace: "nowrap",
+                  transition: "background 150ms"
+                }}>
+                  Report Issue
+                </Link>
+              )}
             </div>
           )}
           {success && (

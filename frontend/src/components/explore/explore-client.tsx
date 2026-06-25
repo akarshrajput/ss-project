@@ -323,8 +323,8 @@ function ExploreContent() {
             gap: "1.25rem",
             width: "100%"
           }}>
-            {songs.map((song) => (
-              <div key={song.songId}>
+            {songs.map((song, index) => (
+              <div key={`${song.songId}-${index}`}>
                 {song.songUrl && (
                   <WavePlayer
                     src={song.songUrl}

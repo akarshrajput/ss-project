@@ -29,11 +29,19 @@ type CronStatusData = {
 export function CronStatusPanel() {
   const [data, setData] = useState<CronStatusData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [triggerLoading, setTriggerLoading] = useState(false);
   const [triggerResult, setTriggerResult] = useState<string | null>(null);
   const [showLogs, setShowLogs] = useState(false);
 
-  const fetchStatus = useCallback(async () => {
+  const Spinner = () => (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ animation: "spin 1s linear infinite" }}>
+      <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+    </svg>
+  );
+
+  const fetchStatus = useCallback(async (isManualRefresh = false) => {
+    if (isManualRefresh) setIsRefreshing(true);
     try {
       const res = await fetch("/api/song-queue/cron/status");
       if (res.ok) {
@@ -42,6 +50,7 @@ export function CronStatusPanel() {
     } catch {
       // Silently fail
     } finally {
+      if (isManualRefresh) setIsRefreshing(false);
       setLoading(false);
     }
   }, []);
@@ -400,15 +409,7 @@ export function CronStatusPanel() {
         >
           {triggerLoading ? (
             <>
-              <span
-                style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: "50%",
-                  background: "#34d399",
-                  animation: "pulse 1.5s infinite",
-                }}
-              />
+              <Spinner />
               Running...
             </>
           ) : (
@@ -431,7 +432,8 @@ export function CronStatusPanel() {
 
         <button
           type="button"
-          onClick={() => fetchStatus()}
+          onClick={() => fetchStatus(true)}
+          disabled={isRefreshing}
           style={{
             display: "inline-flex",
             alignItems: "center",
@@ -443,24 +445,28 @@ export function CronStatusPanel() {
             color: "var(--text-secondary)",
             fontSize: "0.83rem",
             fontWeight: 600,
-            cursor: "pointer",
+            cursor: isRefreshing ? "not-allowed" : "pointer",
             transition: "all 200ms ease",
           }}
         >
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-          >
-            <path d="M21 2v6h-6" />
-            <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
-            <path d="M3 22v-6h6" />
-            <path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
-          </svg>
+          {isRefreshing ? (
+            <Spinner />
+          ) : (
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            >
+              <path d="M21 2v6h-6" />
+              <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
+              <path d="M3 22v-6h6" />
+              <path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
+            </svg>
+          )}
           Refresh
         </button>
 
@@ -626,6 +632,9 @@ export function CronStatusPanel() {
           0% { opacity: 1; transform: scale(1); }
           50% { opacity: 0.5; transform: scale(0.8); }
           100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes spin {
+          100% { transform: rotate(360deg); }
         }
       `}</style>
     </div>

@@ -73,10 +73,18 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
   const [data, setData] = useState<AnalyticsData>(initialData);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [activeRange, setActiveRange] = useState<string>("7d");
+  const [pendingRange, setPendingRange] = useState<string | null>(null);
+
+  const Spinner = () => (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ animation: "spin 1s linear infinite" }}>
+      <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+    </svg>
+  );
 
   // Fetch metrics data when range changes or manual refresh triggers
   const fetchDataForRange = async (range: string) => {
     setIsRefreshing(true);
+    setPendingRange(range);
     try {
       const res = await fetch(`/api/admin/analytics?range=${range}`);
       if (res.ok) {
@@ -88,6 +96,7 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
       console.error("Failed to fetch analytics range:", err);
     } finally {
       setIsRefreshing(false);
+      setPendingRange(null);
     }
   };
 
@@ -180,6 +189,9 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
           0%, 100% { transform: scale(1); opacity: 1; }
           50% { transform: scale(1.3); opacity: 0.5; }
         }
+        @keyframes spin {
+          100% { transform: rotate(360deg); }
+        }
         .live-dot {
           animation: pulseGlow 1.8s infinite ease-in-out;
         }
@@ -234,7 +246,12 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
                 <button
                   key={btn.value}
                   onClick={() => fetchDataForRange(btn.value)}
+                  disabled={isRefreshing}
                   style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "0.4rem",
                     background: isActive ? "#f43f5e" : "transparent",
                     color: isActive ? "#ffffff" : "var(--text-secondary)",
                     border: "none",
@@ -242,11 +259,12 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
                     padding: "0.35rem 0.8rem",
                     fontSize: "0.75rem",
                     fontWeight: isActive ? 700 : 600,
-                    cursor: "pointer",
+                    cursor: isRefreshing ? "not-allowed" : "pointer",
                     transition: "all 150ms ease"
                   }}
                   className={!isActive ? "hover:text-white" : ""}
                 >
+                  {isRefreshing && pendingRange === btn.value && <Spinner />}
                   {btn.label}
                 </button>
               );
@@ -269,12 +287,14 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
             onClick={handleManualRefresh}
             disabled={isRefreshing}
             style={{
+              display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.4rem",
               padding: "0.55rem 1.1rem", borderRadius: "0.6rem", border: "1px solid rgba(255,255,255,0.08)",
               background: "rgba(255,255,255,0.03)", color: "var(--text-primary)",
-              fontSize: "0.85rem", fontWeight: 600, cursor: "pointer", transition: "all 150ms ease"
+              fontSize: "0.85rem", fontWeight: 600, cursor: isRefreshing ? "not-allowed" : "pointer", transition: "all 150ms ease"
             }}
             className="hover:bg-white/10"
           >
+            {isRefreshing && pendingRange === activeRange && <Spinner />}
             {isRefreshing ? "Refreshing..." : "Refresh"}
           </button>
         </div>

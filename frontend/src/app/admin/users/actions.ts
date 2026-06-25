@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getAppUserProfile, setAppUserRole, AppUserRole } from "@/lib/app-store";
 import { getUser } from "@/lib/auth";
+import { getSubscriptionHistory } from "@/lib/subscription-store";
 
 export async function updateUserRole(formData: FormData) {
   const user = await getUser();
@@ -66,4 +67,33 @@ export async function deleteAppUser(formData: FormData) {
   await db.collection("song_queue").deleteMany({ userId: targetUserId });
   
   revalidatePath("/admin/users");
+}
+
+export async function fetchUserSubscriptionHistory(targetUserId: string) {
+  const user = await getUser();
+
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+
+  const profile = await getAppUserProfile(user.id);
+  if (profile?.role !== "admin") {
+    throw new Error("Forbidden");
+  }
+
+  if (!targetUserId) {
+    throw new Error("Invalid user ID");
+  }
+
+  const history = await getSubscriptionHistory(targetUserId);
+  
+  return history.map(sub => ({
+    plan: sub.plan,
+    status: sub.status,
+    amount: sub.amount,
+    currency: sub.currency,
+    startsAt: sub.startsAt.toISOString(),
+    expiresAt: sub.expiresAt.toISOString(),
+    createdAt: sub.createdAt.toISOString(),
+  }));
 }

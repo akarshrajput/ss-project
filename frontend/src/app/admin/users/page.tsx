@@ -6,6 +6,7 @@ import { getAllActiveSubscriptions } from "@/lib/subscription-store";
 import { getUser } from "@/lib/auth";
 import { RoleForm } from "./role-form";
 import { SubscriptionInfo, SubscriptionDTO } from "./subscription-info";
+import { SubscriptionHistory } from "./subscription-history";
 import { DeleteUserForm } from "./delete-form";
 
 export const metadata: Metadata = buildMetadata({
@@ -32,7 +33,7 @@ export default async function AdminUsersPage() {
 
   return (
     <main className="site-container w-full flex-1 px-4 py-12 sm:px-6 lg:px-8">
-      <div style={{ maxWidth: 1020, margin: "0 auto" }}>
+      <div style={{ width: "100%" }}>
         
         {/* Header */}
         <div style={{ marginBottom: "2rem", display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
@@ -128,13 +129,14 @@ export default async function AdminUsersPage() {
                       </td>
                       <td style={{ padding: "1rem" }}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "0.5rem" }}>
+                          <SubscriptionHistory userId={appUser.userId} />
                           {appUser.userId !== user.id ? (
                             <>
                               <RoleForm userId={appUser.userId} currentRole={appUser.role} />
                               <DeleteUserForm userId={appUser.userId} />
                             </>
                           ) : (
-                            <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", fontStyle: "italic" }}>You</span>
+                            <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", fontStyle: "italic", marginLeft: "0.5rem" }}>You</span>
                           )}
                         </div>
                       </td>

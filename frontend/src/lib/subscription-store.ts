@@ -93,3 +93,13 @@ export async function getSubscriptionByStripeSession(
 
   return db.collection<Subscription>(COLLECTION).findOne({ stripeSessionId });
 }
+
+export async function getSubscriptionHistory(userId: string): Promise<Subscription[]> {
+  const db = await getMongoDbOrNull();
+  if (!db) return [];
+
+  return db.collection<Subscription>(COLLECTION)
+    .find({ userId })
+    .sort({ createdAt: -1 })
+    .toArray();
+}

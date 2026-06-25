@@ -95,7 +95,7 @@ export function PromoPopup() {
           </div>
           <div>
             <p style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.5rem", lineHeight: 1.3, fontFamily: '"Space Grotesk", sans-serif' }}>
-              24h Unlimited Song Creation
+              24h Unlimited Song Creation in $1
             </p>
             <p style={{ fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1.25rem" }}>
               Get unlimited songs with no delays — just <strong style={{ color: "#a5b4fc" }}>$1</strong> for 24 hours.
