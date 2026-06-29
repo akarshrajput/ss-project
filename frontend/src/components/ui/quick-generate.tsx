@@ -276,7 +276,7 @@ export function QuickGenerate({ hasActivePlan = false }: { hasActivePlan?: boole
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!value.trim()) { textareaRef.current?.focus(); return; }
-    
+
     if (hasActivePlan) {
       window.location.href = `/studio?lyrics=${encodeURIComponent(value.trim())}`;
       return;
@@ -442,7 +442,35 @@ export function QuickGenerate({ hasActivePlan = false }: { hasActivePlan?: boole
 
   return (
     <>
-      <form onSubmit={handleSubmit} style={{ width: "100%", maxWidth: 680, margin: "0 auto" }} aria-label="Quick text to song generator">
+      <form onSubmit={handleSubmit} style={{ width: "100%", maxWidth: 680, margin: "0 auto", position: "relative" }} aria-label="Quick text to song generator">
+
+        {/* Cursive text and sketch arrow */}
+        <div style={{
+          position: "absolute",
+          top: "-55px",
+          right: "15px",
+          display: "flex",
+          alignItems: "flex-end",
+          gap: "8px",
+          pointerEvents: "none",
+          zIndex: 10
+        }}>
+          <span style={{
+            fontFamily: "'Caveat', 'Kalam', 'Comic Sans MS', cursive",
+            fontSize: "1.2rem",
+            color: "#a5b4fc",
+            transform: "rotate(-0deg)",
+            marginBottom: "12px",
+            whiteSpace: "nowrap"
+          }}>
+            Generate free song here, but it will take hours so buy premium
+          </span>
+          <svg width="45" height="45" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginBottom: "-5px" }}>
+            <path d="M20 10 Q 70 30 80 80" stroke="#a5b4fc" strokeWidth="3" fill="none" strokeLinecap="round" strokeDasharray="6 4" />
+            <path d="M55 80 L 80 80 L 75 55" stroke="#a5b4fc" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+
         <div style={{
           position: "relative", borderRadius: "1rem",
           border: focused ? "1.5px solid rgba(99,102,241,0.6)" : "1.5px solid rgba(255,255,255,0.10)",

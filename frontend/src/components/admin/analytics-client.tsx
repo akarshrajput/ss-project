@@ -2,7 +2,32 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { SpotifyLogo, Globe, MusicNote, ChartBar, Compass, Clock } from "@phosphor-icons/react";
+import { SpotifyLogo, Globe, MusicNote, ChartBar, Compass, Clock, X, CaretLeft, CaretRight, CheckCircle, XCircle, Crown } from "@phosphor-icons/react";
+
+interface RouteVisited {
+  pathname: string;
+  count: number;
+}
+
+interface VisitorDetail {
+  sessionId: string;
+  country: string;
+  browser: string;
+  device: string;
+  os: string;
+  routesVisited: RouteVisited[];
+  totalPageviews: number;
+  lastActive: string;
+  accountCreated: boolean;
+  hasPremium: boolean;
+}
+
+interface VisitorsData {
+  data: VisitorDetail[];
+  total: number;
+  page: number;
+  totalPages: number;
+}
 
 interface DailyTrendPoint {
   date: string;
@@ -75,6 +100,11 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
   const [activeRange, setActiveRange] = useState<string>("7d");
   const [pendingRange, setPendingRange] = useState<string | null>(null);
 
+  // Visitors Modal State
+  const [isVisitorsModalOpen, setIsVisitorsModalOpen] = useState(false);
+  const [visitorsData, setVisitorsData] = useState<VisitorsData | null>(null);
+  const [isLoadingVisitors, setIsLoadingVisitors] = useState(false);
+
   const Spinner = () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ animation: "spin 1s linear infinite" }}>
       <path d="M21 12a9 9 0 1 1-6.219-8.56" />
@@ -120,6 +150,26 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
 
   const handleManualRefresh = () => {
     fetchDataForRange(activeRange);
+  };
+
+  const fetchVisitors = async (page: number, range: string) => {
+    setIsLoadingVisitors(true);
+    try {
+      const res = await fetch(`/api/admin/analytics/visitors?page=${page}&limit=10&range=${range}`);
+      if (res.ok) {
+        const result = await res.json();
+        setVisitorsData(result);
+      }
+    } catch (err) {
+      console.error("Failed to fetch visitors:", err);
+    } finally {
+      setIsLoadingVisitors(false);
+    }
+  };
+
+  const handleOpenVisitorsModal = () => {
+    setIsVisitorsModalOpen(true);
+    fetchVisitors(1, activeRange);
   };
 
   const {
@@ -310,8 +360,15 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
         </div>
 
         {/* Unique Visitors */}
-        <div style={cardStyle}>
-          <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-muted)" }}>Unique Visitors</span>
+        <div 
+          style={{ ...cardStyle, cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s" }}
+          className="hover:scale-[1.02] hover:shadow-[0_8px_32px_rgba(165,180,252,0.15)]"
+          onClick={handleOpenVisitorsModal}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-muted)" }}>Unique Visitors</span>
+            <span style={{ fontSize: "0.7rem", background: "rgba(165,180,252,0.1)", color: "#a5b4fc", padding: "0.1rem 0.4rem", borderRadius: "4px" }}>Click for details</span>
+          </div>
           <p style={{ fontSize: "2rem", fontWeight: 800, color: "#a5b4fc", fontFamily: '"Space Grotesk", sans-serif', margin: "0.2rem 0" }}>{uniqueVisitors}</p>
           <span style={{ fontSize: "0.72rem", color: "#a5b4fc", fontWeight: 600 }}>Unique session indicators</span>
         </div>
@@ -679,6 +736,165 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
         </div>
 
       </div>
+
+      {/* Visitors Modal */}
+      {isVisitorsModalOpen && (
+        <div style={{
+          position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+          background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          zIndex: 9999, padding: "2rem"
+        }}>
+          <div style={{
+            background: "#0d1117", border: "1px solid rgba(255,255,255,0.1)",
+            borderRadius: "1rem", width: "100%", maxWidth: "1000px", maxHeight: "90vh",
+            display: "flex", flexDirection: "column", boxShadow: "0 25px 50px -12px rgba(0,0,0,0.5)"
+          }}>
+            {/* Modal Header */}
+            <div style={{ padding: "1.5rem", borderBottom: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div>
+                <h2 style={{ fontSize: "1.5rem", fontWeight: 800, color: "var(--text-primary)", fontFamily: '"Space Grotesk", sans-serif' }}>Unique Visitors Details</h2>
+                <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginTop: "0.2rem" }}>
+                  Detailed breakdown of visitor sessions and conversions for the {activeRange} range.
+                </p>
+              </div>
+              <button onClick={() => setIsVisitorsModalOpen(false)} style={{ background: "transparent", border: "none", color: "var(--text-muted)", cursor: "pointer" }}>
+                <X size={24} weight="bold" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div style={{ padding: "1.5rem", overflowY: "auto", flex: 1 }}>
+              {isLoadingVisitors && !visitorsData ? (
+                <div style={{ display: "flex", justifyContent: "center", padding: "3rem" }}>
+                  <Spinner />
+                </div>
+              ) : visitorsData ? (
+                <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                  {/* Summary Bar */}
+                  <div style={{ display: "flex", gap: "1rem", background: "rgba(255,255,255,0.02)", padding: "1rem", borderRadius: "0.75rem", border: "1px solid rgba(255,255,255,0.05)", flexWrap: "wrap" }}>
+                    <div style={{ flex: "1 1 200px" }}>
+                      <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Total Visitors</span>
+                      <p style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--text-primary)" }}>{visitorsData.total}</p>
+                    </div>
+                    <div style={{ width: "1px", background: "rgba(255,255,255,0.1)", display: "block" }} />
+                    <div style={{ flex: "1 1 200px" }}>
+                      <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Accounts Created</span>
+                      <p style={{ fontSize: "1.25rem", fontWeight: 700, color: "#10b981" }}>
+                        {visitorsData.data.filter(v => v.accountCreated).length} <span style={{ fontSize: "0.8rem", fontWeight: 400, color: "var(--text-muted)" }}>on this page</span>
+                      </p>
+                    </div>
+                    <div style={{ width: "1px", background: "rgba(255,255,255,0.1)", display: "block" }} />
+                    <div style={{ flex: "1 1 200px" }}>
+                      <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Premium Users</span>
+                      <p style={{ fontSize: "1.25rem", fontWeight: 700, color: "#f59e0b" }}>
+                        {visitorsData.data.filter(v => v.hasPremium).length} <span style={{ fontSize: "0.8rem", fontWeight: 400, color: "var(--text-muted)" }}>on this page</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Table */}
+                  <div style={{ overflowX: "auto", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "0.75rem", marginTop: "0.5rem" }}>
+                    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.85rem", textAlign: "left", minWidth: "700px" }}>
+                      <thead>
+                        <tr style={{ background: "rgba(255,255,255,0.03)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+                          <th style={{ padding: "0.75rem 1rem", color: "var(--text-secondary)", fontWeight: 600 }}>Visitor Info</th>
+                          <th style={{ padding: "0.75rem 1rem", color: "var(--text-secondary)", fontWeight: 600 }}>Routes Visited</th>
+                          <th style={{ padding: "0.75rem 1rem", color: "var(--text-secondary)", fontWeight: 600 }}>Status</th>
+                          <th style={{ padding: "0.75rem 1rem", color: "var(--text-secondary)", fontWeight: 600 }}>Last Active</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {visitorsData.data.map((v) => (
+                          <tr key={v.sessionId} style={{ borderBottom: "1px solid rgba(255,255,255,0.03)" }} className="bar-hover">
+                            <td style={{ padding: "1rem" }}>
+                              <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                                <span style={{ fontFamily: "monospace", fontSize: "0.75rem", color: "#6366f1", background: "rgba(99,102,241,0.1)", padding: "0.15rem 0.4rem", borderRadius: "4px", width: "fit-content" }}>
+                                  {v.sessionId.substring(0, 12)}...
+                                </span>
+                                <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>
+                                  {v.country !== "Unknown" ? `🌐 ${v.country}` : "🌐 ??"} · {v.os} · {v.browser}
+                                </span>
+                              </div>
+                            </td>
+                            <td style={{ padding: "1rem" }}>
+                              <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem", maxHeight: "80px", overflowY: "auto", paddingRight: "0.5rem" }}>
+                                {v.routesVisited.map((route, i) => (
+                                  <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.5rem" }}>
+                                    <span style={{ color: "var(--text-secondary)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "150px" }} title={route.pathname}>{route.pathname}</span>
+                                    <span style={{ fontSize: "0.7rem", background: "rgba(255,255,255,0.05)", padding: "0.1rem 0.3rem", borderRadius: "4px", flexShrink: 0 }}>x{route.count}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </td>
+                            <td style={{ padding: "1rem" }}>
+                              <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                                <span style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", fontSize: "0.75rem", color: v.accountCreated ? "#10b981" : "var(--text-muted)" }}>
+                                  {v.accountCreated ? <CheckCircle weight="fill" /> : <XCircle />} Account
+                                </span>
+                                <span style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", fontSize: "0.75rem", color: v.hasPremium ? "#f59e0b" : "var(--text-muted)" }}>
+                                  {v.hasPremium ? <Crown weight="fill" /> : <XCircle />} Premium
+                                </span>
+                              </div>
+                            </td>
+                            <td style={{ padding: "1rem", color: "var(--text-muted)" }}>
+                              {new Date(v.lastActive).toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}
+                            </td>
+                          </tr>
+                        ))}
+                        {visitorsData.data.length === 0 && (
+                          <tr>
+                            <td colSpan={4} style={{ padding: "2rem", textAlign: "center", color: "var(--text-muted)" }}>
+                              No visitors found for this criteria.
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Pagination */}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1rem" }}>
+                    <span style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>
+                      Showing page {visitorsData.page} of {visitorsData.totalPages || 1}
+                    </span>
+                    <div style={{ display: "flex", gap: "0.5rem" }}>
+                      <button
+                        onClick={() => fetchVisitors(visitorsData.page - 1, activeRange)}
+                        disabled={visitorsData.page <= 1 || isLoadingVisitors}
+                        style={{
+                          display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.3rem",
+                          padding: "0.4rem 0.8rem", borderRadius: "0.5rem", border: "1px solid rgba(255,255,255,0.08)",
+                          background: visitorsData.page <= 1 ? "rgba(255,255,255,0.01)" : "rgba(255,255,255,0.05)",
+                          color: visitorsData.page <= 1 ? "rgba(255,255,255,0.2)" : "var(--text-primary)",
+                          cursor: visitorsData.page <= 1 ? "not-allowed" : "pointer",
+                          transition: "all 0.2s"
+                        }}
+                      >
+                        <CaretLeft weight="bold" /> Prev
+                      </button>
+                      <button
+                        onClick={() => fetchVisitors(visitorsData.page + 1, activeRange)}
+                        disabled={visitorsData.page >= visitorsData.totalPages || isLoadingVisitors}
+                        style={{
+                          display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.3rem",
+                          padding: "0.4rem 0.8rem", borderRadius: "0.5rem", border: "1px solid rgba(255,255,255,0.08)",
+                          background: visitorsData.page >= visitorsData.totalPages ? "rgba(255,255,255,0.01)" : "rgba(255,255,255,0.05)",
+                          color: visitorsData.page >= visitorsData.totalPages ? "rgba(255,255,255,0.2)" : "var(--text-primary)",
+                          cursor: visitorsData.page >= visitorsData.totalPages ? "not-allowed" : "pointer",
+                          transition: "all 0.2s"
+                        }}
+                      >
+                        Next <CaretRight weight="bold" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

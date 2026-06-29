@@ -449,3 +449,131 @@ export async function getRichAnalyticsData(range = "7d") {
     })),
   };
 }
+
+export type VisitorDetail = {
+  sessionId: string;
+  country: string;
+  browser: string;
+  device: string;
+  os: string;
+  routesVisited: { pathname: string; count: number }[];
+  totalPageviews: number;
+  lastActive: string;
+  accountCreated: boolean;
+  hasPremium: boolean;
+};
+
+export async function getPaginatedVisitorsAnalytics(
+  page = 1,
+  limit = 10,
+  range = "7d"
+) {
+  const db = await getMongoDb();
+  const pageviewsCol = db.collection<PageviewRecord>(PAGEVIEWS_COLLECTION);
+  const generatorCol = db.collection<SessionAnalytics>("generatorAnalytics");
+  const usersCol = db.collection("users");
+  const subscriptionsCol = db.collection("subscriptions");
+
+  const now = new Date();
+  let startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  
+  if (range === "24h") {
+    startDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  } else if (range === "30d") {
+    startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  } else if (range === "1y") {
+    startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+  }
+
+  const rangeMatch = { $match: { createdAt: { $gte: startDate } } };
+
+  // Aggregate unique sessions with their paths and max createdAt
+  const aggregationPipeline = [
+    rangeMatch,
+    {
+      $group: {
+        _id: "$sessionId",
+        totalPageviews: { $sum: 1 },
+        routes: { $push: "$pathname" },
+        country: { $last: "$country" },
+        browser: { $last: "$browser" },
+        device: { $last: "$device" },
+        os: { $last: "$os" },
+        lastActive: { $max: "$createdAt" }
+      }
+    },
+    { $sort: { lastActive: -1 } },
+    {
+      $facet: {
+        metadata: [{ $count: "total" }],
+        data: [{ $skip: (page - 1) * limit }, { $limit: limit }]
+      }
+    }
+  ];
+
+  const [result] = await pageviewsCol.aggregate(aggregationPipeline).toArray();
+  const total = result.metadata[0]?.total || 0;
+  const data = result.data || [];
+
+  const enrichedData: VisitorDetail[] = await Promise.all(
+    data.map(async (v: { _id: string; routes: string[]; country?: string; browser?: string; device?: string; os?: string; totalPageviews: number; lastActive: Date }) => {
+      // Calculate route counts
+      const routeCounts = v.routes.reduce((acc: Record<string, number>, curr: string) => {
+        acc[curr] = (acc[curr] || 0) + 1;
+        return acc;
+      }, {});
+      const routesVisited = Object.entries(routeCounts).map(([pathname, count]) => ({
+        pathname,
+        count: count as number,
+      }));
+
+      let accountCreated = false;
+      let hasPremium = false;
+
+      // Check generatorAnalytics for email
+      const sessionEvent = await generatorCol.findOne({ sessionId: v._id });
+      if (sessionEvent) {
+        if (sessionEvent.status === "completed") {
+          accountCreated = true;
+        }
+
+        if (sessionEvent.email) {
+          // Check users collection
+          const user = await usersCol.findOne({ email: sessionEvent.email });
+          if (user) {
+            accountCreated = true;
+            // Check subscriptions collection
+            const sub = await subscriptionsCol.findOne({
+              userId: user.userId,
+              status: "active",
+              expiresAt: { $gt: now }
+            });
+            if (sub) {
+              hasPremium = true;
+            }
+          }
+        }
+      }
+
+      return {
+        sessionId: v._id,
+        country: v.country || "Unknown",
+        browser: v.browser || "Unknown",
+        device: v.device || "Unknown",
+        os: v.os || "Unknown",
+        routesVisited,
+        totalPageviews: v.totalPageviews,
+        lastActive: v.lastActive.toISOString(),
+        accountCreated,
+        hasPremium
+      };
+    })
+  );
+
+  return {
+    data: enrichedData,
+    total,
+    page,
+    totalPages: Math.ceil(total / limit)
+  };
+}

@@ -289,7 +289,7 @@ export default async function Home() {
         </p>
 
         {/* ─── Quick Generate input — the tool IS the CTA ────────────── */}
-        <div className="fade-up-delay-3 mt-10 w-full px-2">
+        <div className="fade-up-delay-3 mt-20 w-full px-2">
           <QuickGenerate hasActivePlan={!!sub} />
         </div>
 
