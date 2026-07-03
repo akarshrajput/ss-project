@@ -82,7 +82,7 @@ export function QuickGenerate({ hasActivePlan = false }: { hasActivePlan?: boole
   const [theme, setTheme] = useState<string | null>(null);
   const [genre, setGenre] = useState<string | null>(null);
   const [mood, setMood] = useState<string | null>(null);
-  const [duration, setDuration] = useState(30);
+  const [duration, setDuration] = useState(60);
   const [vocalType, setVocalType] = useState<string>("Female voice");
 
   // Details step
@@ -444,32 +444,7 @@ export function QuickGenerate({ hasActivePlan = false }: { hasActivePlan?: boole
     <>
       <form onSubmit={handleSubmit} style={{ width: "100%", maxWidth: 680, margin: "0 auto", position: "relative" }} aria-label="Quick text to song generator">
 
-        {/* Cursive text and sketch arrow */}
-        <div style={{
-          position: "absolute",
-          top: "-55px",
-          right: "15px",
-          display: "flex",
-          alignItems: "flex-end",
-          gap: "8px",
-          pointerEvents: "none",
-          zIndex: 10
-        }}>
-          <span style={{
-            fontFamily: "'Caveat', 'Kalam', 'Comic Sans MS', cursive",
-            fontSize: "1.2rem",
-            color: "#a5b4fc",
-            transform: "rotate(-0deg)",
-            marginBottom: "12px",
-            whiteSpace: "nowrap"
-          }}>
-            Generate free song here, but it will take hours so buy premium
-          </span>
-          <svg width="45" height="45" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginBottom: "-5px" }}>
-            <path d="M20 10 Q 70 30 80 80" stroke="#a5b4fc" strokeWidth="3" fill="none" strokeLinecap="round" strokeDasharray="6 4" />
-            <path d="M55 80 L 80 80 L 75 55" stroke="#a5b4fc" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
+
 
         <div style={{
           position: "relative", borderRadius: "1rem",
@@ -545,7 +520,7 @@ export function QuickGenerate({ hasActivePlan = false }: { hasActivePlan?: boole
               boxShadow: value.trim() ? "0 0 20px rgba(99,102,241,0.4)" : "none", transition: "all 200ms ease",
             }}>
               {/* <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3" /></svg> */}
-              Generate free song
+              Create Free song
             </button>
           </div>
         </div>
@@ -557,6 +532,12 @@ export function QuickGenerate({ hasActivePlan = false }: { hasActivePlan?: boole
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = "var(--text-muted)"; }}
             >{tag}</button>
           ))}
+        </div>
+
+        {/* Minimal Trusted By Logos */}
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "2.5rem", marginTop: "1.75rem" }} aria-label="Trusted companies">
+          <img src="/trusted/hhg.png" alt="HHG" style={{ height: "50px", filter: "brightness(0) invert(1) opacity(0.7)", objectFit: "contain" }} />
+          <img src="/trusted/niftyip.png" alt="Nifty IP" style={{ height: "50px", filter: "brightness(0) invert(1) opacity(0.7)", objectFit: "contain" }} />
         </div>
       </form>
 

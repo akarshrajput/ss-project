@@ -137,36 +137,65 @@ export function PromoPopup() {
                 </li>
               ))}
             </ul>
-            <Link
-              href="/register?plan=24h-unlimited"
-              onClick={dismiss}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "0.5rem",
-                padding: "0.75rem 2rem",
-                borderRadius: "0.6rem",
-                background: "linear-gradient(135deg, #6366f1, #818cf8)",
-                color: "#fff",
-                fontSize: "0.95rem",
-                fontWeight: 700,
-                textDecoration: "none",
-                boxShadow: "0 0 24px rgba(99,102,241,0.3)",
-                transition: "transform 180ms, box-shadow 180ms",
-                width: "100%",
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = "translateY(-1px)";
-                e.currentTarget.style.boxShadow = "0 0 32px rgba(99,102,241,0.4)";
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 0 24px rgba(99,102,241,0.3)";
-              }}
-            >
-              Get Started →
-            </Link>
+            <div style={{ display: "flex", gap: "1rem", width: "100%" }}>
+              <button
+                onClick={dismiss}
+                style={{
+                  flex: 1,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "0.75rem 1rem",
+                  borderRadius: "0.6rem",
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  color: "var(--text-secondary)",
+                  fontSize: "0.95rem",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  transition: "all 150ms",
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = "rgba(255,255,255,0.1)";
+                  e.currentTarget.style.color = "var(--text-primary)";
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                  e.currentTarget.style.color = "var(--text-secondary)";
+                }}
+              >
+                Cancel
+              </button>
+              <Link
+                href="/register?plan=24h-unlimited"
+                onClick={dismiss}
+                style={{
+                  flex: 1,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "0.75rem 1rem",
+                  borderRadius: "0.6rem",
+                  background: "linear-gradient(135deg, #6366f1, #818cf8)",
+                  color: "#fff",
+                  fontSize: "0.95rem",
+                  fontWeight: 700,
+                  textDecoration: "none",
+                  boxShadow: "0 0 24px rgba(99,102,241,0.3)",
+                  transition: "transform 180ms, box-shadow 180ms",
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                  e.currentTarget.style.boxShadow = "0 0 32px rgba(99,102,241,0.4)";
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "0 0 24px rgba(99,102,241,0.3)";
+                }}
+              >
+                Buy premium
+              </Link>
+            </div>
           </div>
         </div>
 

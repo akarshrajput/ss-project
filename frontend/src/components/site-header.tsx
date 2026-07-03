@@ -4,12 +4,13 @@ import { getAppUserProfile } from "@/lib/app-store";
 import { getUser } from "@/lib/auth";
 import { hasActiveSubscription } from "@/lib/subscription-store";
 import { UserMenu } from "@/components/ui/user-menu";
+import { MobileMenu } from "@/components/ui/mobile-menu";
 
 import { PromoBanner } from "@/components/ui/promo-banner";
 
 const navItems = [
   // { href: "/", label: "Home" },
-  { href: "/explore", label: "Explore" },
+  { href: "/explore", label: "Explore Songs" },
   // { href: "/services", label: "Services" },
   // { href: "/features", label: "Features" },
 ];
@@ -38,10 +39,10 @@ export async function SiteHeader() {
           </span>
         </Link>
 
-        {/* Right side */}
-        <div className="flex items-center gap-2">
+        {/* Right side — desktop */}
+        <div className="hidden md:flex items-center gap-2">
           {navItems.map((item) => (
-            <Link key={item.href} className="nav-link hidden md:block" href={item.href} prefetch={false}>
+            <Link key={item.href} className="nav-link" href={item.href} prefetch={false}>
               {item.label}
             </Link>
           ))}
@@ -49,7 +50,7 @@ export async function SiteHeader() {
             <>
               {isSubscribed && (
                 <Link
-                  className="nav-link hidden md:block"
+                  className="nav-link"
                   href="/studio"
                   prefetch={false}
                 >
@@ -58,7 +59,7 @@ export async function SiteHeader() {
               )}
               {profile?.role === "admin" && (
                 <Link
-                  className="nav-link hidden md:block"
+                  className="nav-link"
                   href="/admin"
                   prefetch={false}
                 >
@@ -68,11 +69,42 @@ export async function SiteHeader() {
               <UserMenu />
             </>
           ) : (
-            <></>
+            <>
+              <Link
+                className="nav-link"
+                href="/login"
+                prefetch={false}
+              >
+                Login
+              </Link>
+              <Link
+                className="nav-link border border-indigo-600/30 bg-indigo-500/10 flex items-center justify-center"
+                href="/register"
+                prefetch={false}
+                style={{
+                  color: "#fff",
+                  padding: "0.4rem 1rem",
+                  borderRadius: "10px",
+                  fontWeight: 600,
+                }}
+              >
+                Register
+              </Link>
+            </>
           )}
+        </div>
+
+        {/* Right side — mobile */}
+        <div className="flex items-center gap-2 md:hidden">
+          {user && <UserMenu />}
+          <MobileMenu
+            items={navItems}
+            isLoggedIn={!!user}
+            isSubscribed={isSubscribed}
+            isAdmin={profile?.role === "admin"}
+          />
         </div>
       </div>
     </header>
   );
 }
-

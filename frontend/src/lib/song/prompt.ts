@@ -2,32 +2,45 @@ import type { SongGenerateInput } from "@/lib/song/types";
 
 const GENRE_MACROS: Record<string, string> = {
   Lullaby:
-    "gentle lullaby, soft acoustic guitar, warm glockenspiel melody, tender cello undertone, cozy bedtime atmosphere",
-  Pop: "upbeat children pop, catchy hook, bright piano, bouncy percussion, modern clean mix",
-  Folk: "warm acoustic folk, fingerpicked guitar, ukulele support, gentle hand percussion, storytelling tone",
+    "gentle lullaby, soft acoustic guitar, warm glockenspiel melody, tender cello undertone, cozy bedtime atmosphere, studio-quality mix",
+  Pop: "modern pop production, catchy melodic hook, polished synth layers, crisp snare, punchy 808 bass, bright piano chords, radio-ready mix, professional mastering",
+  Folk: "warm acoustic folk, fingerpicked steel-string guitar, ukulele harmony, gentle hand percussion, storytelling tone, intimate studio recording, analog warmth",
   Orchestral:
-    "cinematic orchestral score, warm strings, playful woodwinds, harp transitions, adventurous family-safe mood",
-  Jazz: "playful jazz, soft upright piano, brushed snare swing, warm vibraphone, fun and lively",
+    "cinematic orchestral score, lush string section, expressive woodwinds, brass accents, harp glissandos, timpani rolls, film soundtrack quality, wide stereo mix",
+  Jazz: "smooth jazz, warm upright piano, walking bass line, brushed snare swing, mellow vibraphone, saxophone solo, intimate club atmosphere, professional recording",
   Techno:
-    "futuristic electronic, bright synth melody, light kick pulse, sparkly arpeggios, child-safe energy",
-  "Lo-fi": "cozy lo-fi, warm vinyl texture, mellow chords, soft beats, nostalgic calm mood",
-  Rock: "fun rock anthem, clean guitar riffs, punchy drums, uplifting chorus, playful confidence",
+    "electronic dance production, powerful synth leads, sidechained bass, crisp hi-hats, layered arpeggios, wide stereo panning, festival-ready energy, professional mastering",
+  "Lo-fi": "lo-fi hip hop, warm vinyl crackle, mellow Rhodes piano, tape-saturated beats, soulful sample chops, ambient room tone, nostalgic calm mood, cozy atmosphere",
+  Rock: "powerful rock anthem, overdriven electric guitar riffs, thundering drums, driving bass line, anthemic chorus, arena-rock energy, professional studio mix",
   Ambient:
-    "peaceful ambient soundscape, evolving pads, nature textures, no heavy percussion, dreamy and calm",
-  Reggae: "cheerful reggae groove, offbeat guitar, smooth bass, sunny tropical warmth, uplifting vibe",
+    "atmospheric ambient soundscape, evolving synthesizer pads, granular textures, subtle field recordings, spacious reverb, ethereal and immersive, studio-quality production",
+  Reggae: "authentic reggae groove, offbeat rhythm guitar, deep dub bass, rimshot snare, organ stabs, sunny tropical warmth, professional mix",
+  "Hip-Hop": "hard-hitting hip hop beat, deep 808 sub-bass, crisp trap hi-hats, punchy kick, atmospheric pads, melodic tag, professional mix and master",
+  "R&B": "silky R&B production, smooth vocal harmonies, warm Rhodes chords, subtle 808 bass, finger snaps, lush pads, intimate and polished mix",
+  Country: "modern country, bright acoustic guitar strumming, pedal steel slides, fiddle melody, tight rhythm section, Nashville studio sound, warm analog tone",
+  Classical: "classical composition, expressive string quartet, grand piano, delicate flute passages, rich cello, concert hall reverb, dynamic orchestration",
+  EDM: "high-energy EDM, massive supersaw leads, powerful drops, sidechained bass, soaring build-ups, festival-ready production, pristine digital mastering",
 };
 
 const MOOD_MACROS: Record<string, string> = {
-  happy: "happy, joyful, uplifting",
-  calm: "calm, peaceful, serene",
-  playful: "playful, bouncy, fun",
-  mysterious: "mysterious, curious, wonder-filled",
-  epic: "epic, heroic, cinematic",
-  cute: "cute, sweet, adorable",
-  sad: "gentle melancholy, tender emotion",
-  energetic: "high energy, vibrant, exciting",
-  spooky: "mildly spooky, playful halloween, child-safe",
-  dreamy: "dreamy, whimsical, magical",
+  happy: "happy, joyful, uplifting, feel-good energy, bright and radiant",
+  Happy: "happy, joyful, uplifting, feel-good energy, bright and radiant",
+  calm: "calm, peaceful, serene, meditative, soothing atmosphere",
+  Calm: "calm, peaceful, serene, meditative, soothing atmosphere",
+  playful: "playful, bouncy, fun, lighthearted, infectious groove",
+  mysterious: "mysterious, curious, wonder-filled, dark undertones, atmospheric tension",
+  epic: "epic, heroic, cinematic, grandiose, powerful crescendo",
+  cute: "cute, sweet, adorable, gentle and warm",
+  sad: "emotional melancholy, tender heartfelt sadness, bittersweet longing, expressive vulnerability",
+  Sad: "emotional melancholy, tender heartfelt sadness, bittersweet longing, expressive vulnerability",
+  energetic: "high energy, vibrant, exciting, driving momentum, electrifying intensity",
+  Energetic: "high energy, vibrant, exciting, driving momentum, electrifying intensity",
+  spooky: "mildly spooky, eerie atmosphere, suspenseful tension, child-safe",
+  dreamy: "dreamy, whimsical, magical, ethereal, floating atmosphere",
+  Dreamy: "dreamy, whimsical, magical, ethereal, floating atmosphere",
+  Dark: "dark, moody, brooding atmosphere, deep bass, mysterious tension, cinematic depth",
+  Upbeat: "upbeat, positive, energetic, danceable groove, feel-good rhythm",
+  Melancholic: "melancholic, wistful, nostalgic, emotional depth, poignant beauty",
 };
 
 const SCENE_MACROS: Record<string, string> = {
@@ -44,12 +57,13 @@ const SCENE_MACROS: Record<string, string> = {
 };
 
 const VOCAL_MACROS: Record<string, string> = {
-  "Female vocal": "warm female vocalist, clear diction",
-  "Male vocal": "friendly male vocalist, clear diction",
-  "Child voice": "bright child-like voice, innocent tone",
-  Choir: "soft children choir, warm harmony",
-  Rap: "playful child-safe rap rhythm, expressive spoken cadence",
-  Instrumental: "fully instrumental, no vocals",
+  "Female vocal": "professional female vocalist, smooth and expressive, clear enunciation, studio-recorded, polished vibrato, emotionally rich tone",
+  "Male vocal": "professional male vocalist, rich baritone, clear enunciation, studio-recorded, confident delivery, emotionally expressive",
+  "Child voice": "bright child-like voice, innocent tone, clear diction",
+  "Children vocal": "bright youthful voice, clear diction, energetic and expressive",
+  Choir: "lush vocal choir, rich harmonies, warm layered voices, professional choral arrangement",
+  Rap: "confident rap flow, sharp rhythmic delivery, expressive spoken cadence, professional vocal recording",
+  Instrumental: "fully instrumental, no vocals, rich instrumental arrangement",
 };
 
 const STRUCTURE_MACROS: Record<string, string> = {

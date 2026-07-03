@@ -95,7 +95,7 @@ export function StudioPremiumClient({ expiresAt }: { expiresAt: string }) {
   }, []);
   const [basePrompt, setBasePrompt] = useState("");
   const [vocalType, setVocalType] = useState("Female voice");
-  const [duration, setDuration] = useState(30);
+  const [duration, setDuration] = useState(60);
   const [genre, setGenre] = useState<string | null>(null);
   const [mood, setMood] = useState<string | null>(null);
 

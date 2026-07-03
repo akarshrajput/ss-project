@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { registerWithPassword } from "@/app/actions/auth";
 import { buildMetadata } from "@/lib/seo";
 import { getUser } from "@/lib/auth";
@@ -37,13 +38,15 @@ export default async function RegisterPage({ searchParams }: { searchParams: Sea
       <div style={{ width: "100%", maxWidth: 440 }}>
 
         {/* Logo */}
-        <div className="flex items-center gap-2.5 mb-8">
-          <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg, #6366f1, #2dd4bf)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 20px rgba(99,102,241,0.3)" }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="M9 18V5l12-2v13M9 18c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-2c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-          <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--text-primary)", fontFamily: '"Space Grotesk", sans-serif' }}>Songify</span>
+        <div className="flex items-center justify-center gap-2.5 mb-8">
+          <Image
+            src="/songify-logo.png"
+            alt="Songify"
+            width={40}
+            height={40}
+            className="rounded-[10px] shadow-[0_0_20px_rgba(99,102,241,0.3)]"
+          />
+          <span style={{ fontSize: "1.2rem", fontWeight: 700, color: "var(--text-primary)", fontFamily: '"Space Grotesk", sans-serif' }}>Songify</span>
         </div>
 
         <h1 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.9rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.4rem" }}>

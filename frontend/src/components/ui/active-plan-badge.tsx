@@ -34,7 +34,7 @@ export function ActivePlanBadge({ expiresAt }: { expiresAt: Date }) {
           el.focus();
         }
       }}
-      className="inline-flex items-center gap-2 rounded-full border border-teal-500/30 bg-teal-500/10 px-4 py-1.5 text-sm font-semibold text-teal-300 transition-colors hover:bg-teal-500/20"
+      className="inline-flex items-center gap-2 rounded-lg border border-teal-500/30 bg-teal-500/10 px-4 py-1.5 text-sm font-semibold text-teal-300 transition-colors hover:bg-teal-500/20"
       style={{ textDecoration: "none" }}
     >
       Generate without delay ({timeLeft}) remaining &rarr;

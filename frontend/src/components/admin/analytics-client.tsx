@@ -234,7 +234,8 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-      <style dangerouslySetInnerHTML={{__html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes pulseGlow {
           0%, 100% { transform: scale(1); opacity: 1; }
           50% { transform: scale(1.3); opacity: 0.5; }
@@ -360,7 +361,7 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
         </div>
 
         {/* Unique Visitors */}
-        <div 
+        <div
           style={{ ...cardStyle, cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s" }}
           className="hover:scale-[1.02] hover:shadow-[0_8px_32px_rgba(165,180,252,0.15)]"
           onClick={handleOpenVisitorsModal}
@@ -390,10 +391,10 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
 
       {/* ── TWO-COLUMN DASHBOARD LAYOUT ── */}
       <div className="dashboard-layout">
-        
+
         {/* LEFT COLUMN: Charts & Timeline */}
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-          
+
           {/* Trend Chart (SVG) */}
           <div style={cardStyle}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1rem" }}>
@@ -466,7 +467,7 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
                       {/* Hover hotspot */}
                       <circle cx={p.x} cy={p.y} r="3.5" fill="#6366f1" stroke="rgba(13,17,23,0.9)" strokeWidth="1" />
                       <circle cx={p.x} cy={p.cy} r="2.5" fill="#10b981" stroke="rgba(13,17,23,0.9)" strokeWidth="0.8" />
-                      
+
                       {/* X-Axis labels */}
                       {showLabel && (
                         <text
@@ -477,7 +478,7 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
                           fontWeight="bold"
                           textAnchor="middle"
                         >
-                          {activeRange === "24h" 
+                          {activeRange === "24h"
                             ? p.date.split(" ")[1] // e.g. "10:00"
                             : activeRange === "1y"
                               ? new Date(p.date + "-02").toLocaleDateString("en-US", { month: "short" }) // e.g. "Jan"
@@ -494,7 +495,7 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
 
           {/* Browser, OS & Device Breakdown */}
           <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
-            
+
             {/* Devices Card */}
             <div style={cardStyle}>
               <h3 style={{ fontSize: "0.85rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--text-muted)", marginBottom: "0.5rem" }}>
@@ -578,7 +579,7 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
               <Clock size={18} color="#a5b4fc" />
               Live Activities Feed
             </h3>
-            
+
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginTop: "0.5rem" }}>
               {recentEvents.map((evt, idx) => (
                 <div
@@ -627,7 +628,7 @@ export function AnalyticsClient({ initialData }: AnalyticsClientProps) {
 
         {/* RIGHT COLUMN: Country & Preferences */}
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-          
+
           {/* Top Visited Pages */}
           <div style={cardStyle}>
             <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "var(--text-primary)", fontFamily: '"Space Grotesk", sans-serif', display: "flex", alignItems: "center", gap: "0.4rem" }}>

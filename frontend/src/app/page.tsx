@@ -4,6 +4,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { absoluteUrl, buildMetadata, siteConfig } from "@/lib/seo";
 import { buildBreadcrumbSchema } from "@/lib/structured-data";
 import { DemoSongs } from "@/components/ui/demo-songs";
+import { DemoSongsCarousel } from "@/components/ui/demo-songs-carousel";
 import { SongDemoSection } from "@/components/ui/song-demo-section";
 import { QuickGenerate } from "@/components/ui/quick-generate";
 import { servicePages } from "@/lib/services";
@@ -262,10 +263,10 @@ export default async function Home() {
           ) : (
             <Link
               href="/register?plan=24h-unlimited"
-              className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-sm font-semibold text-indigo-300 transition-colors hover:bg-indigo-500/20"
+              className="inline-flex items-center gap-2 rounded-lg border border-indigo-600/30 bg-indigo-500/10 px-4 py-1.5 text-sm font-semibold text-indigo-300 transition-colors hover:bg-indigo-500/20"
               style={{ textDecoration: "none" }}
             >
-              Unlimited Songs creation for 24 hours without delay in just 1$ &rarr;
+              Unlimited creation for 24 hours without delay in 1$ &rarr;
             </Link>
           )}
         </div>
@@ -289,7 +290,7 @@ export default async function Home() {
         </p>
 
         {/* ─── Quick Generate input — the tool IS the CTA ────────────── */}
-        <div className="fade-up-delay-3 mt-20 w-full px-2">
+        <div className="fade-up-delay-3 mt-8 w-full px-2">
           <QuickGenerate hasActivePlan={!!sub} />
         </div>
 
@@ -298,7 +299,7 @@ export default async function Home() {
           Free · No account needed · 50,000+ songs created
         </p>
 
-        <DemoSongs />
+        <DemoSongsCarousel />
 
       </section>
 

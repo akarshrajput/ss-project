@@ -190,8 +190,14 @@ export async function processQueueEntry(
   // ── Step 1: Build workflow ─────────────────────────────────────
   const seed = Math.floor(Math.random() * 999_999_999);
 
+  const professionalPrefix = "professional studio recording, radio-ready production, polished mix and master, high fidelity audio, rich instrumentation";
+  const userBasePrompt = entry.basePrompt || "";
+  const combinedBasePrompt = userBasePrompt
+    ? `${professionalPrefix}, ${userBasePrompt}`
+    : professionalPrefix;
+
   const fakeInput = {
-    basePrompt: entry.basePrompt || "",
+    basePrompt: combinedBasePrompt,
     lyrics: entry.lyrics,
     lyricsMode: "use" as const,
     genre: entry.genre || "",
@@ -208,11 +214,11 @@ export async function processQueueEntry(
     language: "en",
     accent: "US",
     bpm: 90,
-    energy: 50,
+    energy: 75,
     keyScale: "G major",
     length: entry.duration,
     structure: "Verse+Chorus",
-    complexity: 40,
+    complexity: 70,
     seed,
     vibeLock: false,
     kidSafe: true,

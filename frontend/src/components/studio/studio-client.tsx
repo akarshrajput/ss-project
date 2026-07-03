@@ -8,7 +8,7 @@ import { WavePlayer } from "@/components/ui/wave-player";
 
 // ─── Constants ────────────────────────────────────────────
 const DEFAULT_PROMPT =
-  "warm children song, acoustic instruments, gentle storytelling melody, family-safe content, clean vocal pronunciation";
+  "professional studio recording, radio-ready production, polished mix, clear vocal delivery, rich instrumentation, high fidelity audio";
 
 const GENRES = ["Lullaby", "Pop", "Folk", "Orchestral", "Jazz", "Techno", "Lo-fi", "Rock", "Ambient", "Reggae"];
 const MOODS = ["happy", "calm", "playful", "mysterious", "epic", "cute", "sad", "energetic", "spooky", "dreamy"];
