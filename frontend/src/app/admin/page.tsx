@@ -202,6 +202,26 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
               <p style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>Manage users and privileges</p>
             </div>
           </a>
+
+          <a
+            href="/admin/notification-emails"
+            style={{
+              ...cardStyle,
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
+              transition: "border-color 220ms, box-shadow 220ms",
+            }}
+          >
+            <div style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+            </div>
+            <div>
+              <p style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--text-primary)" }}>Notification Emails</p>
+              <p style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>Manage subscription alerts</p>
+            </div>
+          </a>
         </div>
 
         <div style={{ maxWidth: 560 }}>

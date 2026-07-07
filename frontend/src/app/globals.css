@@ -43,13 +43,18 @@ body {
   font-family: "Inter", system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 /* ─── Scrollbar ─────────────────────────────────────────── */
-::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: var(--bg-base); }
 ::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.35); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(99,102,241,0.6); }
+
+.demo-carousel-scroll::-webkit-scrollbar {
+  display: none;
+}
 
 /* ─── Layout ─────────────────────────────────────────────── */
 .site-container {

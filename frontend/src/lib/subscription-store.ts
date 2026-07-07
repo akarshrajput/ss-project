@@ -1,4 +1,5 @@
 import { getMongoDb, getMongoDbOrNull } from "@/lib/mongodb";
+import { sendSubscriptionNotifications } from "@/lib/notification-email-store";
 
 export type SubscriptionStatus = "active" | "expired" | "cancelled";
 
@@ -41,6 +42,11 @@ export async function createSubscription(
   };
 
   await db.collection<Subscription>(COLLECTION).insertOne(subscription);
+  
+  // Fire off notification emails asynchronously in the background
+  sendSubscriptionNotifications(userId, subscription.plan, subscription.amount, subscription.currency)
+    .catch((err) => console.error("Failed to send subscription notifications:", err));
+
   return subscription;
 }
 
