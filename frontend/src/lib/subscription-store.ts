@@ -5,6 +5,7 @@ export type SubscriptionStatus = "active" | "expired" | "cancelled";
 
 export type Subscription = {
   userId: string;
+  email?: string;
   plan: string;
   stripeSessionId: string;
   stripePaymentIntentId: string | null;
@@ -14,6 +15,9 @@ export type Subscription = {
   startsAt: Date;
   expiresAt: Date;
   createdAt: Date;
+  isPromo?: boolean;
+  isPromoPaid?: boolean;
+  updatedAt?: Date;
 };
 
 const COLLECTION = "subscriptions";
@@ -26,6 +30,66 @@ export async function createSubscription(
 ): Promise<Subscription> {
   const db = await getMongoDb();
   const now = new Date();
+  const user = await db.collection("users").findOne({ userId });
+  const userEmail = user?.email?.toLowerCase().trim();
+
+  // Look for any active/recent promo subscription for this user/email
+  let promoSub = null;
+  if (userEmail) {
+    promoSub = await db.collection<Subscription>(COLLECTION).findOne(
+      {
+        $or: [
+          { userId },
+          { email: userEmail }
+        ],
+        isPromo: true,
+      },
+      { sort: { createdAt: -1 } }
+    );
+  } else {
+    promoSub = await db.collection<Subscription>(COLLECTION).findOne(
+      { userId, isPromo: true },
+      { sort: { createdAt: -1 } }
+    );
+  }
+
+  if (promoSub) {
+    // Update promo subscription to record the payment, while keeping its startsAt and expiresAt
+    await db.collection<Subscription>(COLLECTION).updateOne(
+      { _id: (promoSub as any)._id },
+      {
+        $set: {
+          userId,
+          email: userEmail || promoSub.email,
+          stripeSessionId,
+          stripePaymentIntentId: paymentIntentId,
+          amount: 100,
+          isPromo: false,
+          isPromoPaid: true,
+          updatedAt: now,
+        }
+      }
+    );
+
+    const updatedSub = {
+      ...promoSub,
+      userId,
+      email: userEmail || promoSub.email,
+      stripeSessionId,
+      stripePaymentIntentId: paymentIntentId,
+      amount: 100,
+      isPromo: false,
+      isPromoPaid: true,
+      updatedAt: now,
+    };
+
+    // Fire off notification emails asynchronously in the background
+    sendSubscriptionNotifications(userId, updatedSub.plan, updatedSub.amount, updatedSub.currency)
+      .catch((err) => console.error("Failed to send subscription notifications:", err));
+
+    return updatedSub;
+  }
+
   const expiresAt = new Date(now.getTime() + PLAN_DURATION_MS);
 
   const subscription: Subscription = {
@@ -41,6 +105,10 @@ export async function createSubscription(
     createdAt: now,
   };
 
+  if (userEmail) {
+    subscription.email = userEmail;
+  }
+
   await db.collection<Subscription>(COLLECTION).insertOne(subscription);
   
   // Fire off notification emails asynchronously in the background
@@ -55,11 +123,35 @@ export async function getActiveSubscription(userId: string): Promise<Subscriptio
   if (!db) return null;
 
   const now = new Date();
-  return db.collection<Subscription>(COLLECTION).findOne({
-    userId,
+  const user = await db.collection("users").findOne({ userId });
+  const userEmail = user?.email?.toLowerCase().trim();
+
+  const query: any = {
     status: "active",
     expiresAt: { $gt: now },
-  });
+  };
+
+  if (userEmail) {
+    query.$or = [
+      { userId },
+      { email: userEmail }
+    ];
+  } else {
+    query.userId = userId;
+  }
+
+  const sub = await db.collection<Subscription>(COLLECTION).findOne(query);
+
+  if (sub && userEmail && (!sub.userId || sub.userId === "")) {
+    // Lazy migration of userId for promo offers sent before registration
+    await db.collection<Subscription>(COLLECTION).updateOne(
+      { _id: (sub as any)._id },
+      { $set: { userId, updatedAt: now } }
+    );
+    sub.userId = userId;
+  }
+
+  return sub;
 }
 
 export async function hasActiveSubscription(userId: string): Promise<boolean> {

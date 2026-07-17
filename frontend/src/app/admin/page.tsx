@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
 import { getAppSettings, getAppUserProfile } from "@/lib/app-store";
 import { getUser } from "@/lib/auth";
-import { saveComfyUiUrl, testComfyUiUrl } from "./actions";
+import { saveComfyUiUrl, testComfyUiUrl, sendPromoOffer } from "./actions";
 
 export const metadata: Metadata = buildMetadata({
   title: "Admin",
@@ -222,9 +222,30 @@ export default async function AdminPage({ searchParams }: { searchParams: Search
               <p style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>Manage subscription alerts</p>
             </div>
           </a>
+
+          <a
+            href="/admin/promotional-offers"
+            style={{
+              ...cardStyle,
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
+              transition: "border-color 220ms, box-shadow 220ms",
+            }}
+          >
+            <div style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(16,185,129,0.12)", border: "1px solid rgba(16,185,129,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34d399" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <p style={{ fontSize: "0.88rem", fontWeight: 600, color: "var(--text-primary)" }}>Promotional Offers</p>
+              <p style={{ fontSize: "0.72rem", color: "var(--text-muted)" }}>Send offers and trial subscriptions</p>
+            </div>
+          </a>
         </div>
 
         <div style={{ maxWidth: 560 }}>
+          {/* Card 1: Studio Backend */}
           <div style={cardStyle}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.25rem" }}>
               <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
