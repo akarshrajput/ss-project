@@ -9,9 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1067.0",
     "@phosphor-icons/react": "^2.1.10",
     "@stripe/stripe-js": "^9.7.0",
+    "@supabase/supabase-js": "^2.112.3",
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
     "jose": "^6.2.3",

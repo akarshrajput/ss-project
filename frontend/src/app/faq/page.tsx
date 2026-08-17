@@ -4,8 +4,8 @@ import { buildMetadata } from "@/lib/seo";
 import { buildBreadcrumbSchema, buildFaqSchema } from "@/lib/structured-data";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Songify FAQ: Text to Song Generator & AI",
-  description: "Got questions about Songify? Learn how our free text to song generator turns text into songs, how the text to song converter online free works, and how to convert text to song, text to rap song, or text to audio song.",
+  title: "Singify FAQ: Text to Song Generator & AI",
+  description: "Got questions about Singify? Learn how our free text to song generator turns text into songs, how the text to song converter online free works, and how to convert text to song, text to rap song, or text to audio song.",
   path: "/faq",
   keywords: [
     "text to song generator",
@@ -23,60 +23,60 @@ export const metadata: Metadata = buildMetadata({
 
 const faqs = [
   {
-    question: "What is a text to song AI and how does Songify work?",
-    answer: "A text to song AI converts any written input — a poem, a story, or even a single sentence — into a fully produced audio track. Songify is the best text to song generator free online. Our text to song converter reads your prompt, selects a musical style, and renders a complete song. Use it as a text to song app right in your browser — no downloads needed.",
+    question: "What is a text to song AI and how does Singify work?",
+    answer: "A text to song AI converts any written input — a poem, a story, or even a single sentence — into a fully produced audio track. Singify is the best text to song generator free online. Our text to song converter reads your prompt, selects a musical style, and renders a complete song. Use it as a text to song app right in your browser — no downloads needed.",
   },
   {
-    question: "Is Songify really a free AI song generator?",
-    answer: "Yes. Songify lets you generate your first song without creating an account and at zero cost. Guest mode gives you one free generation per session. Sign up for free to unlock more generations, cloud storage, and MP3 downloads — no credit card needed.",
+    question: "Is Singify really a free AI song generator?",
+    answer: "Yes. Singify lets you generate your first song without creating an account and at zero cost. Guest mode gives you one free generation per session. Sign up for free to unlock more generations, cloud storage, and MP3 downloads — no credit card needed.",
   },
   {
-    question: "How is Songify different from other AI music generators?",
-    answer: "Most AI music generators create background music without vocals. Songify is a complete AI song maker — it generates fully produced tracks from a single text prompt. Think of it as a comprehensive AI music maker tool.",
+    question: "How is Singify different from other AI music generators?",
+    answer: "Most AI music generators create background music without vocals. Singify is a complete AI song maker — it generates fully produced tracks from a single text prompt. Think of it as a comprehensive AI music maker tool.",
   },
   {
-    question: "Can I use Songify for specific musical styles?",
-    answer: "Yes. In the Studio, you can select from various genres and moods. Songify’s AI music generator will adapt your input into a structured song format before producing the final audio.",
+    question: "Can I use Singify for specific musical styles?",
+    answer: "Yes. In the Studio, you can select from various genres and moods. Singify’s AI music generator will adapt your input into a structured song format before producing the final audio.",
   },
   {
     question: "What music genres does the AI song maker support?",
-    answer: "Songify supports a wide range of genres including Pop, Folk, Lo-fi, Rock, Jazz, Orchestral, Techno, Ambient, Reggae, and Lullaby. You can also mix moods and scenes to create a truly unique sound — making it one of the most flexible AI music generators available.",
+    answer: "Singify supports a wide range of genres including Pop, Folk, Lo-fi, Rock, Jazz, Orchestral, Techno, Ambient, Reggae, and Lullaby. You can also mix moods and scenes to create a truly unique sound — making it one of the most flexible AI music generators available.",
   },
   {
     question: "Which languages can the AI music maker produce songs in?",
-    answer: "Currently Songify supports English, Hindi, Spanish, French, and German. Our AI music generator has been tested with all five and produces natural, high-quality output. More languages are being added — vote for yours in the community forum.",
+    answer: "Currently Singify supports English, Hindi, Spanish, French, and German. Our AI music generator has been tested with all five and produces natural, high-quality output. More languages are being added — vote for yours in the community forum.",
   },
   {
     question: "How long does it take to generate a song?",
-    answer: "Most songs are ready in under 60 seconds. Short clips (10–30 s) are typically done in 15–20 seconds. Longer tracks up to 3 minutes may take 45–90 seconds depending on server load. Songify is optimised to be the fastest free AI music generator online.",
+    answer: "Most songs are ready in under 60 seconds. Short clips (10–30 s) are typically done in 15–20 seconds. Longer tracks up to 3 minutes may take 45–90 seconds depending on server load. Singify is optimised to be the fastest free AI music generator online.",
   },
   {
     question: "Can I download the AI-generated songs as MP3?",
-    answer: "Yes. Every track generated through Songify can be downloaded as an MP3 file. Logged-in users get instant one-click downloads from the Studio output panel and from their Library. Guest users can listen in-browser and sign up to save their track.",
+    answer: "Yes. Every track generated through Singify can be downloaded as an MP3 file. Logged-in users get instant one-click downloads from the Studio output panel and from their Library. Guest users can listen in-browser and sign up to save their track.",
   },
   {
-    question: "Who owns the songs created by Songify's AI song generator?",
-    answer: "You do. Songs generated with your prompt belong to you. Songify grants a broad licence for personal and commercial use. We recommend reading our Terms of Service for details on attribution and redistribution, especially for commercial projects.",
+    question: "Who owns the songs created by Singify's AI song generator?",
+    answer: "You do. Songs generated with your prompt belong to you. Singify grants a broad licence for personal and commercial use. We recommend reading our Terms of Service for details on attribution and redistribution, especially for commercial projects.",
   },
   {
-    question: "Can I use Songify as a song generator for kids' content?",
-    answer: "Absolutely. Songify has a built-in Kid Safe mode that filters all output for family-friendly content. This makes it the ideal AI song maker for lullabies, classroom music, children's audiobooks, and educational videos.",
+    question: "Can I use Singify as a song generator for kids' content?",
+    answer: "Absolutely. Singify has a built-in Kid Safe mode that filters all output for family-friendly content. This makes it the ideal AI song maker for lullabies, classroom music, children's audiobooks, and educational videos.",
   },
   {
-    question: "Does Songify work on mobile devices?",
-    answer: "Yes. The Songify Studio and the homepage song generator are fully responsive and work on iOS and Android browsers. The waveform player, genre controls, and download button are all touch-friendly — create AI songs from your phone anywhere, anytime.",
+    question: "Does Singify work on mobile devices?",
+    answer: "Yes. The Singify Studio and the homepage song generator are fully responsive and work on iOS and Android browsers. The waveform player, genre controls, and download button are all touch-friendly — create AI songs from your phone anywhere, anytime.",
   },
   {
-    question: "Is Songify the top AI platform for music creation?",
-    answer: "Songify is built specifically for the text-to-song use case: you type, AI composes the music. Unlike generic AI tools, Songify understands song structure and produces output that sounds like a real track — making it one of the top AI platforms for music generation online.",
+    question: "Is Singify the top AI platform for music creation?",
+    answer: "Singify is built specifically for the text-to-song use case: you type, AI composes the music. Unlike generic AI tools, Singify understands song structure and produces output that sounds like a real track — making it one of the top AI platforms for music generation online.",
   },
   {
-    question: "Can I collaborate with others on Songify?",
+    question: "Can I collaborate with others on Singify?",
     answer: "While we don't have real-time collaboration features yet, you can share the links to your saved songs with others. They can listen to your tracks and read the prompts you used. We are planning to introduce shared playlists and collaborative editing in future updates.",
   },
   {
     question: "How do I report a bug or suggest a feature?",
-    answer: "We welcome your feedback! If you encounter any issues or have ideas for new features, please reach out to us via the Contact page or send an email to support@songify.fun. Our development team reviews all suggestions to improve the platform.",
+    answer: "We welcome your feedback! If you encounter any issues or have ideas for new features, please reach out to us via the Contact page or send an email to contact@singify.fun. Our development team reviews all suggestions to improve the platform.",
   },
   {
     question: "Is there a limit to how many songs I can create?",
@@ -147,7 +147,7 @@ export default function FaqPage() {
             Our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> uses a multi-stage AI pipeline to turn your words into music. First, a language model interprets your prompt and extracts key creative signals: genre cues, emotional tone, lyrical themes, tempo suggestions, and mood descriptors. Then a music generation model translates those signals into a musical composition — selecting instruments, setting the key and time signature, building the arrangement, and generating the vocal melody and lyrics if applicable.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
-            The final stage is audio synthesis and mastering — where the raw musical composition is rendered into a high-quality audio file with balanced levels, clear stereo imaging, and appropriate loudness for streaming. This entire process happens automatically, in the background, in a matter of seconds. You submit a prompt, and you receive a finished song. That is the core promise of the Songify <strong style={{ color: "var(--text-primary)" }}>text to song AI free</strong> platform.
+            The final stage is audio synthesis and mastering — where the raw musical composition is rendered into a high-quality audio file with balanced levels, clear stereo imaging, and appropriate loudness for streaming. This entire process happens automatically, in the background, in a matter of seconds. You submit a prompt, and you receive a finished song. That is the core promise of the Singify <strong style={{ color: "var(--text-primary)" }}>text to song AI free</strong> platform.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
             Understanding this pipeline helps you write better prompts. The more musical context you include — genre, mood, tempo, instruments, vocal style, lyrical theme — the more accurately the AI can fulfill your creative intent. If you leave most of these parameters unspecified, the AI will make its own creative choices, which can produce interesting surprises but may not align with your vision. Experiment with different levels of specificity to find what works best for your workflow.

@@ -13,23 +13,23 @@ const deploymentVersion = Date.now().toString();
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Songify | AI Text to Audio & Music Generation Platform",
-    template: "%s | Songify",
+    default: "Singify | AI Text to Audio & Music Generation Platform",
+    template: "%s | Singify",
   },
   description: siteConfig.description,
   keywords: siteConfig.keywords,
   openGraph: {
     type: "website",
-    title: "Songify | AI Text to Audio & Music Generation Platform",
+    title: "Singify | AI Text to Audio & Music Generation Platform",
     description: siteConfig.description,
     url: absoluteUrl("/"),
     siteName: siteConfig.name,
     locale: siteConfig.locale,
-    images: [{ url: absoluteUrl("/opengraph-image"), width: 1200, height: 630, alt: "Songify AI audio platform" }],
+    images: [{ url: absoluteUrl("/opengraph-image"), width: 1200, height: 630, alt: "Singify AI audio platform" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Songify | AI Text to Audio & Music Generation Platform",
+    title: "Singify | AI Text to Audio & Music Generation Platform",
     description: siteConfig.description,
     creator: siteConfig.twitterHandle,
     images: [absoluteUrl("/twitter-image")],
@@ -68,7 +68,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <SiteHeader />
           <div className="flex-1">{children}</div>
           <SiteFooter />
-          <PromoPopup />
+          {/* <PromoPopup /> */}
         </div>
         {/* Social Bar — disabled (can intercept pointer events) */}
         {/* <Script

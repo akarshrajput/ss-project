@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Songify Features: Text to Song Generator AI",
-  description: "Discover Songify platform features for text to song generation, text to song converter online free, text to rap song creation, text to audio song, and text to speech songs.",
+  title: "Singify Features: Text to Song Generator AI",
+  description: "Discover Singify platform features for text to song generation, text to song converter online free, text to rap song creation, text to audio song, and text to speech songs.",
   path: "/features",
   keywords: [
     "text to song generator",
@@ -82,7 +82,7 @@ export default function FeaturesPage() {
           Production-focused features for AI audio
         </h1>
         <p style={{ marginTop: "1rem", fontSize: "1rem", color: "var(--text-secondary)", lineHeight: 1.7 }}>
-          Songify combines speech and music generation in one environment, with controls designed for consistent output and faster iteration. As a <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> and <strong style={{ color: "var(--text-primary)" }}>text to song converter</strong>, our tools let you convert text to song in seconds.
+          Singify combines speech and music generation in one environment, with controls designed for consistent output and faster iteration. As a <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> and <strong style={{ color: "var(--text-primary)" }}>text to song converter</strong>, our tools let you convert text to song in seconds.
         </p>
         <p style={{ marginTop: "1rem", fontSize: "1rem", color: "var(--text-secondary)", lineHeight: 1.7 }}>
           Whether you are a developer looking to integrate audio into an application, a creator needing background scores, or a business automating voiceovers, our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong> platform provides the tools to do it efficiently. Use it as a <strong style={{ color: "var(--text-primary)" }}>text to song maker</strong>, <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> creator, or <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> generator.
@@ -136,7 +136,7 @@ export default function FeaturesPage() {
             How to Use These Features for Maximum Impact
           </h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8, marginBottom: "1rem" }}>
-            To get the most out of Songify, we recommend experimenting with different prompt tags and mood settings. Our platform is designed to respond dynamically to your inputs. For example, combining a specific genre like "Lo-fi" with a mood like "Relaxed" will yield a very different result than using "Lo-fi" with "Energetic".
+            To get the most out of Singify, we recommend experimenting with different prompt tags and mood settings. Our platform is designed to respond dynamically to your inputs. For example, combining a specific genre like "Lo-fi" with a mood like "Relaxed" will yield a very different result than using "Lo-fi" with "Energetic".
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
             Don't hesitate to use the Vibe Lock feature once you find a sound you like. This allows you to maintain consistency across multiple tracks, which is ideal for creating a cohesive album or background music for a video series. Our metadata indexing makes it easy to find these saved settings in your library later.
@@ -145,7 +145,7 @@ export default function FeaturesPage() {
       </section>
       <section style={{ maxWidth: 860, marginTop: "2rem" }}>
         <div className="glass-card" style={{ padding: "1.75rem" }}>
-          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Building a Consistent Audio Brand with Songify</h2>
+          <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Building a Consistent Audio Brand with Singify</h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
             One of the most underused capabilities of our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> is the seed control system. When you find a vocal style, instrumental arrangement, or production quality that fits your brand, you can pin that seed and reproduce it across future generations. This is how content creators build a consistent sonic identity — the same warmth, the same energy, the same feel — across every piece of audio they publish.
           </p>
@@ -162,10 +162,10 @@ export default function FeaturesPage() {
         <div className="glass-card" style={{ padding: "1.75rem" }}>
           <h2 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>From Free to Professional: Scaling Your Audio Production</h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
-            Songify is designed to grow with you. The free tier lets you experiment with every feature of our <strong style={{ color: "var(--text-primary)" }}>text to song converter</strong> without any commitment. Guest access means you can generate your first track in under a minute — no account, no credit card, no onboarding. That zero-friction entry point is intentional: we want you to experience the quality of our AI before you decide whether to create an account.
+            Singify is designed to grow with you. The free tier lets you experiment with every feature of our <strong style={{ color: "var(--text-primary)" }}>text to song converter</strong> without any commitment. Guest access means you can generate your first track in under a minute — no account, no credit card, no onboarding. That zero-friction entry point is intentional: we want you to experience the quality of our AI before you decide whether to create an account.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
-            As your needs grow, the authenticated experience adds library storage, one-click downloads, and generation history. These features transform Songify from a quick creative tool into a full production asset manager. Your generated audio is organized, retrievable, and ready to be dropped into any project at any time.
+            As your needs grow, the authenticated experience adds library storage, one-click downloads, and generation history. These features transform Singify from a quick creative tool into a full production asset manager. Your generated audio is organized, retrievable, and ready to be dropped into any project at any time.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
             For professional teams and enterprise deployments, we offer custom integration support, higher throughput limits, and dedicated account management. Whether you are producing audio for a media company, a game studio, or a global marketing campaign, our platform scales to meet the demand. The same core <strong style={{ color: "var(--text-primary)" }}>text to song maker</strong> technology powers every tier — you just get more control and capacity as you scale.

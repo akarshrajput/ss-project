@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Impressum | Legal Notice | Songify",
-  description: "Legal notice and company information for Songify. Required by EU law.",
+  title: "Impressum | Legal Notice | Singify",
+  description: "Legal notice and contact information for Singify.",
   path: "/impressum",
 });
 
@@ -14,47 +14,38 @@ export default function ImpressumPage() {
         Legal Notice
       </h1>
       <section style={{ marginBottom: '2.5rem' }}>
-        <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Company Information</h2>
-        <div style={{ fontSize: '1rem', color: 'var(--text-primary)', lineHeight: 1.7 }}>
-          NovaVision Consulting FZCO<br />
-          Dubai Digital Park<br />
-          Dubai Silicon Oasis<br />
-          Dubai, UAE
-        </div>
-      </section>
-      <section style={{ marginBottom: '2.5rem' }}>
         <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Contact</h2>
         <div style={{ fontSize: '1rem', color: 'var(--text-primary)', lineHeight: 1.7 }}>
-          Email: <a href="mailto:contact@Novavision-strategy.com" style={{ color: '#6366f1', textDecoration: 'underline' }}>contact@Novavision-strategy.com</a>
+          Email: <a href="mailto:contact@singify.fun" style={{ color: '#6366f1', textDecoration: 'underline' }}>contact@singify.fun</a>
         </div>
       </section>
       <section>
         <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Liability Notice</h2>
         <div style={{ fontSize: '1rem', color: 'var(--text-primary)', lineHeight: 1.7 }}>
-          Songify provides AI-powered song generation and audio production tools. All generated content is provided for creative and entertainment purposes. Use is at your own risk. We do not guarantee the copyright status, uniqueness, or accuracy of the generated audio tracks and lyrics.
+          Singify provides AI-powered song generation and audio production tools. All generated content is provided for creative and entertainment purposes. Use is at your own risk. We do not guarantee the copyright status, uniqueness, or accuracy of the generated audio tracks and lyrics.
         </div>
       </section>
 
       <section style={{ marginTop: '2.5rem' }}>
         <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--text-secondary)' }}>About Our Platform</h2>
         <div style={{ fontSize: '1rem', color: 'var(--text-primary)', lineHeight: 1.8, marginBottom: '1rem' }}>
-          Songify is a web-based AI music generation platform that allows users to convert text into fully produced songs. Our service is accessible at songify.fun and is operated by NovaVision Consulting FZCO, a company registered in the Dubai Silicon Oasis free zone in the United Arab Emirates. We are committed to providing a transparent and compliant service to all users globally.
+          Singify is a web-based AI music generation platform that allows users to convert text into fully produced songs. Our service is accessible at singify.fun. We are committed to providing a transparent and compliant service to all users globally.
         </div>
         <div style={{ fontSize: '1rem', color: 'var(--text-primary)', lineHeight: 1.8, marginBottom: '1rem' }}>
-          As an EU-accessible service, we publish this legal notice (Impressum) to meet the transparency requirements expected of online service providers. This page provides accurate identification of the entity responsible for the operation of Songify and serves as the official point of contact for legal inquiries, regulatory communications, and formal complaints.
+          As an online service, we publish this legal notice (Impressum) to meet transparency standards expected of service providers. This page serves as the official point of contact for inquiries, regulatory communications, and formal notices.
         </div>
         <div style={{ fontSize: '1rem', color: 'var(--text-primary)', lineHeight: 1.8 }}>
-          For general support, billing questions, and product feedback, please use our contact page at songify.fun/contact. For legal and compliance matters related to this notice, please contact us directly via the email address listed in the Company Information section above.
+          For general support, billing questions, and product feedback, please contact us at <a href="mailto:contact@singify.fun" style={{ color: '#6366f1', textDecoration: 'underline' }}>contact@singify.fun</a>.
         </div>
       </section>
 
       <section style={{ marginTop: '2.5rem' }}>
         <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--text-secondary)' }}>Disclaimer of Warranties</h2>
         <div style={{ fontSize: '1rem', color: 'var(--text-primary)', lineHeight: 1.8, marginBottom: '1rem' }}>
-          The Songify platform and all content generated through it are provided on an &quot;as is&quot; and &quot;as available&quot; basis without any warranties of any kind, either express or implied. NovaVision Consulting FZCO does not warrant that the platform will be uninterrupted, error-free, or free of harmful components. We do not warrant the accuracy, completeness, or usefulness of any information or content generated by the platform.
+          The Singify platform and all content generated through it are provided on an &quot;as is&quot; and &quot;as available&quot; basis without any warranties of any kind, either express or implied. Singify does not warrant that the platform will be uninterrupted, error-free, or free of harmful components. We do not warrant the accuracy, completeness, or usefulness of any information or content generated by the platform.
         </div>
         <div style={{ fontSize: '1rem', color: 'var(--text-primary)', lineHeight: 1.8 }}>
-          Users are solely responsible for evaluating the appropriateness of any generated audio for their intended use, including compliance with applicable copyright laws, platform terms of third-party services, and local regulations governing AI-generated content. Songify is a creative tool — the responsibility for how generated outputs are used rests with the individual creator.
+          Users are solely responsible for evaluating the appropriateness of any generated audio for their intended use, including compliance with applicable copyright laws, platform terms of third-party services, and local regulations governing AI-generated content. Singify is a creative tool — the responsibility for how generated outputs are used rests with the individual creator.
         </div>
       </section>
 
@@ -68,17 +59,17 @@ export default function ImpressumPage() {
       <section style={{ marginTop: '2.5rem' }}>
         <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--text-secondary)' }}>Intellectual Property and AI Generations</h2>
         <div style={{ fontSize: '1rem', color: 'var(--text-primary)', lineHeight: 1.8, marginBottom: '1rem' }}>
-          The underlying technology, interface design, branding, and original text content of the Songify platform are the property of NovaVision Consulting FZCO. Users are granted a limited license to access and use the platform for its intended purpose of generating audio content.
+          The underlying technology, interface design, branding, and original text content of the Singify platform are the property of Singify. Users are granted a limited license to access and use the platform for its intended purpose of generating audio content.
         </div>
         <div style={{ fontSize: '1rem', color: 'var(--text-primary)', lineHeight: 1.8 }}>
-          Regarding the content generated by our users: Songify does not claim ownership over the lyrics, prompts, or generated audio tracks created by users. Users retain the rights to their inputs and the outputs generated by the AI, subject to our Terms of Service. It is the user&apos;s responsibility to ensure that their use of generated content does not infringe upon the rights of any third party.
+          Regarding the content generated by our users: Singify does not claim ownership over the lyrics, prompts, or generated audio tracks created by users. Users retain the rights to their inputs and the outputs generated by the AI, subject to our Terms of Service. It is the user&apos;s responsibility to ensure that their use of generated content does not infringe upon the rights of any third party.
         </div>
       </section>
 
       <section style={{ marginTop: '2.5rem', marginBottom: '2rem' }}>
         <h2 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--text-secondary)' }}>Dispute Resolution</h2>
         <div style={{ fontSize: '1rem', color: 'var(--text-primary)', lineHeight: 1.8 }}>
-          Any disputes arising from or in connection with the use of the Songify platform shall be governed by the laws of the United Arab Emirates. We encourage users to contact us directly to resolve any issues or concerns before seeking formal dispute resolution. Our goal is to provide a positive and productive experience for all creators on our platform.
+          We encourage users to contact us directly at <a href="mailto:contact@singify.fun" style={{ color: '#6366f1', textDecoration: 'underline' }}>contact@singify.fun</a> to resolve any issues or concerns. Our goal is to provide a positive and productive experience for all creators on our platform.
         </div>
       </section>
     </main>

@@ -69,7 +69,7 @@ export default function Loading() {
             fontFamily: '"Space Grotesk", sans-serif',
           }}
         >
-          Songify
+          Singify
         </p>
         <p
           style={{

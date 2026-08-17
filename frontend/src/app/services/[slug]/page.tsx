@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const resolvedParams = await params;
   const service = getServiceBySlug(resolvedParams.slug);
   if (!service) {
-    return buildMetadata({ title: "Service Not Found", description: "The requested Songify service page was not found.", path: `/services/${resolvedParams.slug}`, noIndex: true });
+    return buildMetadata({ title: "Service Not Found", description: "The requested Singify service page was not found.", path: `/services/${resolvedParams.slug}`, noIndex: true });
   }
   return buildMetadata({
     title: service.title,
@@ -67,7 +67,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
           {service.intro}
         </p>
         <p style={{ marginTop: "0.85rem", fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.75 }}>
-          This is part of the Songify <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> platform. Use our <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> tools to <strong style={{ color: "var(--text-primary)" }}>convert text to song</strong>, <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong>, or <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> directly from the Studio.
+          This is part of the Singify <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> platform. Use our <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> tools to <strong style={{ color: "var(--text-primary)" }}>convert text to song</strong>, <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong>, or <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> directly from the Studio.
         </p>
       </div>
 
@@ -91,11 +91,11 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
       {/* Workflow */}
       <section className="glass-card" style={{ padding: "2rem", maxWidth: 740, marginBottom: "1.25rem" }}>
         <h2 style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.75rem" }}>
-          How teams use this in Songify
+          How teams use this in Singify
         </h2>
         <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)", lineHeight: 1.75 }}>
           Start in Studio to set prompt direction, output style, and duration. Then generate and iterate until you
-          reach the desired tone. Authenticated users can save final outputs to the Songify library and reuse
+          reach the desired tone. Authenticated users can save final outputs to the Singify library and reuse
           successful settings across projects.
         </p>
       </section>
@@ -105,7 +105,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
           Practical fit
         </h2>
         <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)", lineHeight: 1.75 }}>
-          These service pages are meant to help a buyer, editor, or product owner understand when to use Songify. The content focuses on the output quality, the workflow, and the kind of project where the service makes the most sense.
+          These service pages are meant to help a buyer, editor, or product owner understand when to use Singify. The content focuses on the output quality, the workflow, and the kind of project where the service makes the most sense.
         </p>
       </section>
 
@@ -142,7 +142,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
             The quality of AI-generated audio is directly related to the quality of your input. When using this service, be as specific as possible about the tone, mood, pace, and intended audience for your content. Instead of a vague prompt like &quot;make a song about summer,&quot; try something like &quot;upbeat pop song about a summer road trip with friends, energetic and nostalgic, 90s style guitars.&quot; The more context you provide, the better the output will match your vision.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
-            Iteration is a core part of the workflow. Do not expect the first generation to be perfect — use it as a starting point. Listen to the output, note what works and what doesn&apos;t, then adjust your prompt and regenerate. The Songify platform is designed for fast iteration cycles, so you can go from rough idea to polished output in just a few rounds of refinement.
+            Iteration is a core part of the workflow. Do not expect the first generation to be perfect — use it as a starting point. Listen to the output, note what works and what doesn&apos;t, then adjust your prompt and regenerate. The Singify platform is designed for fast iteration cycles, so you can go from rough idea to polished output in just a few rounds of refinement.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
             Once you find a generation you are happy with, save it to your library if you are logged in. This gives you a permanent reference point that you can compare against future generations, share with collaborators, or use as a benchmark for similar projects. Your library is your creative archive — and it grows more valuable the more you use it.
@@ -154,10 +154,10 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         <div className="glass-card" style={{ padding: "1.75rem" }}>
           <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Integration with Your Existing Workflow</h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
-            Songify is designed to fit into your existing content production process, not replace it. The audio files you generate can be downloaded as MP3s and imported directly into video editors, DAWs, podcast software, or any other tool in your stack. We support standard audio formats that are compatible with all major platforms including Adobe Premiere, Final Cut Pro, GarageBand, Audacity, and DaVinci Resolve.
+            Singify is designed to fit into your existing content production process, not replace it. The audio files you generate can be downloaded as MP3s and imported directly into video editors, DAWs, podcast software, or any other tool in your stack. We support standard audio formats that are compatible with all major platforms including Adobe Premiere, Final Cut Pro, GarageBand, Audacity, and DaVinci Resolve.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
-            For teams with higher-volume needs, we offer API access and custom integration support through our enterprise plan. This allows you to trigger generation programmatically, integrate with content management systems, and build automated audio production pipelines. Contact our sales team to discuss how Songify can be embedded into your specific workflow at scale.
+            For teams with higher-volume needs, we offer API access and custom integration support through our enterprise plan. This allows you to trigger generation programmatically, integrate with content management systems, and build automated audio production pipelines. Contact our sales team to discuss how Singify can be embedded into your specific workflow at scale.
           </p>
         </div>
       </section>

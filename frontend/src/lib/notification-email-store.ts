@@ -70,13 +70,13 @@ export async function sendSubscriptionNotifications(
   const amountFormatted = (amount / 100).toFixed(2); // amount is in cents
   
   const mailOptions = {
-    from: `"Songify AI" <${process.env.GMAIL_USER}>`,
+    from: `"Singify AI" <${process.env.GMAIL_USER}>`,
     to: process.env.GMAIL_USER, // To avoid spam filters showing empty to:
     bcc: bccList,
     subject: `🎉 New Premium Subscription: ${subscriberName}`,
     html: `
       <h2>New Premium Subscription!</h2>
-      <p>Someone just bought a premium subscription on Songify AI.</p>
+      <p>Someone just bought a premium subscription on Singify AI.</p>
       <ul>
         <li><strong>Name:</strong> ${subscriberName}</li>
         <li><strong>Email:</strong> ${subscriberEmail}</li>
@@ -114,7 +114,7 @@ export async function sendPromoOfferEmail(email: string, subject: string, custom
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
   const mailOptions = {
-    from: `"Songify AI" <${process.env.GMAIL_USER}>`,
+    from: `"Singify AI" <${process.env.GMAIL_USER}>`,
     to: email.toLowerCase().trim(),
     subject: subject,
     html: `
@@ -152,16 +152,16 @@ export async function sendPromoOfferEmail(email: string, subject: string, custom
             <h2 class="email-title" style="color: #4f46e5; text-align: center; margin-top: 10px; margin-bottom: 20px;">${subject}</h2>
             <div class="email-box" style="background-color: #f3f4f6; color: #374151; padding: 15px; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 20px; white-space: pre-wrap; font-size: 15px; line-height: 1.6;">${customMessage}</div>
             <p class="email-text" style="font-size: 14px; line-height: 1.5; color: #4b5563;">
-              Your 24-hour premium subscription has started! Register or log in to Songify using this email to access the studio and generate unlimited high-quality songs.
+              Your 24-hour premium subscription has started! Register or log in to Singify using this email to access the studio and generate unlimited high-quality songs.
             </p>
             <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
               <a href="${siteUrl}/studio" style="background: linear-gradient(135deg, #6366f1, #818cf8); color: #ffffff; text-decoration: none; padding: 12px 30px; font-weight: bold; border-radius: 30px; display: inline-block; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);">
-                Go to Songify Studio
+                Go to Singify Studio
               </a>
             </div>
             <hr class="email-divider" style="border: 0; border-top: 1px solid #e5e7eb; margin-top: 20px; margin-bottom: 20px;">
             <p class="email-footer" style="font-size: 12px; color: #9ca3af; text-align: center;">
-              This 24-hour subscription offer was sent directly by the Songify Administration team.
+              This 24-hour subscription offer was sent directly by the Singify Administration team.
             </p>
           </div>
         </body>

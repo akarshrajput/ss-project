@@ -86,7 +86,7 @@ export function LibrarySongCard({ song, index }: { song: SongRow; index: number 
         <WavePlayer
           src={song.audio_url}
           title={song.title ?? `Song ${index + 1}`}
-          artist="Songify AI"
+          artist="Singify AI"
           genre={song.genre ?? undefined}
           accent={accent}
         />

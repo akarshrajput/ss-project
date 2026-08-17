@@ -16,7 +16,7 @@ export const servicePages: ServicePage[] = [
     description:
       "Convert text into clear, natural speech with controllable tone and delivery for content, apps, and narration workflows.",
     intro:
-      "Songify text to speech lets teams convert scripts into clean voice output for product demos, lessons, support flows, and social media audio. Our advanced neural networks ensure that the generated speech sounds natural and engaging, avoiding the robotic tone of traditional TTS systems.",
+      "Singify text to speech lets teams convert scripts into clean voice output for product demos, lessons, support flows, and social media audio. Our advanced neural networks ensure that the generated speech sounds natural and engaging, avoiding the robotic tone of traditional TTS systems.",
     useCases: [
       "Narration for explainers and tutorials",
       "Voice for web and mobile applications",
@@ -29,17 +29,17 @@ export const servicePages: ServicePage[] = [
       {
         question: "Can I control speaking style in text to speech?",
         answer:
-          "Yes. Songify supports tone and delivery controls so output can match formal, friendly, or expressive use cases. You can adjust the energy level, pacing, and emotional undertone to fit your specific needs.",
+          "Yes. Singify supports tone and delivery controls so output can match formal, friendly, or expressive use cases. You can adjust the energy level, pacing, and emotional undertone to fit your specific needs.",
       },
       {
         question: "Is text to speech suitable for product demos?",
         answer:
-          "Yes. Teams use Songify text to speech for demos, onboarding flows, and support walkthrough narration. It provides a consistent and professional voice that can be updated instantly whenever your script changes.",
+          "Yes. Teams use Singify text to speech for demos, onboarding flows, and support walkthrough narration. It provides a consistent and professional voice that can be updated instantly whenever your script changes.",
       },
       {
         question: "What languages and accents are supported?",
         answer:
-          "Songify supports a wide range of global languages and regional accents. This allows you to localize your content effectively and reach a broader audience with native-sounding voices.",
+          "Singify supports a wide range of global languages and regional accents. This allows you to localize your content effectively and reach a broader audience with native-sounding voices.",
       },
       {
         question: "Can I download the generated audio files?",
@@ -55,7 +55,7 @@ export const servicePages: ServicePage[] = [
     description:
       "Generate artist-free AI music from prompts, genres, and mood controls for videos, podcasts, products, and branded campaigns.",
     intro:
-      "Songify AI music generation transforms lyrics and style prompts into polished tracks with genre, tempo, structure, and mood controls. Whether you need a background track for a video or a full song with lyrics, our platform delivers studio-quality results in seconds.",
+      "Singify AI music generation transforms lyrics and style prompts into polished tracks with genre, tempo, structure, and mood controls. Whether you need a background track for a video or a full song with lyrics, our platform delivers studio-quality results in seconds.",
     useCases: [
       "Background music for content creators",
       "Brand music experiments and ad campaigns",
@@ -66,9 +66,9 @@ export const servicePages: ServicePage[] = [
     ],
     faqItems: [
       {
-        question: "Can Songify generate music without hiring artists?",
+        question: "Can Singify generate music without hiring artists?",
         answer:
-          "Yes. Songify is built for artist-free AI music generation with style, mood, and structure controls. This saves time and budget while giving you complete creative control over the output.",
+          "Yes. Singify is built for artist-free AI music generation with style, mood, and structure controls. This saves time and budget while giving you complete creative control over the output.",
       },
       {
         question: "Can I iterate music outputs quickly?",
@@ -83,7 +83,7 @@ export const servicePages: ServicePage[] = [
       {
         question: "Can I generate music with vocals?",
         answer:
-          "Yes, Songify can generate both instrumental tracks and songs with full AI-generated vocals based on the lyrics or prompts you provide.",
+          "Yes, Singify can generate both instrumental tracks and songs with full AI-generated vocals based on the lyrics or prompts you provide.",
       },
     ],
   },
@@ -94,7 +94,7 @@ export const servicePages: ServicePage[] = [
     description:
       "Create synthetic voices with controllable tone, pacing, and expression for product voice layers and content pipelines.",
     intro:
-      "Songify voice generation helps teams produce consistent voice output for multiple channels while maintaining style and delivery targets. Create unique character voices or maintain a consistent brand voice across all your digital touchpoints.",
+      "Singify voice generation helps teams produce consistent voice output for multiple channels while maintaining style and delivery targets. Create unique character voices or maintain a consistent brand voice across all your digital touchpoints.",
     useCases: [
       "Character and branded voice prototypes",
       "Multichannel campaign voice assets",
@@ -107,7 +107,7 @@ export const servicePages: ServicePage[] = [
       {
         question: "Is AI voice generation consistent across outputs?",
         answer:
-          "Songify focuses on consistent delivery controls so teams can maintain recognizable voice style across projects. This is crucial for building brand identity and user trust.",
+          "Singify focuses on consistent delivery controls so teams can maintain recognizable voice style across projects. This is crucial for building brand identity and user trust.",
       },
       {
         question: "Can voice generation be used for marketing assets?",
@@ -133,7 +133,7 @@ export const servicePages: ServicePage[] = [
     description:
       "Turn poems and literary text into expressive audio with natural pacing and emotional tone suitable for publishing and storytelling.",
     intro:
-      "Songify poem to audio mode captures rhythm, pauses, and emotional contour so written poetry can become engaging listening experiences. Perfect for authors, educators, and creators looking to bring written words to life.",
+      "Singify poem to audio mode captures rhythm, pauses, and emotional contour so written poetry can become engaging listening experiences. Perfect for authors, educators, and creators looking to bring written words to life.",
     useCases: [
       "Poetry publishing and audiobook samples",
       "Creative writing showcases",
@@ -146,7 +146,7 @@ export const servicePages: ServicePage[] = [
       {
         question: "Can poem-to-audio preserve rhythm and pauses?",
         answer:
-          "Yes. Songify poem workflows are tuned for natural pacing and expressive cadence in poetic text. The system respects line breaks and punctuation to maintain the intended rhythm.",
+          "Yes. Singify poem workflows are tuned for natural pacing and expressive cadence in poetic text. The system respects line breaks and punctuation to maintain the intended rhythm.",
       },
       {
         question: "Who uses poem-to-audio generation?",
@@ -172,7 +172,7 @@ export const servicePages: ServicePage[] = [
     description:
       "Adjust speech tone, intensity, and style so generated audio matches the context, audience, and communication intent.",
     intro:
-      "Songify speech tone tools provide practical controls for calm, energetic, formal, and expressive delivery profiles. Fine-tune your audio to ensure it resonates correctly with your target audience.",
+      "Singify speech tone tools provide practical controls for calm, energetic, formal, and expressive delivery profiles. Fine-tune your audio to ensure it resonates correctly with your target audience.",
     useCases: [
       "Tone matching for product announcements",
       "Localized communication variants",
@@ -190,7 +190,7 @@ export const servicePages: ServicePage[] = [
       {
         question: "Can I test multiple tone styles quickly?",
         answer:
-          "Yes. Songify lets you iterate tone, energy, and delivery so teams can compare options before publishing. This rapid prototyping saves time in the production cycle.",
+          "Yes. Singify lets you iterate tone, energy, and delivery so teams can compare options before publishing. This rapid prototyping saves time in the production cycle.",
       },
       {
         question: "How many distinct tones can I choose from?",

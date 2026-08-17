@@ -113,9 +113,9 @@ export async function POST(request: Request) {
     });
 
     const mailOptions = {
-      from: `"Songify AI" <${process.env.GMAIL_USER}>`,
+      from: `"Singify AI" <${process.env.GMAIL_USER}>`,
       to: body.email,
-      subject: `Your Song Request — Songify`,
+      subject: `Your Song Request — Singify`,
       html,
     };
 

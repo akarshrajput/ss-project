@@ -5,7 +5,7 @@ export function JSONLD() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": siteConfig.name,
-    "alternateName": [siteConfig.name, "Songify.fun", "Songify AI"],
+    "alternateName": [siteConfig.name, "Singify.fun", "Singify AI"],
     "url": siteConfig.url,
     "potentialAction": {
       "@type": "SearchAction",

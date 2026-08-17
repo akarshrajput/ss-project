@@ -4,7 +4,7 @@ import Link from "next/link";
 import { OtpForm } from "./otp-form";
 
 export const metadata = buildMetadata({
-  title: "Verify your email - Songify AI",
+  title: "Verify your email - Singify AI",
   description: "Enter your verification code to continue.",
   path: "/verify-otp",
   noIndex: true,
@@ -33,7 +33,7 @@ export default async function VerifyOtpPage({
         <div style={{ textAlign: "center", marginBottom: "2rem" }}>
           <Link href="/" style={{ display: "inline-block", marginBottom: "1rem" }}>
             <span style={{ fontSize: "1.5rem", fontWeight: 800, color: "#6366f1", letterSpacing: "-0.05em" }}>
-              Songify AI
+              Singify AI
             </span>
           </Link>
           <h1 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.8rem", fontWeight: 700, color: "var(--text-primary)" }}>

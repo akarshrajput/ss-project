@@ -38,18 +38,18 @@ export function SiteFooter() {
         <div className="col-span-full lg:col-span-1" style={{ gridColumn: "1 / span 1" }}>
           <Link href="/" className="flex items-center gap-2.5 mb-4" style={{ textDecoration: "none" }}>
           <Image
-            src="/songify-logo.png"
-            alt="Songify"
+            src="/singify-logo.png"
+            alt="Singify"
             width={30}
             height={30}
             className="rounded-[8px]"
           />
             <span style={{ fontSize: "1rem", fontWeight: 700, color: "#f1f5f9", fontFamily: '"Space Grotesk", sans-serif' }}>
-              Songify
+              Singify
             </span>
           </Link>
           <p style={{ fontSize: "0.83rem", color: "var(--text-muted)", lineHeight: 1.8, maxWidth: 240 }}>
-            Songify is the leading <strong style={{ color: "var(--text-secondary)" }}>text to song generator</strong> and <strong style={{ color: "var(--text-secondary)" }}>text to song converter online free</strong> for creators of every level. Use our <strong style={{ color: "var(--text-secondary)" }}>text to song AI</strong> to turn any idea into a full track — <strong style={{ color: "var(--text-secondary)" }}>text to song free</strong>, fast, and effortlessly.
+            Singify is the leading <strong style={{ color: "var(--text-secondary)" }}>text to song generator</strong> and <strong style={{ color: "var(--text-secondary)" }}>text to song converter online free</strong> for creators of every level. Use our <strong style={{ color: "var(--text-secondary)" }}>text to song AI</strong> to turn any idea into a full track — <strong style={{ color: "var(--text-secondary)" }}>text to song free</strong>, fast, and effortlessly.
           </p>
         </div>
 
@@ -79,7 +79,7 @@ export function SiteFooter() {
 
       <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }} className="site-container px-4 py-5 sm:px-6 lg:px-8">
         <p style={{ fontSize: "0.78rem", color: "var(--text-muted)" }}>
-          © {new Date().getFullYear()} Songify — Free Text to Song Generator, Text to Song Converter &amp; AI Song Maker. All rights reserved.
+          © {new Date().getFullYear()} Singify — Free Text to Song Generator, Text to Song Converter &amp; AI Song Maker. All rights reserved.
         </p>
       </div>
     </footer>

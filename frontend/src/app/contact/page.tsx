@@ -5,7 +5,7 @@ import { buildBreadcrumbSchema } from "@/lib/structured-data";
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact — Text to Song Generator Support & Partnerships",
-  description: "Contact Songify for text to song generator support, text to song AI partnership discussions, and text to song converter online free onboarding.",
+  description: "Contact Singify for text to song generator support, text to song AI partnership discussions, and text to song converter online free onboarding.",
   path: "/contact",
   keywords: [
     "text to song generator",
@@ -16,7 +16,8 @@ export const metadata: Metadata = buildMetadata({
 });
 
 const contacts = [
-  { label: "Company Information", value: "NovaVision Consulting FZCO", icon: "🏢", desc: "Dubai Digital Park, Dubai Silicon Oasis, Dubai, UAE. Contact: contact@Novavision-strategy.com" },
+  { label: "General Inquiries & Support", value: "contact@singify.fun", icon: "✉️", desc: "For product support, billing, feedback, and general questions." },
+  { label: "Partnerships & Business", value: "contact@singify.fun", icon: "🤝", desc: "For enterprise rollouts, partnerships, and custom audio workflows." },
 ];
 
 export default function ContactPage() {
@@ -50,7 +51,9 @@ export default function ContactPage() {
               {c.label}
             </p>
             <p style={{ fontSize: "0.95rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.5rem" }}>
-              {c.value}
+              <a href={`mailto:${c.value}`} style={{ color: "#6366f1", textDecoration: "underline" }}>
+                {c.value}
+              </a>
             </p>
             <p style={{ fontSize: "0.83rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
               {c.desc}
@@ -98,7 +101,7 @@ export default function ContactPage() {
                 Can I request a custom feature?
               </h3>
               <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
-                Yes, we value user feedback! If you have an idea for a feature that would improve your workflow, please send it to support@songify.fun. While we cannot guarantee all requests will be implemented, we review every suggestion.
+                Yes, we value user feedback! If you have an idea for a feature that would improve your workflow, please send it to contact@singify.fun. While we cannot guarantee all requests will be implemented, we review every suggestion.
               </p>
             </div>
             <div>
@@ -116,7 +119,7 @@ export default function ContactPage() {
         <div className="glass-card" style={{ padding: "1.75rem" }}>
           <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Working With Us on Enterprise Deployments</h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
-            If your team is evaluating Songify as part of a larger content production workflow, we are happy to walk through the technical setup, data handling, and output quality expectations before you commit to a plan. Enterprise discussions typically cover generation throughput, custom prompt templates, output file formats, and integration with existing CMS or DAW workflows.
+            If your team is evaluating Singify as part of a larger content production workflow, we are happy to walk through the technical setup, data handling, and output quality expectations before you commit to a plan. Enterprise discussions typically cover generation throughput, custom prompt templates, output file formats, and integration with existing CMS or DAW workflows.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
             Our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> powers everything from solo creator projects to production pipelines at media companies. When you reach out for a partnership conversation, letting us know the volume of audio you plan to generate, the target output format, and whether you need a dedicated support contact helps us give you a faster and more relevant answer.
@@ -137,7 +140,7 @@ export default function ContactPage() {
             For technical issues — such as audio not generating, downloads failing, or unexpected generation quality — include your browser version, operating system, and the prompt you used when you contact support. This helps our team reproduce the issue and resolve it faster. Screenshots or screen recordings are always welcome.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
-            We are a small team and we read every message. We may not always be able to respond instantly, but we will always respond thoughtfully. Whether you are a solo creator, a podcast producer, a game developer, or a business exploring AI audio for the first time, we want to make sure Songify works for your specific use case.
+            We are a small team and we read every message. We may not always be able to respond instantly, but we will always respond thoughtfully. Whether you are a solo creator, a podcast producer, a game developer, or a business exploring AI audio for the first time, we want to make sure Singify works for your specific use case.
           </p>
         </div>
       </section>

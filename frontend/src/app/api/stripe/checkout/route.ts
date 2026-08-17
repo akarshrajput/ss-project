@@ -20,7 +20,7 @@ export async function POST() {
           price_data: {
             currency: "usd",
             product_data: {
-              name: "Songify — 24h Unlimited Song Creation",
+              name: "Singify — 24h Unlimited Song Creation",
               description: "Generate unlimited AI songs for 24 hours with no delays.",
             },
             unit_amount: 100, // $1.00

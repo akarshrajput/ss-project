@@ -39,7 +39,7 @@ const ACCENTS = [
   { value: "Neutral", label: "Neutral" },
 ];
 
-const GUEST_LIMIT_KEY = "songify_guest_generation_count";
+const GUEST_LIMIT_KEY = "singify_guest_generation_count";
 function randomInt() { return Math.floor(Math.random() * 999_999_999); }
 function readGuestCount() {
   if (typeof window === "undefined") return 0;
@@ -716,7 +716,7 @@ export function StudioClient({ isAuthenticated }: { isAuthenticated: boolean }) 
                   key={result.audioUrl}
                   src={result.audioUrl}
                   title={form.genre ?? "AI Song"}
-                  artist="Songify Studio"
+                  artist="Singify Studio"
                   genre={form.genre ?? undefined}
                   accent="#6366f1"
                 />

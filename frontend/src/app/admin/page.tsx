@@ -7,7 +7,7 @@ import { saveComfyUiUrl, testComfyUiUrl, sendPromoOffer } from "./actions";
 
 export const metadata: Metadata = buildMetadata({
   title: "Admin",
-  description: "Manage Songify Studio backend URL.",
+  description: "Manage Singify Studio backend URL.",
   path: "/admin",
   noIndex: true,
 });

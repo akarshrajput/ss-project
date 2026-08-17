@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 
 export const metadata: Metadata = buildMetadata({
   title: "Register",
-  description: "Create your Songify account to access premium song creation.",
+  description: "Create your Singify account to access premium song creation.",
   path: "/register",
   noIndex: true,
 });
@@ -40,13 +40,13 @@ export default async function RegisterPage({ searchParams }: { searchParams: Sea
         {/* Logo */}
         <div className="flex items-center justify-center gap-2.5 mb-8">
           <Image
-            src="/songify-logo.png"
-            alt="Songify"
+            src="/singify-logo.png"
+            alt="Singify"
             width={40}
             height={40}
             className="rounded-[10px] shadow-[0_0_20px_rgba(99,102,241,0.3)]"
           />
-          <span style={{ fontSize: "1.2rem", fontWeight: 700, color: "var(--text-primary)", fontFamily: '"Space Grotesk", sans-serif' }}>Songify</span>
+          <span style={{ fontSize: "1.2rem", fontWeight: 700, color: "var(--text-primary)", fontFamily: '"Space Grotesk", sans-serif' }}>Singify</span>
         </div>
 
         <h1 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "1.9rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.4rem" }}>

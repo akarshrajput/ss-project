@@ -6,7 +6,7 @@ import { getUser } from "@/lib/auth";
 
 export const metadata: Metadata = buildMetadata({
   title: "Account Settings",
-  description: "Private Songify account settings for authenticated users.",
+  description: "Private Singify account settings for authenticated users.",
   path: "/account",
   noIndex: true,
 });

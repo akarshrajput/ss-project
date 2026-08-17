@@ -25,7 +25,7 @@ export default function OpenGraphImage() {
         }}
       >
         <div style={{ fontSize: 28, letterSpacing: 4, textTransform: "uppercase", color: "#67e8f9" }}>
-          Songify
+          Singify
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
           <div style={{ fontSize: 72, fontWeight: 800, lineHeight: 1.05, display: "flex", flexDirection: "column" }}>

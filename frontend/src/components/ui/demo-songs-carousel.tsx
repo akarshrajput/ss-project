@@ -13,7 +13,7 @@ const DEMO_SONGS = [
     accent: "#6366f1",
     image: "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?q=80&w=600&auto=format&fit=crop",
     songLink: "https://wrehkhvdxnpqturqquqr.supabase.co/storage/v1/object/public/songs/0feb3a23-e20d-4678-82e5-907b816d8d21/community-mpc5jq39-lk7xtq-1779174226097.mp3",
-    listenLink: "https://www.songify.fun/song/mpc5jq39-lk7xtq",
+    listenLink: "https://www.singify.fun/song/mpc5jq39-lk7xtq",
   },
   {
     title: "Funny Song",
@@ -24,7 +24,7 @@ const DEMO_SONGS = [
     accent: "#2dd4bf",
     image: "/covers/cover_pop_1783050118926.png",
     songLink: "https://wrehkhvdxnpqturqquqr.supabase.co/storage/v1/object/public/songs/0feb3a23-e20d-4678-82e5-907b816d8d21/community-mpc5kgji-rv6kqx-1779174207335.mp3",
-    listenLink: "https://www.songify.fun/song/mpc5kgji-rv6kqx",
+    listenLink: "https://www.singify.fun/song/mpc5kgji-rv6kqx",
   },
   {
     title: "Beats Song",
@@ -35,7 +35,7 @@ const DEMO_SONGS = [
     accent: "#a855f7",
     image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop",
     songLink: "https://wrehkhvdxnpqturqquqr.supabase.co/storage/v1/object/public/songs/0feb3a23-e20d-4678-82e5-907b816d8d21/community-mpasbr6i-b7hgb1-1779083810845.mp3",
-    listenLink: "https://www.songify.fun/song/mpasbr6i-b7hgb1",
+    listenLink: "https://www.singify.fun/song/mpasbr6i-b7hgb1",
   },
   {
     title: "Funk Song",
@@ -46,7 +46,7 @@ const DEMO_SONGS = [
     accent: "#f59e0b",
     image: "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?q=80&w=600&auto=format&fit=crop",
     songLink: "https://wrehkhvdxnpqturqquqr.supabase.co/storage/v1/object/public/songs/0feb3a23-e20d-4678-82e5-907b816d8d21/community-mpc5odd5-kjjqpw-1779174189408.mp3",
-    listenLink: "https://www.songify.fun/song/mpc5odd5-kjjqpw",
+    listenLink: "https://www.singify.fun/song/mpc5odd5-kjjqpw",
   },
   {
     title: "Lyrics Song",
@@ -57,7 +57,7 @@ const DEMO_SONGS = [
     accent: "#06b6d4",
     image: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=600&auto=format&fit=crop",
     songLink: "https://wrehkhvdxnpqturqquqr.supabase.co/storage/v1/object/public/songs/0feb3a23-e20d-4678-82e5-907b816d8d21/community-mpasczu3-c5atxz-1779083777473.mp3",
-    listenLink: "https://www.songify.fun/song/mpasczu3-c5atxz",
+    listenLink: "https://www.singify.fun/song/mpasczu3-c5atxz",
   },
   {
     title: "Sad Song",
@@ -68,7 +68,7 @@ const DEMO_SONGS = [
     accent: "#ef4444",
     image: "https://images.unsplash.com/photo-1493225457124-a1a2a4af3049?q=80&w=600&auto=format&fit=crop",
     songLink: "https://wrehkhvdxnpqturqquqr.supabase.co/storage/v1/object/public/songs/0feb3a23-e20d-4678-82e5-907b816d8d21/community-mpc5qk54-f60ctn-1779172801317.mp3",
-    listenLink: "https://www.songify.fun/song/mpc5qk54-f60ctn",
+    listenLink: "https://www.singify.fun/song/mpc5qk54-f60ctn",
   },
   {
     title: "Motivational Song",
@@ -79,7 +79,7 @@ const DEMO_SONGS = [
     accent: "#22c55e",
     image: "https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=600&auto=format&fit=crop",
     songLink: "https://wrehkhvdxnpqturqquqr.supabase.co/storage/v1/object/public/songs/0feb3a23-e20d-4678-82e5-907b816d8d21/community-mpc5s2kw-nyvjyf-1779172780200.mp3",
-    listenLink: "https://www.songify.fun/song/mpc5s2kw-nyvjyf",
+    listenLink: "https://www.singify.fun/song/mpc5s2kw-nyvjyf",
   },
   {
     title: "Horror Song",
@@ -90,7 +90,7 @@ const DEMO_SONGS = [
     accent: "#e879f9",
     image: "/covers/cover_edm_1783050133906.png",
     songLink: "https://wrehkhvdxnpqturqquqr.supabase.co/storage/v1/object/public/songs/0feb3a23-e20d-4678-82e5-907b816d8d21/community-mpasf1n2-er2gui-1779083727318.mp3",
-    listenLink: "https://www.songify.fun/song/mpc5vcps-cadck1",
+    listenLink: "https://www.singify.fun/song/mpc5vcps-cadck1",
   },
   {
     title: "Anime Opening",
@@ -101,7 +101,7 @@ const DEMO_SONGS = [
     accent: "#fb7185",
     image: "/covers/cover_anime_1783050143882.png",
     songLink: "https://wrehkhvdxnpqturqquqr.supabase.co/storage/v1/object/public/songs/0feb3a23-e20d-4678-82e5-907b816d8d21/community-mpasg4qa-mfjqva-1779083714673.mp3",
-    listenLink: "https://www.songify.fun/song/mpasg4qa-mfjqva",
+    listenLink: "https://www.singify.fun/song/mpasg4qa-mfjqva",
   },
   {
     title: "Travel Song",
@@ -112,7 +112,7 @@ const DEMO_SONGS = [
     accent: "#14b8a6",
     image: "/covers/cover_travel_1783050152979.png",
     songLink: "https://wrehkhvdxnpqturqquqr.supabase.co/storage/v1/object/public/songs/0feb3a23-e20d-4678-82e5-907b816d8d21/community-mpash5vx-jh100c-1779083699270.mp3",
-    listenLink: "https://www.songify.fun/song/mpash5vx-jh100c",
+    listenLink: "https://www.singify.fun/song/mpash5vx-jh100c",
   },
 ];
 

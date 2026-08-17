@@ -7,7 +7,7 @@ import { MeClient } from "@/components/me/me-client";
 
 export const metadata: Metadata = buildMetadata({
   title: "My Profile",
-  description: "Manage your Songify account.",
+  description: "Manage your Singify account.",
   path: "/me",
   noIndex: true,
 });

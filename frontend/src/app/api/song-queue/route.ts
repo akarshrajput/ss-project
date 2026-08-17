@@ -10,7 +10,7 @@ import {
   SongQueueStatus,
 } from "@/lib/song-queue-store";
 import { deriveUsernameFromEmail } from "@/lib/username-utils";
-import { persistRemoteAudioToS3 } from "@/lib/audio-storage";
+import { persistRemoteAudioToStorage } from "@/lib/audio-storage";
 import { getUser } from "@/lib/auth";
 import { getAppUserProfile } from "@/lib/app-store";
 import { getActiveSubscription } from "@/lib/subscription-store";
@@ -204,7 +204,7 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: "Queue entry not found." }, { status: 404 });
     }
 
-    const stableAudioUrl = await persistRemoteAudioToS3({
+    const stableAudioUrl = await persistRemoteAudioToStorage({
       sourceUrl: body.songUrl,
       objectPath: `community/${entry.songId}-${Date.now()}.mp3`,
     });

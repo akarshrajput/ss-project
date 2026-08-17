@@ -20,7 +20,7 @@
 
 import type { SongQueueEntry } from "@/lib/song-queue-store";
 import { markSongCompleted } from "@/lib/song-queue-store";
-import { persistRemoteAudioToS3 } from "@/lib/audio-storage";
+import { persistRemoteAudioToStorage } from "@/lib/audio-storage";
 import { buildTags, buildLyrics, buildWorkflow } from "@/lib/song/prompt";
 import nodemailer from "nodemailer";
 
@@ -86,7 +86,7 @@ async function sendCompletionEmail(params: {
   songTitle: string;
 }) {
   const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://www.songify.fun";
+    process.env.NEXT_PUBLIC_SITE_URL || "https://www.singify.fun";
   const songLink = `${siteUrl}/song/${params.songId}`;
 
   const html = `
@@ -103,7 +103,7 @@ async function sendCompletionEmail(params: {
         <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 520px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: left;">
           <tr>
             <td style="padding: 32px 32px 24px; border-bottom: 1px solid #e2e8f0; text-align: center;">
-              <div style="font-size: 24px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px;">Songify</div>
+              <div style="font-size: 24px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px;">Singify</div>
             </td>
           </tr>
           <tr>
@@ -132,10 +132,10 @@ async function sendCompletionEmail(params: {
           <tr>
             <td style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #e2e8f0; text-align: center;">
               <p style="margin: 0 0 8px; font-size: 13px; line-height: 1.5; color: #64748b;">
-                You are receiving this email because you requested a song generation on Songify.
+                You are receiving this email because you requested a song generation on Singify.
               </p>
               <p style="margin: 0; font-size: 13px; color: #94a3b8;">
-                &copy; ${new Date().getFullYear()} Songify. All rights reserved.
+                &copy; ${new Date().getFullYear()} Singify. All rights reserved.
               </p>
             </td>
           </tr>
@@ -163,9 +163,9 @@ async function sendCompletionEmail(params: {
   });
 
   await transporter.sendMail({
-    from: `"Songify AI" <${process.env.GMAIL_USER}>`,
+    from: `"Singify AI" <${process.env.GMAIL_USER}>`,
     to: params.email,
-    subject: `🎵 Your Song "${params.songTitle}" is Ready! — Songify`,
+    subject: `🎵 Your Song "${params.songTitle}" is Ready! — Singify`,
     html,
   });
 
@@ -267,8 +267,8 @@ export async function processQueueEntry(
   const outputAudio = await waitForHistory(promptData.prompt_id, comfyUrl);
   const audioUrl = `${comfyUrl}/view?filename=${encodeURIComponent(outputAudio.filename)}&subfolder=${encodeURIComponent(outputAudio.subfolder ?? "")}&type=${encodeURIComponent(outputAudio.type)}`;
 
-  // ── Step 4: Persist audio to AWS S3 ────────────────────────────
-  const stableAudioUrl = await persistRemoteAudioToS3({
+  // ── Step 4: Persist audio to Supabase Storage ───────────────────
+  const stableAudioUrl = await persistRemoteAudioToStorage({
     sourceUrl: audioUrl,
     objectPath: `${uploaderPrefix}/community-${entry.songId}-${Date.now()}.mp3`,
   });

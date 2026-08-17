@@ -15,9 +15,9 @@ import { ActivePlanBadge } from "@/components/ui/active-plan-badge";
 void SongDemoSection;
 
 export const metadata: Metadata = buildMetadata({
-  title: "Songify: Free AI Text to Song Generator Online",
+  title: "Singify: Free AI Text to Song Generator Online",
   description:
-    "Turn any text into a song instantly with Songify — the best free text to song generator, text to song converter online free, and AI song maker. Convert text to song, text to rap song, or text to audio song in seconds.",
+    "Turn any text into a song instantly with Singify — the best free text to song generator, text to song converter online free, and AI song maker. Convert text to song, text to rap song, or text to audio song in seconds.",
   path: "/",
   keywords: [
     "text to song generator",
@@ -57,12 +57,12 @@ const faqs = [
   {
     question: "What is a text to song generator?",
     answer:
-      "A text to song generator is an AI-powered tool that transforms any written prompt, idea, or lyrics into a complete song — including melody, rhythm, and vocals. Songify is the leading text to song generator free online. Our text to song AI uses advanced music generation models to convert text to song in seconds, no music experience required.",
+      "A text to song generator is an AI-powered tool that transforms any written prompt, idea, or lyrics into a complete song — including melody, rhythm, and vocals. Singify is the leading text to song generator free online. Our text to song AI uses advanced music generation models to convert text to song in seconds, no music experience required.",
   },
   {
     question: "Is this text to song converter free?",
     answer:
-      "Yes — Songify is a completely free text to song converter online. You can use our text to song free tool in guest mode without creating an account. Our text to song generator free tier lets you create songs instantly. Sign up to unlock downloads, save tracks to your library, and access higher quality generation.",
+      "Yes — Singify is a completely free text to song converter online. You can use our text to song free tool in guest mode without creating an account. Our text to song generator free tier lets you create songs instantly. Sign up to unlock downloads, save tracks to your library, and access higher quality generation.",
   },
   {
     question: "How does the text to song AI work?",
@@ -72,22 +72,22 @@ const faqs = [
   {
     question: "Can I convert text to rap song?",
     answer:
-      "Absolutely. Songify is also a powerful text to rap song converter — just select the Hip-Hop or Rap genre when generating. Whether you want to convert text to rap song for fun or for a professional project, the AI song maker understands flow, cadence, and rhyme schemes, so you get bars that actually sound natural.",
+      "Absolutely. Singify is also a powerful text to rap song converter — just select the Hip-Hop or Rap genre when generating. Whether you want to convert text to rap song for fun or for a professional project, the AI song maker understands flow, cadence, and rhyme schemes, so you get bars that actually sound natural.",
   },
   {
     question: "What makes this the best text to song maker?",
     answer:
-      "Songify is the ultimate text to song maker and text to song creator because it combines industry-leading AI music production in one seamless platform. Unlike other text to song online tools, you get complete tracks with melody, instrumentation, and mastering together. It works as a text to song app right in your browser.",
+      "Singify is the ultimate text to song maker and text to song creator because it combines industry-leading AI music production in one seamless platform. Unlike other text to song online tools, you get complete tracks with melody, instrumentation, and mastering together. It works as a text to song app right in your browser.",
   },
   {
-    question: "Can I use Songify as a text to audio song tool?",
+    question: "Can I use Singify as a text to audio song tool?",
     answer:
-      "Yes — Songify works as a complete text to audio song platform. You can also use it for text to speech songs, turning written scripts into spoken audio with music. Whether you need a text to song converter or a text to audio song generator, Songify covers both use cases in one platform.",
+      "Yes — Singify works as a complete text to audio song platform. You can also use it for text to speech songs, turning written scripts into spoken audio with music. Whether you need a text to song converter or a text to audio song generator, Singify covers both use cases in one platform.",
   },
   {
     question: "How do I convert text to song online?",
     answer:
-      "Converting text to song online with Songify is simple: type your lyrics or idea into the Studio, choose a genre and mood, and hit generate. Our text to song converter online free tool handles the rest — melody, vocals, and production. You can use it as a text to song free online tool without any downloads or installations.",
+      "Converting text to song online with Singify is simple: type your lyrics or idea into the Studio, choose a genre and mood, and hit generate. Our text to song converter online free tool handles the rest — melody, vocals, and production. You can use it as a text to song free online tool without any downloads or installations.",
   },
 ];
 
@@ -170,7 +170,7 @@ export default async function Home() {
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Songify",
+    name: "Singify",
     url: absoluteUrl("/"),
     logo: absoluteUrl("/favicon.ico"),
     sameAs: [],
@@ -180,7 +180,7 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: siteConfig.name,
-    alternateName: ["Songify.fun", "Songify AI", "Text to Song"],
+    alternateName: ["Singify.fun", "Singify AI", "Text to Song"],
     url: absoluteUrl("/"),
     description: "Free AI song generator — turn any text into a song instantly.",
     potentialAction: {
@@ -193,7 +193,7 @@ export default async function Home() {
   const softwareSchema = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: "Songify — Free AI Song Generator",
+    name: "Singify — Free AI Song Generator",
     applicationCategory: "MultimediaApplication",
     operatingSystem: "Web",
     url: absoluteUrl("/"),
@@ -204,7 +204,7 @@ export default async function Home() {
       description: "Free tier available. No credit card required.",
     },
     description:
-      "Songify is a free AI song generator and AI music maker that turns any text prompt into a complete track. The top AI platform for music generation.",
+      "Singify is a free AI song generator and AI music maker that turns any text prompt into a complete track. The top AI platform for music generation.",
     featureList: [
       "Text to song conversion",
       "AI music maker",
@@ -260,7 +260,7 @@ export default async function Home() {
         <div className="fade-up">
           {sub ? (
             <ActivePlanBadge expiresAt={sub.expiresAt} />
-          ) : (
+          ) : null /* (
             <Link
               href="/register?plan=24h-unlimited"
               className="inline-flex items-center gap-2 rounded-lg border border-indigo-600/30 bg-indigo-500/10 px-4 py-1.5 text-sm font-semibold text-indigo-300 transition-colors hover:bg-indigo-500/20"
@@ -268,7 +268,7 @@ export default async function Home() {
             >
               Unlimited creation for 24 hours without delay in 1$ &rarr;
             </Link>
-          )}
+          ) */}
         </div>
 
         {/* SEO-specified H1 — exactly one, at the top */}
@@ -286,7 +286,7 @@ export default async function Home() {
           className="fade-up-delay-2 mt-6 text-lg leading-8 max-w-2xl mx-auto"
           style={{ color: "var(--text-secondary)" }}
         >
-          Songify is the #1 <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> online — paste any idea and our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong> writes the music for you. <strong style={{ color: "var(--text-primary)" }}>Convert text to song</strong> free, instantly — then publish and make money on Spotify.
+          Singify is the #1 <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> online — paste any idea and our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong> writes the music for you. <strong style={{ color: "var(--text-primary)" }}>Convert text to song</strong> free, instantly — then publish and make money on Spotify.
         </p>
 
         {/* ─── Quick Generate input — the tool IS the CTA ────────────── */}
@@ -397,7 +397,7 @@ export default async function Home() {
             Everything You Need to Create Songs with AI
           </h2>
           <p className="mt-4 max-w-xl mx-auto text-sm leading-7" style={{ color: "var(--text-secondary)" }}>
-            Songify is built for creators of all levels — from first-time songwriters to professional producers. Write as music effortlessly with tools designed for real creative output.
+            Singify is built for creators of all levels — from first-time songwriters to professional producers. Write as music effortlessly with tools designed for real creative output.
           </p>
         </div>
 
@@ -446,7 +446,7 @@ export default async function Home() {
             Explore the Product Surface
           </h2>
           <p className="mt-4 max-w-xl mx-auto text-sm leading-7" style={{ color: "var(--text-secondary)" }}>
-            Each service page describes a distinct workflow inside Songify, from speech generation to music creation. These pages are useful landing points for users and also give search engines clearer topical structure.
+            Each service page describes a distinct workflow inside Singify, from speech generation to music creation. These pages are useful landing points for users and also give search engines clearer topical structure.
           </p>
         </div>
 
@@ -476,7 +476,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* SEO Content: Why Choose Songify — keyword-rich section */}
+      {/* SEO Content: Why Choose Singify — keyword-rich section */}
       <section className="site-container px-4 pt-24 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
           <h2 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "2rem", fontWeight: 700, color: "var(--text-primary)" }}>
@@ -485,16 +485,16 @@ export default async function Home() {
         </div>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
           <p style={{ fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.8, marginBottom: "1rem" }}>
-            Looking for a <strong style={{ color: "var(--text-primary)" }}>text to song generator free</strong> tool that actually delivers? Songify is the most advanced <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> platform available today. Our <strong style={{ color: "var(--text-primary)" }}>text to song AI free</strong> engine transforms any written idea — lyrics, poems, stories, or even a single sentence — into a fully produced song with vocals and instrumentation.
+            Looking for a <strong style={{ color: "var(--text-primary)" }}>text to song generator free</strong> tool that actually delivers? Singify is the most advanced <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> platform available today. Our <strong style={{ color: "var(--text-primary)" }}>text to song AI free</strong> engine transforms any written idea — lyrics, poems, stories, or even a single sentence — into a fully produced song with vocals and instrumentation.
           </p>
           <p style={{ fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.8, marginBottom: "1rem" }}>
-            Whether you want to <strong style={{ color: "var(--text-primary)" }}>convert text to song</strong> for a YouTube video, <strong style={{ color: "var(--text-primary)" }}>convert text to rap song</strong> for fun, or use our <strong style={{ color: "var(--text-primary)" }}>text to song maker</strong> for professional music production, Songify handles it all. Our platform doubles as a <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> generator and <strong style={{ color: "var(--text-primary)" }}>text to speech songs</strong> creator, covering every audio use case.
+            Whether you want to <strong style={{ color: "var(--text-primary)" }}>convert text to song</strong> for a YouTube video, <strong style={{ color: "var(--text-primary)" }}>convert text to rap song</strong> for fun, or use our <strong style={{ color: "var(--text-primary)" }}>text to song maker</strong> for professional music production, Singify handles it all. Our platform doubles as a <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> generator and <strong style={{ color: "var(--text-primary)" }}>text to speech songs</strong> creator, covering every audio use case.
           </p>
           <p style={{ fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.8, marginBottom: "1rem" }}>
-            As a <strong style={{ color: "var(--text-primary)" }}>text to song creator</strong>, Songify offers what no other <strong style={{ color: "var(--text-primary)" }}>text to song online</strong> tool can: real-time generation, genre controls, mood tuning, and instant MP3 downloads. Use it as a <strong style={{ color: "var(--text-primary)" }}>text to song app</strong> directly in your browser — no installation needed. It is the easiest way to go from <strong style={{ color: "var(--text-primary)" }}>text to song free online</strong>.
+            As a <strong style={{ color: "var(--text-primary)" }}>text to song creator</strong>, Singify offers what no other <strong style={{ color: "var(--text-primary)" }}>text to song online</strong> tool can: real-time generation, genre controls, mood tuning, and instant MP3 downloads. Use it as a <strong style={{ color: "var(--text-primary)" }}>text to song app</strong> directly in your browser — no installation needed. It is the easiest way to go from <strong style={{ color: "var(--text-primary)" }}>text to song free online</strong>.
           </p>
           <p style={{ fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
-            Curious about <strong style={{ color: "var(--text-primary)" }}>how to write a song text</strong>? Just type your idea into the Studio. Songify is the ultimate <strong style={{ color: "var(--text-primary)" }}>text to song converter</strong> — it understands your intent and creates music that matches. From <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> to ballads, from <strong style={{ color: "var(--text-primary)" }}>text to song free</strong> generation to premium exports, we have every creator covered.
+            Curious about <strong style={{ color: "var(--text-primary)" }}>how to write a song text</strong>? Just type your idea into the Studio. Singify is the ultimate <strong style={{ color: "var(--text-primary)" }}>text to song converter</strong> — it understands your intent and creates music that matches. From <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> to ballads, from <strong style={{ color: "var(--text-primary)" }}>text to song free</strong> generation to premium exports, we have every creator covered.
           </p>
         </div>
       </section>
@@ -567,7 +567,7 @@ export default async function Home() {
             className="relative mt-4 max-w-xl mx-auto text-sm leading-7"
             style={{ color: "var(--text-secondary)" }}
           >
-            Join thousands of creators using Songify as their go-to <strong style={{ color: "var(--text-primary)" }}>ai song maker</strong>. Whether you&apos;re a musician, content creator, or just curious — our <strong style={{ color: "var(--text-primary)" }}>song generator</strong> is the fastest path from idea to finished track.
+            Join thousands of creators using Singify as their go-to <strong style={{ color: "var(--text-primary)" }}>ai song maker</strong>. Whether you&apos;re a musician, content creator, or just curious — our <strong style={{ color: "var(--text-primary)" }}>song generator</strong> is the fastest path from idea to finished track.
           </p>
           <div className="relative mt-8 flex flex-wrap gap-4 justify-center">
             <Link
@@ -598,7 +598,7 @@ export default async function Home() {
             Frequently Asked Questions
           </h2>
           <p className="mt-3 max-w-xl text-sm leading-7" style={{ color: "var(--text-secondary)" }}>
-            Everything you need to know about using Songify as your <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong>, <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong>, and <strong style={{ color: "var(--text-primary)" }}>text to song AI free</strong> platform.
+            Everything you need to know about using Singify as your <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong>, <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong>, and <strong style={{ color: "var(--text-primary)" }}>text to song AI free</strong> platform.
           </p>
         </div>
 

@@ -19,13 +19,13 @@ export async function sendVerificationEmail(email: string, payload?: any, userId
   });
 
   const mailOptions = {
-    from: `"Songify AI" <${process.env.GMAIL_FROM || process.env.EMAIL_USER || process.env.GMAIL_USER}>`,
+    from: `"Singify AI" <${process.env.GMAIL_FROM || process.env.EMAIL_USER || process.env.GMAIL_USER}>`,
     to: email,
-    subject: "Verify your email - Songify AI",
+    subject: "Verify your email - Singify AI",
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #ffffff; color: #1e293b; border: 1px solid #e2e8f0; border-radius: 8px;">
         <div style="text-align: center; margin-bottom: 30px;">
-          <h1 style="color: #4f46e5; margin: 0;">Songify AI</h1>
+          <h1 style="color: #4f46e5; margin: 0;">Singify AI</h1>
         </div>
         <h2 style="margin-bottom: 20px; color: #0f172a;">Verify your email</h2>
         <p style="font-size: 16px; color: #475569; line-height: 1.5; margin-bottom: 30px;">

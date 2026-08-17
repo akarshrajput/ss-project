@@ -5,7 +5,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: "Pricing — Free Text to Song Generator & Text to Song AI Plans",
   description:
-    "Review Songify pricing for our text to song generator free tier, text to song converter online free, and professional text to song AI plans for creators and teams.",
+    "Review Singify pricing for our text to song generator free tier, text to song converter online free, and professional text to song AI plans for creators and teams.",
   path: "/pricing",
   keywords: [
     "text to song generator free",
@@ -21,7 +21,7 @@ const plans = [
   {
     name: "Free",
     price: "$0",
-    summary: "Best for trying Songify and creating a first draft with no account friction.",
+    summary: "Best for trying Singify and creating a first draft with no account friction.",
     features: ["Guest access to Studio", "Fast AI generation", "Browser playback"],
     accent: "#6366f1",
   },
@@ -50,7 +50,7 @@ export default function PricingPage() {
           Simple pricing for AI song creation
         </h1>
         <p style={{ marginTop: "1rem", fontSize: "1rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
-          Songify keeps pricing straightforward: start with our <strong style={{ color: "var(--text-primary)" }}>text to song generator free</strong> tier, validate the workflow, and move into a paid plan only when your team needs saved output, repeatable sessions, or custom support. Our <strong style={{ color: "var(--text-primary)" }}>text to song free online</strong> experience lets you <strong style={{ color: "var(--text-primary)" }}>convert text to song</strong> without any commitment.
+          Singify keeps pricing straightforward: start with our <strong style={{ color: "var(--text-primary)" }}>text to song generator free</strong> tier, validate the workflow, and move into a paid plan only when your team needs saved output, repeatable sessions, or custom support. Our <strong style={{ color: "var(--text-primary)" }}>text to song free online</strong> experience lets you <strong style={{ color: "var(--text-primary)" }}>convert text to song</strong> without any commitment.
         </p>
         <p style={{ marginTop: "0.85rem", fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
           The current public experience focuses on the Studio so visitors can test generation immediately. This page keeps the pricing URL crawlable and gives search engines a clear canonical destination instead of a redirect chain.
@@ -122,7 +122,7 @@ export default function PricingPage() {
                 What are the benefits of the Team plan?
               </h3>
               <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>
-                The Team plan is designed for businesses and organizations that need a consistent AI audio workflow. It includes multi-user management, custom onboarding, and dedicated support to help you integrate Songify into your production pipeline.
+                The Team plan is designed for businesses and organizations that need a consistent AI audio workflow. It includes multi-user management, custom onboarding, and dedicated support to help you integrate Singify into your production pipeline.
               </p>
             </div>
             <div>
@@ -150,13 +150,13 @@ export default function PricingPage() {
         <div className="glass-card" style={{ padding: "1.75rem" }}>
           <h2 style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Why Start with the Free Tier?</h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
-            The free tier of our <strong style={{ color: "var(--text-primary)" }}>text to song generator free</strong> platform is not a limited demo — it is a full-featured entry point designed to let you experience the real quality of Songify before making any financial commitment. Guest access means you can generate your first track in under a minute with no account, no email, and no payment information required.
+            The free tier of our <strong style={{ color: "var(--text-primary)" }}>text to song generator free</strong> platform is not a limited demo — it is a full-featured entry point designed to let you experience the real quality of Singify before making any financial commitment. Guest access means you can generate your first track in under a minute with no account, no email, and no payment information required.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
             We believe the best way to evaluate an AI audio tool is to actually use it. Reading about features or watching demo videos gives you an incomplete picture. When you <strong style={{ color: "var(--text-primary)" }}>convert text to song</strong> with your own creative input and hear the result in real time, you immediately understand whether the platform can serve your needs. That hands-on experience is why we keep the free tier genuinely useful, not artificially limited.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
-            For teams evaluating Songify for a production deployment, the free tier also gives you a quick way to test prompt strategies, explore genre coverage, and benchmark output quality before committing to a paid plan. Most teams make a go or no-go decision within a few hours of first use — which is exactly how we designed the evaluation experience.
+            For teams evaluating Singify for a production deployment, the free tier also gives you a quick way to test prompt strategies, explore genre coverage, and benchmark output quality before committing to a paid plan. Most teams make a go or no-go decision within a few hours of first use — which is exactly how we designed the evaluation experience.
           </p>
         </div>
       </section>

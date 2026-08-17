@@ -9,13 +9,13 @@ const envContent = fs.readFileSync(envPath, 'utf-8');
 const envVars = envContent.split('\n').reduce((acc, line) => {
   const match = line.match(/^([^=]+)=(.*)$/);
   if (match) {
-    acc[match[1]] = match[2].replace(/^["']|["']$/g, '');
+    acc[match[1].trim()] = match[2].trim().replace(/^["']|["']$/g, '');
   }
   return acc;
 }, {});
 
 const MONGODB_URI = envVars['MONGODB_URI'];
-const MONGODB_DB = envVars['MONGODB_DB'] ?? "songify";
+const MONGODB_DB = envVars['MONGODB_DB_NAME'] ?? envVars['MONGODB_DB'] ?? "singify";
 
 if (!MONGODB_URI) {
   console.error("MONGODB_URI is not set in .env");
@@ -35,8 +35,8 @@ async function createAdminUser() {
     await client.connect();
     const db = client.db(MONGODB_DB);
     
-    const email = "test@songify.fun";
-    const password = "testpassword1234";
+    const email = "admin@singify.fun";
+    const password = "@akarshrajput2003R";
     const passwordHash = hashPassword(password);
     
     // Check if user already exists
@@ -52,6 +52,7 @@ async function createAdminUser() {
           $set: { 
             passwordHash,
             role: "admin",
+            isVerified: true,
             updatedAt: new Date()
           } 
         }
@@ -63,7 +64,7 @@ async function createAdminUser() {
       await db.collection('users').insertOne({
         userId,
         email,
-        fullName: "Test Admin",
+        fullName: "Admin",
         passwordHash,
         role: "admin",
         isVerified: true,
@@ -75,7 +76,6 @@ async function createAdminUser() {
     console.log("User setup complete. Setting up lifetime subscription...");
 
     // Create a lifetime subscription
-    // First, remove existing active subscriptions
     await db.collection('subscriptions').deleteMany({ userId });
 
     const now = new Date();
@@ -98,9 +98,8 @@ async function createAdminUser() {
 
     await db.collection('subscriptions').insertOne(subscription);
     
-    console.log("Successfully created admin user with lifetime premium in db:", MONGODB_DB);
-    console.log(`Username: ${email}`);
-    console.log(`Password: ${password}`);
+    console.log("Successfully created/updated admin user with lifetime premium in db:", MONGODB_DB);
+    console.log(`Email: ${email}`);
 
   } catch (err) {
     console.error("Error creating admin user:", err);

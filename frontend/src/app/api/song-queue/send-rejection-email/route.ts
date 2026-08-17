@@ -111,9 +111,9 @@ export async function POST(request: Request) {
     });
 
     await transporter.sendMail({
-      from: `"Songify AI" <${process.env.GMAIL_USER}>`,
+      from: `"Singify AI" <${process.env.GMAIL_USER}>`,
       to: body.email,
-      subject: "Update on your Songify request",
+      subject: "Update on your Singify request",
       html,
     });
 

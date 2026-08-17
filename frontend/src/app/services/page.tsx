@@ -6,8 +6,8 @@ import { buildBreadcrumbSchema, buildServiceListSchema } from "@/lib/structured-
 import { servicePages } from "@/lib/services";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Songify: AI Audio Services & Text to Song",
-  description: "Explore Songify services: text to song generator, text to song converter online free, text to rap song, text to audio song, text to speech songs, and voice generation tools.",
+  title: "Singify: AI Audio Services & Text to Song",
+  description: "Explore Singify services: text to song generator, text to song converter online free, text to rap song, text to audio song, text to speech songs, and voice generation tools.",
   path: "/services",
   keywords: [
     "text to song generator",
@@ -58,7 +58,7 @@ export default function ServicesPage() {
           Purpose-built workflows for speech, tone control, music, and narration — each optimized for a specific use case. Our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> and <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> tools power every service.
         </p>
         <p style={{ marginTop: "0.85rem", fontSize: "0.92rem", color: "var(--text-secondary)", lineHeight: 1.75 }}>
-          Each service page explains the practical output, common use cases, and how teams can integrate Songify into real production workflows. From <strong style={{ color: "var(--text-primary)" }}>text to speech songs</strong> to <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> creation, from <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> generation to full AI music production — every workflow is covered.
+          Each service page explains the practical output, common use cases, and how teams can integrate Singify into real production workflows. From <strong style={{ color: "var(--text-primary)" }}>text to speech songs</strong> to <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> creation, from <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> generation to full AI music production — every workflow is covered.
         </p>
       </div>
 
@@ -108,7 +108,7 @@ export default function ServicesPage() {
             Comprehensive AI Audio Solutions
           </h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8, marginBottom: "1rem" }}>
-            At Songify, we believe that high-quality audio should be accessible to everyone. Our suite of services is designed to cover all aspects of audio production, from the spoken word to full musical compositions. By breaking down the barriers of traditional production, we empower creators to focus on what matters most: their ideas.
+            At Singify, we believe that high-quality audio should be accessible to everyone. Our suite of services is designed to cover all aspects of audio production, from the spoken word to full musical compositions. By breaking down the barriers of traditional production, we empower creators to focus on what matters most: their ideas.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
             Whether you are looking to create a quick voiceover for a demo or a complete soundtrack for a game, our tools are built to scale with your needs. We use advanced machine learning models that are continuously updated to provide the best possible quality and speed.
@@ -125,7 +125,7 @@ export default function ServicesPage() {
             For creative writers and poets, the Poem to Audio service is purpose-built to preserve the rhythm and emotional weight of written verse. For social media creators, the Voice Generation service lets you create consistent, recognizable audio personas that your audience will associate with your brand. And for anyone who needs fine-grained control over how speech is delivered, the Speech Tone Tools service provides the nuance that standard TTS engines miss.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
-            All of these services are accessible through the same platform and share the same core generation infrastructure. That means switching between workflows is fast — you do not need to re-learn a new interface or re-upload assets. Everything you create is saved to your library and can be referenced across projects. Our unified approach to <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> generation, speech production, and music creation is what makes Songify a comprehensive solution rather than a collection of disconnected tools.
+            All of these services are accessible through the same platform and share the same core generation infrastructure. That means switching between workflows is fast — you do not need to re-learn a new interface or re-upload assets. Everything you create is saved to your library and can be referenced across projects. Our unified approach to <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> generation, speech production, and music creation is what makes Singify a comprehensive solution rather than a collection of disconnected tools.
           </p>
         </div>
       </section>

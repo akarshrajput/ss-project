@@ -6,7 +6,7 @@ import { getComfyUiBaseUrl } from "@/lib/app-store";
 import { getUser } from "@/lib/auth";
 import { hasActiveSubscription } from "@/lib/subscription-store";
 import { saveDirectSong } from "@/lib/song-queue-store";
-import { persistRemoteAudioToS3 } from "@/lib/audio-storage";
+import { persistRemoteAudioToStorage } from "@/lib/audio-storage";
 
 const requestSchema: z.ZodType<SongGenerateInput> = z.object({
   basePrompt: z.string().min(5),
@@ -79,7 +79,7 @@ async function persistSongIfAuthenticated(params: {
   }
 
   const objectPath = `${user.id}/${Date.now()}-${params.input.seed}.mp3`;
-  const publicUrl = await persistRemoteAudioToS3({
+  const publicUrl = await persistRemoteAudioToStorage({
     sourceUrl: params.audioUrl,
     objectPath
   });

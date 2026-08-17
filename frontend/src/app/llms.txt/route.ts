@@ -1,8 +1,8 @@
 export async function GET() {
   const content = [
-    "# Songify",
+    "# Singify",
     "",
-    "Songify is a Next.js application for AI text-to-song, music generation, speech generation, and audio workflow discovery.",
+    "Singify is a Next.js application for AI text-to-song, music generation, speech generation, and audio workflow discovery.",
     "",
     "## Key pages",
     "- /",

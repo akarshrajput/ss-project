@@ -4,8 +4,8 @@ import { buildMetadata } from "@/lib/seo";
 import { buildBreadcrumbSchema } from "@/lib/structured-data";
 
 export const metadata: Metadata = buildMetadata({
-  title: "About Songify — Free Text to Song Generator & AI Song Maker",
-  description: "Learn about Songify, the leading text to song generator and text to song converter online free. Our text to song AI platform lets you convert text to song, text to rap song, and text to audio song instantly.",
+  title: "About Singify — Free Text to Song Generator & AI Song Maker",
+  description: "Learn about Singify, the leading text to song generator and text to song converter online free. Our text to song AI platform lets you convert text to song, text to rap song, and text to audio song instantly.",
   path: "/about",
   keywords: [
     "text to song generator",
@@ -40,7 +40,7 @@ export default function AboutPage() {
           Built for fast, controllable audio generation
         </h1>
         <p style={{ marginTop: "1.25rem", fontSize: "1rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
-          Songify is the ultimate <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> built for teams and creators who need fast, controllable audio generation without sacrificing
+          Singify is the ultimate <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> built for teams and creators who need fast, controllable audio generation without sacrificing
           quality. Our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong> platform combines text to speech, tone-driven narration, and AI music generation into one
           production-ready workflow. <strong style={{ color: "var(--text-primary)" }}>Convert text to song</strong> in seconds.
         </p>
@@ -49,7 +49,7 @@ export default function AboutPage() {
           move from concept to publication with fewer manual steps.
         </p>
         <p style={{ marginTop: "1rem", fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
-          The product is intentionally broad enough for creators and teams, but narrow enough that the core use case stays clear: use our <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> to turn text into useful audio without forcing users through a heavy learning curve. Whether you need a <strong style={{ color: "var(--text-primary)" }}>text to song maker</strong>, a <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> creator, or a <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> tool, Songify delivers.
+          The product is intentionally broad enough for creators and teams, but narrow enough that the core use case stays clear: use our <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> to turn text into useful audio without forcing users through a heavy learning curve. Whether you need a <strong style={{ color: "var(--text-primary)" }}>text to song maker</strong>, a <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> creator, or a <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> tool, Singify delivers.
         </p>
       </div>
 
@@ -70,7 +70,7 @@ export default function AboutPage() {
             How we think about the product
           </h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
-            Songify is designed to make generated audio practical, not experimental. That means clean routes, stable metadata, useful copy on each page, and internal links that help both humans and search engines navigate the product.
+            Singify is designed to make generated audio practical, not experimental. That means clean routes, stable metadata, useful copy on each page, and internal links that help both humans and search engines navigate the product.
           </p>
         </div>
       </section>
@@ -79,10 +79,10 @@ export default function AboutPage() {
       <section style={{ maxWidth: 860, marginTop: "2.25rem" }}>
         <div className="glass-card" style={{ padding: "1.75rem" }}>
           <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
-            The Technology Behind Songify
+            The Technology Behind Singify
           </h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8, marginBottom: "1rem" }}>
-            Songify utilizes state-of-the-art neural networks and machine learning models to analyze text and synthesize high-quality audio. Our systems are trained on diverse datasets to understand rhythm, melody, and linguistic nuances, allowing them to create realistic vocals and rich instrumental tracks.
+            Singify utilizes state-of-the-art neural networks and machine learning models to analyze text and synthesize high-quality audio. Our systems are trained on diverse datasets to understand rhythm, melody, and linguistic nuances, allowing them to create realistic vocals and rich instrumental tracks.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
             We are constantly iterating on our models to improve generation speed and quality. Our goal is to provide a seamless bridge between written ideas and polished audio outputs, making professional-grade sound creation accessible to everyone.
@@ -93,18 +93,14 @@ export default function AboutPage() {
       <section style={{ maxWidth: 860, marginTop: "2rem", display: "grid", gap: "1.5rem", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}>
         <div className="glass-card" style={{ padding: "1.75rem" }}>
           <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>
-            Company Information
+            Contact Us
           </h2>
-          <div style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.7 }}>
-            NovaVision Consulting FZCO<br />
-            Dubai Digital Park<br />
-            Dubai Silicon Oasis<br />
-            Dubai, UAE
-          </div>
-          <div style={{ marginTop: "1.25rem" }}>
-            <h3 style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.4rem" }}>Contact</h3>
-            <a href="mailto:contact@Novavision-strategy.com" style={{ fontSize: "0.85rem", color: "#6366f1", textDecoration: "underline" }}>
-              contact@Novavision-strategy.com
+          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "1rem" }}>
+            Have questions, feedback, or need help with Singify? Reach out to our team directly.
+          </p>
+          <div>
+            <a href="mailto:contact@singify.fun" style={{ fontSize: "0.9rem", color: "#6366f1", textDecoration: "underline", fontWeight: 600 }}>
+              contact@singify.fun
             </a>
           </div>
         </div>
@@ -114,7 +110,7 @@ export default function AboutPage() {
             Liability Notice
           </h2>
           <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: 1.75 }}>
-            Songify provides AI-powered song generation and audio production tools. All generated content is provided for creative and entertainment purposes. Use is at your own risk. We do not guarantee the copyright status, uniqueness, or accuracy of the generated audio tracks and lyrics.
+            Singify provides AI-powered song generation and audio production tools. All generated content is provided for creative and entertainment purposes. Use is at your own risk. We do not guarantee the copyright status, uniqueness, or accuracy of the generated audio tracks and lyrics.
           </p>
         </div>
       </section>
@@ -122,10 +118,10 @@ export default function AboutPage() {
         <div className="glass-card" style={{ padding: "1.75rem" }}>
           <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Our Mission: Making Music Creation Accessible to Everyone</h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
-            Songify was founded on a simple belief: creating music should not require years of training, expensive equipment, or a professional studio. Our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> removes every barrier between an idea and a finished track. You write the words — our AI handles the melody, harmony, rhythm, and production. The result is a fully produced song, ready to share or download, in seconds.
+            Singify was founded on a simple belief: creating music should not require years of training, expensive equipment, or a professional studio. Our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> removes every barrier between an idea and a finished track. You write the words — our AI handles the melody, harmony, rhythm, and production. The result is a fully produced song, ready to share or download, in seconds.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
-            We built Songify as a <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> tool because we wanted the barrier to entry to be zero. No software to install. No account required to try it. No credit card. You visit the site, type your idea, and generate. That philosophy — free, instant, no friction — is built into every decision we make about the product.
+            We built Singify as a <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> tool because we wanted the barrier to entry to be zero. No software to install. No account required to try it. No credit card. You visit the site, type your idea, and generate. That philosophy — free, instant, no friction — is built into every decision we make about the product.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
             Over time, we have expanded from a simple <strong style={{ color: "var(--text-primary)" }}>text to song maker</strong> into a full AI audio platform. You can <strong style={{ color: "var(--text-primary)" }}>convert text to song</strong> in dozens of genres, generate <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> outputs with real cadence and flow, or produce <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> tracks for podcasts, videos, games, and presentations. Every feature is designed to serve real creative workflows, not just impressive demos.
@@ -138,15 +134,15 @@ export default function AboutPage() {
 
       <section style={{ maxWidth: 860, marginTop: "1.25rem" }}>
         <div className="glass-card" style={{ padding: "1.75rem" }}>
-          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Why Creators Choose Songify</h2>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Why Creators Choose Singify</h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
-            There are many AI music tools available today, but Songify stands apart because it is built around the creative workflow, not the technology showcase. When you use our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong>, you are not just running a model — you are working inside a system designed to help you iterate quickly, reproduce great results, and understand what settings produce the output you want.
+            There are many AI music tools available today, but Singify stands apart because it is built around the creative workflow, not the technology showcase. When you use our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong>, you are not just running a model — you are working inside a system designed to help you iterate quickly, reproduce great results, and understand what settings produce the output you want.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
             Genre diversity is one of our strongest differentiators. Whether you need a melancholic indie ballad, an upbeat pop anthem, a hard-hitting hip-hop track, or ambient electronic music for focus work, our <strong style={{ color: "var(--text-primary)" }}>text to song creator</strong> engine adapts to your intent. The AI reads not just the words but the emotional context, adjusting instrumentation, vocal style, and tempo accordingly.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
-            We are also committed to transparency. Our pricing is clear, our terms are readable, and our privacy policy is written for humans, not just lawyers. When you generate a song with Songify, you own the creative output. Our <strong style={{ color: "var(--text-primary)" }}>text to song free online</strong> tier gives you full access to generation and browser playback. Premium features like library storage and high-priority processing are available on paid plans as they roll out.
+            We are also committed to transparency. Our pricing is clear, our terms are readable, and our privacy policy is written for humans, not just lawyers. When you generate a song with Singify, you own the creative output. Our <strong style={{ color: "var(--text-primary)" }}>text to song free online</strong> tier gives you full access to generation and browser playback. Premium features like library storage and high-priority processing are available on paid plans as they roll out.
           </p>
         </div>
       </section>

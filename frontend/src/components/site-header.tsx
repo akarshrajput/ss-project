@@ -28,14 +28,14 @@ export async function SiteHeader() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group" style={{ textDecoration: "none" }}>
           <Image
-            src="/songify-logo.png"
-            alt="Songify"
+            src="/singify-logo.png"
+            alt="Singify"
             width={32}
             height={32}
             className="rounded-[9px] shadow-[0_0_16px_rgba(99,102,241,0.4)] transition-shadow duration-200 group-hover:shadow-[0_0_24px_rgba(99,102,241,0.6)]"
           />
           <span style={{ fontSize: "1.05rem", fontWeight: 700, color: "#f1f5f9", fontFamily: '"Space Grotesk", sans-serif', letterSpacing: "-0.02em" }}>
-            Songify
+            Singify
           </span>
         </Link>
 

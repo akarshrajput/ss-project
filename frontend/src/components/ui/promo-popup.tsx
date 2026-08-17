@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const DISMISS_KEY = "songify_promo_dismissed";
+const DISMISS_KEY = "singify_promo_dismissed";
 const DISMISS_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 export function PromoPopup() {
@@ -86,8 +86,8 @@ export function PromoPopup() {
             overflow: "hidden"
           }}>
             <Image
-              src="/songify-logo.png"
-              alt="Songify"
+              src="/singify-logo.png"
+              alt="Singify"
               width={56}
               height={56}
               className="object-cover"

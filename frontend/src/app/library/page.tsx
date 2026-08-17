@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { LibraryClient } from "@/components/library/library-client";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Your Library: Songify",
+  title: "Your Library: Singify",
   description:
     "Listen to your generated songs and view your library.",
   path: "/library",
@@ -17,7 +17,7 @@ export const metadata: Metadata = buildMetadata({
     "text to speech songs",
     "convert text to song",
     "ai songs",
-    "songify community",
+    "singify community",
   ],
 });
 
@@ -42,7 +42,7 @@ export default function LibraryPage() {
             Discover What Our Text to Song Generator Can Create
           </h2>
           <p style={{ fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "1rem" }}>
-            Welcome to the Songify community explore page. This space is dedicated to showcasing the incredible creativity of our users who use our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> and <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong>. Here, you can find a diverse collection of songs generated from text prompts, spanning various genres, moods, and themes. Our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong> empowers anyone, regardless of musical background, to become a creator.
+            Welcome to the Singify community explore page. This space is dedicated to showcasing the incredible creativity of our users who use our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> and <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong>. Here, you can find a diverse collection of songs generated from text prompts, spanning various genres, moods, and themes. Our <strong style={{ color: "var(--text-primary)" }}>text to song AI</strong> empowers anyone, regardless of musical background, to become a creator.
           </p>
           <p style={{ fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "1rem" }}>
             By browsing this gallery, you can discover new styles, find inspiration for your own prompts, and see how others are using our <strong style={{ color: "var(--text-primary)" }}>text to song maker</strong> to push the boundaries of AI-assisted music production. From <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> creations to <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> experiments, this community showcase offers a glimpse into the future of music.
@@ -71,7 +71,7 @@ export default function LibraryPage() {
           <div className="glass-card" style={{ padding: "1.75rem" }}>
             <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "0.85rem" }}>The Power of Community-Driven AI Music</h2>
             <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
-              Every song you see on this page was created by a real person using the Songify <strong style={{ color: "var(--text-primary)" }}>text to song AI free</strong> tool. That means this gallery is always growing, always changing, and always reflecting the diverse creative ideas of our global user base. From heartfelt love songs to energetic workout anthems, from lo-fi study beats to cinematic orchestral pieces — the range of what people create with our <strong style={{ color: "var(--text-primary)" }}>text to song generator free</strong> continues to surprise us.
+              Every song you see on this page was created by a real person using the Singify <strong style={{ color: "var(--text-primary)" }}>text to song AI free</strong> tool. That means this gallery is always growing, always changing, and always reflecting the diverse creative ideas of our global user base. From heartfelt love songs to energetic workout anthems, from lo-fi study beats to cinematic orchestral pieces — the range of what people create with our <strong style={{ color: "var(--text-primary)" }}>text to song generator free</strong> continues to surprise us.
             </p>
             <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
               Listening to other creators&apos; work is one of the best ways to understand the full potential of our platform. You might hear a <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> with punchy rhymes that inspire you to write your own verse, or a smooth R&B track that shows you how mood settings affect the vocal style. Each song is a learning opportunity — and a reminder that with the right prompt, anyone can make something worth sharing.

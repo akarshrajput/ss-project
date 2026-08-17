@@ -535,9 +535,11 @@ export function QuickGenerate({ hasActivePlan = false }: { hasActivePlan?: boole
         </div>
 
         {/* Minimal Trusted By Logos */}
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "2.5rem", marginTop: "1.75rem" }} aria-label="Trusted companies">
-          <img src="/trusted/hhg.png" alt="HHG" style={{ height: "50px", filter: "brightness(0) invert(1) opacity(0.7)", objectFit: "contain" }} />
-          <img src="/trusted/niftyip.png" alt="Nifty IP" style={{ height: "50px", filter: "brightness(0) invert(1) opacity(0.7)", objectFit: "contain" }} />
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "0.55rem", marginTop: "1.75rem" }} aria-label="Trusted companies">
+          <span style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--text-muted)", opacity: 0.75 }}>
+            Trusted by
+          </span>
+          <img src="/trusted/nba_logo1.svg" alt="NBA" style={{ height: "38px", filter: "brightness(0) invert(1) opacity(0.75)", objectFit: "contain" }} />
         </div>
       </form>
 

@@ -14,7 +14,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing data." }, { status: 400 });
     }
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.songify.fun";
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.singify.fun";
     const songLink = `${siteUrl}/song/${body.songId}`;
 
     // Build a clean, professional HTML email
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
           <!-- Header -->
           <tr>
             <td style="padding: 32px 32px 24px; border-bottom: 1px solid #e2e8f0; text-align: center;">
-              <div style="font-size: 24px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px;">Songify</div>
+              <div style="font-size: 24px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px;">Singify</div>
             </td>
           </tr>
 
@@ -70,10 +70,10 @@ export async function POST(request: Request) {
           <tr>
             <td style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #e2e8f0; text-align: center;">
               <p style="margin: 0 0 8px; font-size: 13px; line-height: 1.5; color: #64748b;">
-                You are receiving this email because you requested a song generation on Songify.
+                You are receiving this email because you requested a song generation on Singify.
               </p>
               <p style="margin: 0; font-size: 13px; color: #94a3b8;">
-                &copy; ${new Date().getFullYear()} Songify. All rights reserved.
+                &copy; ${new Date().getFullYear()} Singify. All rights reserved.
               </p>
             </td>
           </tr>
@@ -99,9 +99,9 @@ export async function POST(request: Request) {
     });
 
     const mailOptions = {
-      from: `"Songify AI" <${process.env.GMAIL_USER}>`,
+      from: `"Singify AI" <${process.env.GMAIL_USER}>`,
       to: body.email,
-      subject: `🎵 Your Song "${body.songTitle}" is Ready! — Songify`,
+      subject: `🎵 Your Song "${body.songTitle}" is Ready! — Singify`,
       html,
     };
 

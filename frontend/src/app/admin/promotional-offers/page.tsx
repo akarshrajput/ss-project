@@ -163,7 +163,7 @@ export default async function PromotionalOffersPage({ searchParams }: { searchPa
                   name="subject"
                   type="text"
                   required
-                  defaultValue="🎁 Special Premium Offer: 24h Free Access to Songify!"
+                  defaultValue="🎁 Special Premium Offer: 24h Free Access to Singify!"
                   placeholder="Enter email subject line..."
                   style={inputStyle}
                 />
@@ -175,7 +175,7 @@ export default async function PromotionalOffersPage({ searchParams }: { searchPa
                   name="message"
                   required
                   placeholder="Type your custom offer message here..."
-                  defaultValue={`Hey there,\n\nWe've activated 24 hours of premium subscription access for you on Songify AI!\n\nYou can now generate unlimited high-quality AI songs without any delay or limits.\n\nClick the button below to visit the studio and start creating your music. Enjoy!\n\nBest regards,\nThe Songify Team`}
+                  defaultValue={`Hey there,\n\nWe've activated 24 hours of premium subscription access for you on Singify AI!\n\nYou can now generate unlimited high-quality AI songs without any delay or limits.\n\nClick the button below to visit the studio and start creating your music. Enjoy!\n\nBest regards,\nThe Singify Team`}
                   rows={8}
                   style={{
                     ...inputStyle,

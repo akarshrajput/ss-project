@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
   title: "Privacy Policy — Text to Song Generator & Text to Song AI",
-  description: "Review how Songify's text to song generator handles account data, generated text to song outputs, and text to song converter online free service analytics.",
+  description: "Review how Singify's text to song generator handles account data, generated text to song outputs, and text to song converter online free service analytics.",
   path: "/privacy",
   keywords: [
     "text to song generator",
@@ -25,9 +25,9 @@ export default function PrivacyPage() {
         <div className="glass-card" style={{ padding: "2rem" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
             {[
-              "Songify stores account and generated asset metadata required to deliver platform functionality and user libraries.",
+              "Singify stores account and generated asset metadata required to deliver platform functionality and user libraries.",
               "We apply security controls to protect user data and only process operational data needed for service performance.",
-              "For data access or deletion requests, contact privacy@songify.fun.",
+              "For data access or deletion requests, contact privacy@singify.fun.",
             ].map((text, i) => (
               <p key={i} style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
                 {text}
@@ -41,7 +41,7 @@ export default function PrivacyPage() {
             Data handled in the product
           </h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
-            Depending on how you use Songify, we may process account details, generation prompts, saved outputs, and operational logs. We keep that scope limited to what is needed for product delivery, debugging, and library features.
+            Depending on how you use Singify, we may process account details, generation prompts, saved outputs, and operational logs. We keep that scope limited to what is needed for product delivery, debugging, and library features.
           </p>
         </div>
 
@@ -69,7 +69,7 @@ export default function PrivacyPage() {
             How We Use Your Information
           </h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
-            We use the information we collect to provide, maintain, and improve our services, including the Songify Studio. This includes processing your generation requests, managing your account, sending technical notices, and responding to your support requests. We may also use aggregated or de-identified information for research and analysis to enhance our AI models.
+            We use the information we collect to provide, maintain, and improve our services, including the Singify Studio. This includes processing your generation requests, managing your account, sending technical notices, and responding to your support requests. We may also use aggregated or de-identified information for research and analysis to enhance our AI models.
           </p>
         </div>
 
@@ -86,7 +86,7 @@ export default function PrivacyPage() {
             Cookies and Tracking Technologies
           </h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
-            Songify uses cookies and similar tracking technologies to track activity on our service and hold certain information. Cookies are files with a small amount of data which may include an anonymous unique identifier. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our service.
+            Singify uses cookies and similar tracking technologies to track activity on our service and hold certain information. Cookies are files with a small amount of data which may include an anonymous unique identifier. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our service.
           </p>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
             We use session cookies to operate our service, preference cookies to remember your preferences and various settings, and security cookies for security purposes. We may also use third-party analytics tools to understand how our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> is used so we can improve the experience for all users.

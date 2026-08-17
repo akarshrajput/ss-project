@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 
 export const siteConfig = {
-  name: "Songify",
-  shortName: "Songify",
+  name: "Singify",
+  shortName: "Singify",
   description:
-    "Songify is the best text to song generator, text to song converter online free, and text to song AI platform. Convert text to song, text to rap song, or text to audio song instantly.",
+    "Singify is the best text to song generator, text to song converter online free, and text to song AI platform. Convert text to song, text to rap song, or text to audio song instantly.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   locale: "en_US",
-  twitterHandle: "@songify",
+  twitterHandle: "@singify",
   keywords: [
+    "singify text to song",
     "text to song generator",
     "text to song",
     "text to song ai",
@@ -83,7 +84,7 @@ export function buildMetadata({
           url: absoluteUrl("/opengraph-image"),
           width: 1200,
           height: 630,
-          alt: "Songify AI audio generation platform",
+          alt: "Singify AI audio generation platform",
         },
       ],
     },
@@ -96,26 +97,26 @@ export function buildMetadata({
     },
     robots: noIndex
       ? {
+        index: false,
+        follow: false,
+        googleBot: {
           index: false,
           follow: false,
-          googleBot: {
-            index: false,
-            follow: false,
-            "max-image-preview": "large",
-            "max-snippet": -1,
-            "max-video-preview": -1,
-          },
-        }
+          "max-image-preview": "large",
+          "max-snippet": -1,
+          "max-video-preview": -1,
+        },
+      }
       : {
+        index: true,
+        follow: true,
+        googleBot: {
           index: true,
           follow: true,
-          googleBot: {
-            index: true,
-            follow: true,
-            "max-image-preview": "large",
-            "max-snippet": -1,
-            "max-video-preview": -1,
-          },
+          "max-image-preview": "large",
+          "max-snippet": -1,
+          "max-video-preview": -1,
         },
+      },
   };
 }

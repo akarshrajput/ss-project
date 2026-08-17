@@ -6,7 +6,7 @@ import { getUser } from "@/lib/auth";
 
 export const metadata: Metadata = buildMetadata({
   title: "User Dashboard",
-  description: "Private Songify workspace dashboard.",
+  description: "Private Singify workspace dashboard.",
   path: "/dashboard",
   noIndex: true,
 });

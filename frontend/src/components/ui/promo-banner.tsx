@@ -13,7 +13,7 @@ export function PromoBanner({ user }: PromoBannerProps) {
 
   useEffect(() => {
     // Only show if the user hasn't dismissed it
-    const dismissed = localStorage.getItem("songify_promo_banner_dismissed");
+    const dismissed = localStorage.getItem("singify_promo_banner_dismissed");
     if (!dismissed) {
       // setIsVisible(true); // Temporarily hidden as per user request
     }
@@ -23,7 +23,7 @@ export function PromoBanner({ user }: PromoBannerProps) {
 
   const handleDismiss = () => {
     setIsVisible(false);
-    localStorage.setItem("songify_promo_banner_dismissed", "true");
+    localStorage.setItem("singify_promo_banner_dismissed", "true");
   };
 
   return (
