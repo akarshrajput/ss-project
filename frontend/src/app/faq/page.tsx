@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { buildBreadcrumbSchema, buildFaqSchema } from "@/lib/structured-data";
+import { AdsterraBanner } from "@/components/ads/adsterra-banner";
 
 export const metadata: Metadata = buildMetadata({
   title: "Singify FAQ: Text to Song Generator & AI",
-  description: "Got questions about Singify? Learn how our free text to song generator turns text into songs, how the text to song converter online free works, and how to convert text to song, text to rap song, or text to audio song.",
+  description:
+    "Got questions about Singify? Learn how our free text to song generator turns text into songs, how the text to song converter online free works, and how to convert text to song, text to rap song, or text to audio song.",
   path: "/faq",
   keywords: [
     "text to song generator",
@@ -24,63 +26,78 @@ export const metadata: Metadata = buildMetadata({
 const faqs = [
   {
     question: "What is a text to song AI and how does Singify work?",
-    answer: "A text to song AI converts any written input — a poem, a story, or even a single sentence — into a fully produced audio track. Singify is the best text to song generator free online. Our text to song converter reads your prompt, selects a musical style, and renders a complete song. Use it as a text to song app right in your browser — no downloads needed.",
+    answer:
+      "A text to song AI converts any written input — a poem, a story, or even a single sentence — into a fully produced audio track. Singify is the best text to song generator free online. Our text to song converter reads your prompt, selects a musical style, and renders a complete song. Use it as a text to song app right in your browser — no downloads needed.",
   },
   {
     question: "Is Singify really a free AI song generator?",
-    answer: "Yes. Singify lets you generate your first song without creating an account and at zero cost. Guest mode gives you one free generation per session. Sign up for free to unlock more generations, cloud storage, and MP3 downloads — no credit card needed.",
+    answer:
+      "Yes. Singify lets you generate your first song without creating an account and at zero cost. Guest mode gives you one free generation per session. Sign up for free to unlock more generations, cloud storage, and MP3 downloads — no credit card needed.",
   },
   {
     question: "How is Singify different from other AI music generators?",
-    answer: "Most AI music generators create background music without vocals. Singify is a complete AI song maker — it generates fully produced tracks from a single text prompt. Think of it as a comprehensive AI music maker tool.",
+    answer:
+      "Most AI music generators create background music without vocals. Singify is a complete AI song maker — it generates fully produced tracks from a single text prompt. Think of it as a comprehensive AI music maker tool.",
   },
   {
     question: "Can I use Singify for specific musical styles?",
-    answer: "Yes. In the Studio, you can select from various genres and moods. Singify’s AI music generator will adapt your input into a structured song format before producing the final audio.",
+    answer:
+      "Yes. In the Studio, you can select from various genres and moods. Singify’s AI music generator will adapt your input into a structured song format before producing the final audio.",
   },
   {
     question: "What music genres does the AI song maker support?",
-    answer: "Singify supports a wide range of genres including Pop, Folk, Lo-fi, Rock, Jazz, Orchestral, Techno, Ambient, Reggae, and Lullaby. You can also mix moods and scenes to create a truly unique sound — making it one of the most flexible AI music generators available.",
+    answer:
+      "Singify supports a wide range of genres including Pop, Folk, Lo-fi, Rock, Jazz, Orchestral, Techno, Ambient, Reggae, and Lullaby. You can also mix moods and scenes to create a truly unique sound — making it one of the most flexible AI music generators available.",
   },
   {
     question: "Which languages can the AI music maker produce songs in?",
-    answer: "Currently Singify supports English, Hindi, Spanish, French, and German. Our AI music generator has been tested with all five and produces natural, high-quality output. More languages are being added — vote for yours in the community forum.",
+    answer:
+      "Currently Singify supports English, Hindi, Spanish, French, and German. Our AI music generator has been tested with all five and produces natural, high-quality output. More languages are being added — vote for yours in the community forum.",
   },
   {
     question: "How long does it take to generate a song?",
-    answer: "Most songs are ready in under 60 seconds. Short clips (10–30 s) are typically done in 15–20 seconds. Longer tracks up to 3 minutes may take 45–90 seconds depending on server load. Singify is optimised to be the fastest free AI music generator online.",
+    answer:
+      "Most songs are ready in under 60 seconds. Short clips (10–30 s) are typically done in 15–20 seconds. Longer tracks up to 3 minutes may take 45–90 seconds depending on server load. Singify is optimised to be the fastest free AI music generator online.",
   },
   {
     question: "Can I download the AI-generated songs as MP3?",
-    answer: "Yes. Every track generated through Singify can be downloaded as an MP3 file. Logged-in users get instant one-click downloads from the Studio output panel and from their Library. Guest users can listen in-browser and sign up to save their track.",
+    answer:
+      "Yes. Every track generated through Singify can be downloaded as an MP3 file. Logged-in users get instant one-click downloads from the Studio output panel and from their Library. Guest users can listen in-browser and sign up to save their track.",
   },
   {
     question: "Who owns the songs created by Singify's AI song generator?",
-    answer: "You do. Songs generated with your prompt belong to you. Singify grants a broad licence for personal and commercial use. We recommend reading our Terms of Service for details on attribution and redistribution, especially for commercial projects.",
+    answer:
+      "You do. Songs generated with your prompt belong to you. Singify grants a broad licence for personal and commercial use. We recommend reading our Terms of Service for details on attribution and redistribution, especially for commercial projects.",
   },
   {
     question: "Can I use Singify as a song generator for kids' content?",
-    answer: "Absolutely. Singify has a built-in Kid Safe mode that filters all output for family-friendly content. This makes it the ideal AI song maker for lullabies, classroom music, children's audiobooks, and educational videos.",
+    answer:
+      "Absolutely. Singify has a built-in Kid Safe mode that filters all output for family-friendly content. This makes it the ideal AI song maker for lullabies, classroom music, children's audiobooks, and educational videos.",
   },
   {
     question: "Does Singify work on mobile devices?",
-    answer: "Yes. The Singify Studio and the homepage song generator are fully responsive and work on iOS and Android browsers. The waveform player, genre controls, and download button are all touch-friendly — create AI songs from your phone anywhere, anytime.",
+    answer:
+      "Yes. The Singify Studio and the homepage song generator are fully responsive and work on iOS and Android browsers. The waveform player, genre controls, and download button are all touch-friendly — create AI songs from your phone anywhere, anytime.",
   },
   {
     question: "Is Singify the top AI platform for music creation?",
-    answer: "Singify is built specifically for the text-to-song use case: you type, AI composes the music. Unlike generic AI tools, Singify understands song structure and produces output that sounds like a real track — making it one of the top AI platforms for music generation online.",
+    answer:
+      "Singify is built specifically for the text-to-song use case: you type, AI composes the music. Unlike generic AI tools, Singify understands song structure and produces output that sounds like a real track — making it one of the top AI platforms for music generation online.",
   },
   {
     question: "Can I collaborate with others on Singify?",
-    answer: "While we don't have real-time collaboration features yet, you can share the links to your saved songs with others. They can listen to your tracks and read the prompts you used. We are planning to introduce shared playlists and collaborative editing in future updates.",
+    answer:
+      "While we don't have real-time collaboration features yet, you can share the links to your saved songs with others. They can listen to your tracks and read the prompts you used. We are planning to introduce shared playlists and collaborative editing in future updates.",
   },
   {
     question: "How do I report a bug or suggest a feature?",
-    answer: "We welcome your feedback! If you encounter any issues or have ideas for new features, please reach out to us via the Contact page or send an email to contact@singify.fun. Our development team reviews all suggestions to improve the platform.",
+    answer:
+      "We welcome your feedback! If you encounter any issues or have ideas for new features, please reach out to us via the Contact page or send an email to contact@singify.fun. Our development team reviews all suggestions to improve the platform.",
   },
   {
     question: "Is there a limit to how many songs I can create?",
-    answer: "Guest users are limited to one generation per session. Free registered users get a set number of generations per month. For unlimited generations and priority processing, you will need to upgrade to a Pro or Team plan when they become available.",
+    answer:
+      "Guest users are limited to one generation per session. Free registered users get a set number of generations per month. For unlimited generations and priority processing, you will need to upgrade to a Pro or Team plan when they become available.",
   },
 ];
 
@@ -98,29 +115,99 @@ export default function FaqPage() {
 
       <div style={{ maxWidth: 640, marginBottom: "3rem" }}>
         <p className="section-eyebrow mb-3">FAQ</p>
-        <h1 style={{ fontFamily: '"Space Grotesk", sans-serif', fontSize: "2.5rem", fontWeight: 700, color: "var(--text-primary)" }}>
+        <h1
+          style={{
+            fontFamily: '"Space Grotesk", sans-serif',
+            fontSize: "2.5rem",
+            fontWeight: 700,
+            color: "var(--text-primary)",
+          }}
+        >
           Frequently asked questions
         </h1>
-        <p style={{ marginTop: "1rem", fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
-          This page covers the most common product questions so visitors can understand the workflow before they enter the Studio. It also gives crawlers a clear, text-rich overview of the platform.
+        <p
+          style={{
+            marginTop: "1rem",
+            fontSize: "0.95rem",
+            color: "var(--text-secondary)",
+            lineHeight: 1.8,
+          }}
+        >
+          This page covers the most common product questions so visitors can
+          understand the workflow before they enter the Studio. It also gives
+          crawlers a clear, text-rich overview of the platform.
         </p>
-        <p style={{ marginTop: "1rem", fontSize: "0.95rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
-          We are committed to making music creation accessible to everyone. Our text to song generator leverages cutting-edge artificial intelligence to break down the barriers of traditional music production. Whether you want to convert text to song, use our text to song converter online free, or explore text to rap song creation, the questions below cover everything you need to know.
+        <p
+          style={{
+            marginTop: "1rem",
+            fontSize: "0.95rem",
+            color: "var(--text-secondary)",
+            lineHeight: 1.8,
+          }}
+        >
+          We are committed to making music creation accessible to everyone. Our
+          text to song generator leverages cutting-edge artificial intelligence
+          to break down the barriers of traditional music production. Whether
+          you want to convert text to song, use our text to song converter
+          online free, or explore text to rap song creation, the questions below
+          cover everything you need to know.
         </p>
       </div>
 
-      <div style={{ maxWidth: 740, display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+      <div
+        style={{
+          maxWidth: 740,
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.75rem",
+        }}
+      >
         {faqs.map((item, i) => (
-          <article key={item.question} className="glass-card" style={{ padding: "1.5rem" }}>
-            <div style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
-              <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--accent-violet)", background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: "50%", width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
+          <article
+            key={item.question}
+            className="glass-card"
+            style={{ padding: "1.5rem" }}
+          >
+            <div
+              style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}
+            >
+              <span
+                style={{
+                  fontSize: "0.75rem",
+                  fontWeight: 700,
+                  color: "var(--accent-violet)",
+                  background: "rgba(99,102,241,0.12)",
+                  border: "1px solid rgba(99,102,241,0.2)",
+                  borderRadius: "50%",
+                  width: 26,
+                  height: 26,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                  marginTop: 1,
+                }}
+              >
                 {i + 1}
               </span>
               <div>
-                <h2 style={{ fontSize: "0.95rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.5rem" }}>
+                <h2
+                  style={{
+                    fontSize: "0.95rem",
+                    fontWeight: 600,
+                    color: "var(--text-primary)",
+                    marginBottom: "0.5rem",
+                  }}
+                >
                   {item.question}
                 </h2>
-                <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)", lineHeight: 1.7 }}>
+                <p
+                  style={{
+                    fontSize: "0.875rem",
+                    color: "var(--text-secondary)",
+                    lineHeight: 1.7,
+                  }}
+                >
                   {item.answer}
                 </p>
               </div>
@@ -129,43 +216,170 @@ export default function FaqPage() {
         ))}
       </div>
 
+      <AdsterraBanner type="728x90" className="my-8 max-w-[740px]" />
+
       <section style={{ maxWidth: 740, marginTop: "2.25rem" }}>
         <div className="glass-card" style={{ padding: "1.75rem" }}>
-          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.65rem" }}>
+          <h2
+            style={{
+              fontSize: "1.05rem",
+              fontWeight: 600,
+              color: "var(--text-primary)",
+              marginBottom: "0.65rem",
+            }}
+          >
             Still need help?
           </h2>
-          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.8 }}>
-            If your question is about a specific workflow, service page, or deployment scenario, use the Contact page and include the relevant route. That keeps support responses focused and makes the content more useful for your team.
+          <p
+            style={{
+              fontSize: "0.9rem",
+              color: "var(--text-secondary)",
+              lineHeight: 1.8,
+            }}
+          >
+            If your question is about a specific workflow, service page, or
+            deployment scenario, use the Contact page and include the relevant
+            route. That keeps support responses focused and makes the content
+            more useful for your team.
           </p>
         </div>
       </section>
 
       <section style={{ maxWidth: 740, marginTop: "1.25rem" }}>
         <div className="glass-card" style={{ padding: "1.75rem" }}>
-          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Understanding AI Music Generation: A Deeper Dive</h2>
-          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
-            Our <strong style={{ color: "var(--text-primary)" }}>text to song generator</strong> uses a multi-stage AI pipeline to turn your words into music. First, a language model interprets your prompt and extracts key creative signals: genre cues, emotional tone, lyrical themes, tempo suggestions, and mood descriptors. Then a music generation model translates those signals into a musical composition — selecting instruments, setting the key and time signature, building the arrangement, and generating the vocal melody and lyrics if applicable.
+          <h2
+            style={{
+              fontSize: "1.05rem",
+              fontWeight: 600,
+              color: "var(--text-primary)",
+              marginBottom: "0.85rem",
+            }}
+          >
+            Understanding AI Music Generation: A Deeper Dive
+          </h2>
+          <p
+            style={{
+              fontSize: "0.9rem",
+              color: "var(--text-secondary)",
+              lineHeight: 1.85,
+              marginBottom: "0.85rem",
+            }}
+          >
+            Our{" "}
+            <strong style={{ color: "var(--text-primary)" }}>
+              text to song generator
+            </strong>{" "}
+            uses a multi-stage AI pipeline to turn your words into music. First,
+            a language model interprets your prompt and extracts key creative
+            signals: genre cues, emotional tone, lyrical themes, tempo
+            suggestions, and mood descriptors. Then a music generation model
+            translates those signals into a musical composition — selecting
+            instruments, setting the key and time signature, building the
+            arrangement, and generating the vocal melody and lyrics if
+            applicable.
           </p>
-          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
-            The final stage is audio synthesis and mastering — where the raw musical composition is rendered into a high-quality audio file with balanced levels, clear stereo imaging, and appropriate loudness for streaming. This entire process happens automatically, in the background, in a matter of seconds. You submit a prompt, and you receive a finished song. That is the core promise of the Singify <strong style={{ color: "var(--text-primary)" }}>text to song AI free</strong> platform.
+          <p
+            style={{
+              fontSize: "0.9rem",
+              color: "var(--text-secondary)",
+              lineHeight: 1.85,
+              marginBottom: "0.85rem",
+            }}
+          >
+            The final stage is audio synthesis and mastering — where the raw
+            musical composition is rendered into a high-quality audio file with
+            balanced levels, clear stereo imaging, and appropriate loudness for
+            streaming. This entire process happens automatically, in the
+            background, in a matter of seconds. You submit a prompt, and you
+            receive a finished song. That is the core promise of the Singify{" "}
+            <strong style={{ color: "var(--text-primary)" }}>
+              text to song AI free
+            </strong>{" "}
+            platform.
           </p>
-          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
-            Understanding this pipeline helps you write better prompts. The more musical context you include — genre, mood, tempo, instruments, vocal style, lyrical theme — the more accurately the AI can fulfill your creative intent. If you leave most of these parameters unspecified, the AI will make its own creative choices, which can produce interesting surprises but may not align with your vision. Experiment with different levels of specificity to find what works best for your workflow.
+          <p
+            style={{
+              fontSize: "0.9rem",
+              color: "var(--text-secondary)",
+              lineHeight: 1.85,
+            }}
+          >
+            Understanding this pipeline helps you write better prompts. The more
+            musical context you include — genre, mood, tempo, instruments, vocal
+            style, lyrical theme — the more accurately the AI can fulfill your
+            creative intent. If you leave most of these parameters unspecified,
+            the AI will make its own creative choices, which can produce
+            interesting surprises but may not align with your vision. Experiment
+            with different levels of specificity to find what works best for
+            your workflow.
           </p>
         </div>
       </section>
 
       <section style={{ maxWidth: 740, marginTop: "1.25rem" }}>
         <div className="glass-card" style={{ padding: "1.75rem" }}>
-          <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Tips for Better Prompts and Results</h2>
-          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
-            The single most impactful thing you can do to improve your results with our <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> is to be specific. Instead of &quot;a sad song,&quot; try &quot;a slow, melancholic piano ballad about missing someone you love, with a female vocalist and soft strings in the background.&quot; Each additional detail gives the AI more to work with and reduces the gap between what you imagined and what gets generated.
+          <h2
+            style={{
+              fontSize: "1.05rem",
+              fontWeight: 600,
+              color: "var(--text-primary)",
+              marginBottom: "0.85rem",
+            }}
+          >
+            Tips for Better Prompts and Results
+          </h2>
+          <p
+            style={{
+              fontSize: "0.9rem",
+              color: "var(--text-secondary)",
+              lineHeight: 1.85,
+              marginBottom: "0.85rem",
+            }}
+          >
+            The single most impactful thing you can do to improve your results
+            with our{" "}
+            <strong style={{ color: "var(--text-primary)" }}>
+              text to song converter online free
+            </strong>{" "}
+            is to be specific. Instead of &quot;a sad song,&quot; try &quot;a
+            slow, melancholic piano ballad about missing someone you love, with
+            a female vocalist and soft strings in the background.&quot; Each
+            additional detail gives the AI more to work with and reduces the gap
+            between what you imagined and what gets generated.
           </p>
-          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85, marginBottom: "0.85rem" }}>
-            Reference familiar styles when helpful. Phrases like &quot;90s hip-hop production style,&quot; &quot;lo-fi jazz with a rainy day feel,&quot; or &quot;uplifting gospel choir energy&quot; give the AI strong stylistic anchors. You can also describe the intended use: &quot;background music for a motivational YouTube video&quot; or &quot;intro jingle for a tech podcast&quot; help the AI calibrate the energy and complexity of the output.
+          <p
+            style={{
+              fontSize: "0.9rem",
+              color: "var(--text-secondary)",
+              lineHeight: 1.85,
+              marginBottom: "0.85rem",
+            }}
+          >
+            Reference familiar styles when helpful. Phrases like &quot;90s
+            hip-hop production style,&quot; &quot;lo-fi jazz with a rainy day
+            feel,&quot; or &quot;uplifting gospel choir energy&quot; give the AI
+            strong stylistic anchors. You can also describe the intended use:
+            &quot;background music for a motivational YouTube video&quot; or
+            &quot;intro jingle for a tech podcast&quot; help the AI calibrate
+            the energy and complexity of the output.
           </p>
-          <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", lineHeight: 1.85 }}>
-            Do not be discouraged by imperfect first outputs. Every generation is a learning opportunity. Listen carefully to what the AI produced, identify what is close to what you wanted and what is not, then refine your prompt accordingly. Most users find that after two or three rounds of refinement, they arrive at something they are genuinely happy with. The <strong style={{ color: "var(--text-primary)" }}>text to song free online</strong> platform is designed for iteration — make the most of it.
+          <p
+            style={{
+              fontSize: "0.9rem",
+              color: "var(--text-secondary)",
+              lineHeight: 1.85,
+            }}
+          >
+            Do not be discouraged by imperfect first outputs. Every generation
+            is a learning opportunity. Listen carefully to what the AI produced,
+            identify what is close to what you wanted and what is not, then
+            refine your prompt accordingly. Most users find that after two or
+            three rounds of refinement, they arrive at something they are
+            genuinely happy with. The{" "}
+            <strong style={{ color: "var(--text-primary)" }}>
+              text to song free online
+            </strong>{" "}
+            platform is designed for iteration — make the most of it.
           </p>
         </div>
       </section>

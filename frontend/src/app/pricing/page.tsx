@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
+import { AdsterraBanner } from "@/components/ads/adsterra-banner";
 
 export const metadata: Metadata = buildMetadata({
   title: "Pricing — Free Text to Song Generator & Text to Song AI Plans",
@@ -79,6 +80,8 @@ export default function PricingPage() {
           </article>
         ))}
       </section>
+
+      <AdsterraBanner type="728x90" className="mt-10 max-w-[760px]" />
 
       <section style={{ maxWidth: 760, marginTop: "3rem" }}>
         <div className="glass-card" style={{ padding: "1.75rem" }}>

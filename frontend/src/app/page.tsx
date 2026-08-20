@@ -11,6 +11,7 @@ import { servicePages } from "@/lib/services";
 import { getUser } from "@/lib/auth";
 import { getActiveSubscription } from "@/lib/subscription-store";
 import { ActivePlanBadge } from "@/components/ui/active-plan-badge";
+import { AdsterraBanner } from "@/components/ads/adsterra-banner";
 
 void SongDemoSection;
 
@@ -301,6 +302,9 @@ export default async function Home() {
 
         <DemoSongsCarousel />
 
+        {/* In-Feed 728x90 Leaderboard Banner */}
+        <AdsterraBanner type="728x90" className="mt-12" />
+
       </section>
 
 
@@ -376,6 +380,9 @@ export default async function Home() {
             Try the AI Song Generator Free
           </Link>
         </div>
+
+        {/* In-Feed Native 4:1 Adsterra Banner */}
+        <AdsterraBanner type="native" className="mt-14" />
       </section>
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
@@ -583,6 +590,11 @@ export default async function Home() {
 
         </div>
       </section>
+
+      {/* In-Feed 728x90 Leaderboard Banner */}
+      <div className="site-container px-4 pt-16 sm:px-6 lg:px-8">
+        <AdsterraBanner type="728x90" />
+      </div>
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       {/* FAQ                                                                  */}

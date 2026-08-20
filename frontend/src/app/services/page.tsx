@@ -4,6 +4,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { buildBreadcrumbSchema, buildServiceListSchema } from "@/lib/structured-data";
 import { servicePages } from "@/lib/services";
+import { AdsterraBanner } from "@/components/ads/adsterra-banner";
 
 export const metadata: Metadata = buildMetadata({
   title: "Singify: AI Audio Services & Text to Song",
@@ -89,6 +90,8 @@ export default function ServicesPage() {
           );
         })}
       </section>
+
+      <AdsterraBanner type="728x90" className="mt-10 max-w-[740px]" />
 
       <section style={{ maxWidth: 740, marginTop: "2.5rem" }}>
         <div className="glass-card" style={{ padding: "1.75rem" }}>
