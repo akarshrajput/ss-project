@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect, useCallback, Suspense, useRef } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { WavePlayer } from "@/components/ui/wave-player";
+import { SponsoredSongCard } from "@/components/ads/sponsored-song-card";
 
 type ExploreSong = {
   songId: string;
@@ -335,6 +336,18 @@ function ExploreContent() {
                     accent={song.genre === "Lo-fi" ? "#a855f7" : song.genre === "Hip-Hop" ? "#2dd4bf" : "#6366f1"}
                     titleHref={`/song/${song.songId}`}
                   />
+                )}
+                {/* In-Grid Monetization Card at position #3 */}
+                {index === 2 && (
+                  <div className="mt-5">
+                    <SponsoredSongCard variant="banner" />
+                  </div>
+                )}
+                {/* In-Grid High-Conversion Promo Card at position #9 */}
+                {index === 8 && (
+                  <div className="mt-5">
+                    <SponsoredSongCard variant="promo" />
+                  </div>
                 )}
               </div>
             ))}

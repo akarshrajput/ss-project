@@ -53,9 +53,14 @@ export default function ExplorePage() {
           </p>
         </div>
 
+        {/* Top Responsive Leaderboard Banner */}
+        <AdsterraBanner type="responsive" className="my-4" />
+
         <ExploreClient />
 
-        <AdsterraBanner type="728x90" className="mt-8" />
+        {/* Bottom Banners Row */}
+        <AdsterraBanner type="responsive" className="mt-8" />
+        <AdsterraBanner type="native" className="mt-4" />
 
         <section style={{ display: "none" }}>
           <h2

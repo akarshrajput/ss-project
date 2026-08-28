@@ -12,6 +12,7 @@ import { getUser } from "@/lib/auth";
 import { getActiveSubscription } from "@/lib/subscription-store";
 import { ActivePlanBadge } from "@/components/ui/active-plan-badge";
 import { AdsterraBanner } from "@/components/ads/adsterra-banner";
+import { SmartlinkBannerCTA } from "@/components/ads/smartlink-banner-cta";
 
 void SongDemoSection;
 
@@ -302,8 +303,16 @@ export default async function Home() {
 
         <DemoSongsCarousel />
 
-        {/* In-Feed 728x90 Leaderboard Banner */}
-        <AdsterraBanner type="728x90" className="mt-12" />
+        {/* High-Converting Smartlink Ribbon CTA */}
+        <SmartlinkBannerCTA
+          title="🔥 Unlock 320kbps Studio Master Quality & Unlimited Stems"
+          subtitle="Generate full length tracks with zero wait times and export high-fidelity stems directly."
+          buttonText="Unlock Free Access →"
+          className="mt-10"
+        />
+
+        {/* In-Feed Responsive Leaderboard Banner */}
+        <AdsterraBanner type="responsive" className="mt-8" />
 
       </section>
 
@@ -591,9 +600,9 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* In-Feed 728x90 Leaderboard Banner */}
+      {/* In-Feed Responsive Leaderboard Banner */}
       <div className="site-container px-4 pt-16 sm:px-6 lg:px-8">
-        <AdsterraBanner type="728x90" />
+        <AdsterraBanner type="responsive" />
       </div>
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}

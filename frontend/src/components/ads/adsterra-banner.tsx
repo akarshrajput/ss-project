@@ -1,13 +1,17 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { AD_CONFIG } from "./ad-config";
+
+export type BannerType = "300x250" | "728x90" | "native" | "responsive";
 
 interface AdsterraBannerProps {
-  type: "300x250" | "728x90" | "native";
+  type: BannerType;
   className?: string;
+  label?: boolean;
 }
 
-export function AdsterraBanner({ type, className = "" }: AdsterraBannerProps) {
+export function AdsterraBanner({ type, className = "", label = true }: AdsterraBannerProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
@@ -18,6 +22,7 @@ export function AdsterraBanner({ type, className = "" }: AdsterraBannerProps) {
         <!DOCTYPE html>
         <html>
           <head>
+            <meta charset="utf-8" />
             <style>
               * { box-sizing: border-box; margin: 0; padding: 0; }
               body { background: transparent; display: flex; justify-content: center; align-items: center; min-height: 250px; overflow: hidden; }
@@ -26,14 +31,14 @@ export function AdsterraBanner({ type, className = "" }: AdsterraBannerProps) {
           <body>
             <script type="text/javascript">
               atOptions = {
-                'key' : 'ddb9e8676a21d0ff0d0886d19d8d5529',
+                'key' : '${AD_CONFIG.banner300x250Key}',
                 'format' : 'iframe',
                 'height' : 250,
                 'width' : 300,
                 'params' : {}
               };
             </script>
-            <script type="text/javascript" src="https://www.highperformanceformat.com/ddb9e8676a21d0ff0d0886d19d8d5529/invoke.js"></script>
+            <script type="text/javascript" src="${AD_CONFIG.invokeHost}/${AD_CONFIG.banner300x250Key}/invoke.js"></script>
           </body>
         </html>
       `;
@@ -42,6 +47,7 @@ export function AdsterraBanner({ type, className = "" }: AdsterraBannerProps) {
         <!DOCTYPE html>
         <html>
           <head>
+            <meta charset="utf-8" />
             <style>
               * { box-sizing: border-box; margin: 0; padding: 0; }
               body { background: transparent; display: flex; justify-content: center; align-items: center; min-height: 90px; overflow: hidden; }
@@ -50,14 +56,14 @@ export function AdsterraBanner({ type, className = "" }: AdsterraBannerProps) {
           <body>
             <script type="text/javascript">
               atOptions = {
-                'key' : '6e4b1ace19a6ea05b1ed41bd8ccae281',
+                'key' : '${AD_CONFIG.banner728x90Key}',
                 'format' : 'iframe',
                 'height' : 90,
                 'width' : 728,
                 'params' : {}
               };
             </script>
-            <script type="text/javascript" src="https://www.highperformanceformat.com/6e4b1ace19a6ea05b1ed41bd8ccae281/invoke.js"></script>
+            <script type="text/javascript" src="${AD_CONFIG.invokeHost}/${AD_CONFIG.banner728x90Key}/invoke.js"></script>
           </body>
         </html>
       `;
@@ -66,24 +72,38 @@ export function AdsterraBanner({ type, className = "" }: AdsterraBannerProps) {
         <!DOCTYPE html>
         <html>
           <head>
+            <meta charset="utf-8" />
             <style>
               * { box-sizing: border-box; margin: 0; padding: 0; }
               body { background: transparent; display: flex; justify-content: center; align-items: center; min-height: 90px; overflow: hidden; width: 100%; }
-              #container-1bd2e123239998dc695c8d725d5f053d { width: 100%; }
+              #${AD_CONFIG.nativeContainerId} { width: 100%; }
             </style>
           </head>
           <body>
-            <script async="async" data-cfasync="false" src="https://pl30889663.effectivecpmnetwork.com/1bd2e123239998dc695c8d725d5f053d/invoke.js"></script>
-            <div id="container-1bd2e123239998dc695c8d725d5f053d"></div>
+            <script async="async" data-cfasync="false" src="${AD_CONFIG.nativeBannerScript}"></script>
+            <div id="${AD_CONFIG.nativeContainerId}"></div>
           </body>
         </html>
       `;
     }
 
-    if (iframeRef.current) {
+    if (iframeRef.current && adHtml) {
       iframeRef.current.srcdoc = adHtml;
     }
   }, [type]);
+
+  if (type === "responsive") {
+    return (
+      <div className={`my-6 flex flex-col items-center justify-center ${className}`}>
+        <div className="hidden md:block w-full">
+          <AdsterraBanner type="728x90" label={label} />
+        </div>
+        <div className="block md:hidden w-full">
+          <AdsterraBanner type="300x250" label={label} />
+        </div>
+      </div>
+    );
+  }
 
   const width = type === "728x90" ? "728px" : type === "300x250" ? "300px" : "100%";
   const height = type === "728x90" ? "90px" : type === "300x250" ? "250px" : "120px";
@@ -98,19 +118,21 @@ export function AdsterraBanner({ type, className = "" }: AdsterraBannerProps) {
         maxWidth: "100%",
       }}
     >
-      <span
-        style={{
-          fontSize: "9px",
-          fontWeight: 600,
-          letterSpacing: "0.12em",
-          textTransform: "uppercase",
-          color: "var(--text-muted)",
-          marginBottom: "4px",
-          display: "block",
-        }}
-      >
-        Advertisement
-      </span>
+      {label && (
+        <span
+          style={{
+            fontSize: "9px",
+            fontWeight: 600,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            color: "var(--text-muted)",
+            marginBottom: "4px",
+            display: "block",
+          }}
+        >
+          Sponsored
+        </span>
+      )}
       <iframe
         ref={iframeRef}
         title={`Adsterra ${type} banner`}

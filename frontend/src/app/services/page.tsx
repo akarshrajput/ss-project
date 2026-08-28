@@ -91,7 +91,9 @@ export default function ServicesPage() {
         })}
       </section>
 
-      <AdsterraBanner type="728x90" className="mt-10 max-w-[740px]" />
+      {/* Responsive Leaderboard & Native Banners */}
+      <AdsterraBanner type="responsive" className="mt-10" />
+      <AdsterraBanner type="native" className="mt-4" />
 
       <section style={{ maxWidth: 740, marginTop: "2.5rem" }}>
         <div className="glass-card" style={{ padding: "1.75rem" }}>

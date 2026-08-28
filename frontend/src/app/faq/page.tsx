@@ -216,7 +216,9 @@ export default function FaqPage() {
         ))}
       </div>
 
-      <AdsterraBanner type="728x90" className="my-8 max-w-[740px]" />
+      {/* Responsive Leaderboard & Native Banners */}
+      <AdsterraBanner type="responsive" className="my-8" />
+      <AdsterraBanner type="native" className="mb-8" />
 
       <section style={{ maxWidth: 740, marginTop: "2.25rem" }}>
         <div className="glass-card" style={{ padding: "1.75rem" }}>

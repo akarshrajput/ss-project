@@ -1,16 +1,22 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
+import { AD_CONFIG } from "./ad-config";
 
 export function SideBanners() {
+  const pathname = usePathname();
   const leftRef = useRef<HTMLIFrameElement>(null);
   const rightRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
+    if (pathname?.startsWith("/admin")) return;
+
     const bannerHtml = `
       <!DOCTYPE html>
       <html>
         <head>
+          <meta charset="utf-8" />
           <style>
             * { box-sizing: border-box; margin: 0; padding: 0; }
             body {
@@ -27,14 +33,14 @@ export function SideBanners() {
         <body>
           <script type="text/javascript">
             atOptions = {
-              'key' : 'ddb9e8676a21d0ff0d0886d19d8d5529',
+              'key' : '${AD_CONFIG.banner300x250Key}',
               'format' : 'iframe',
               'height' : 250,
               'width' : 300,
               'params' : {}
             };
           </script>
-          <script type="text/javascript" src="https://www.highperformanceformat.com/ddb9e8676a21d0ff0d0886d19d8d5529/invoke.js"></script>
+          <script type="text/javascript" src="${AD_CONFIG.invokeHost}/${AD_CONFIG.banner300x250Key}/invoke.js"></script>
         </body>
       </html>
     `;
@@ -45,11 +51,13 @@ export function SideBanners() {
     if (rightRef.current) {
       rightRef.current.srcdoc = bannerHtml;
     }
-  }, []);
+  }, [pathname]);
+
+  if (pathname?.startsWith("/admin")) return null;
 
   return (
     <>
-      {/* Left Side Skyscraper/Box Banner (Wider for full 300x250 display) */}
+      {/* Left Side Skyscraper/Box Banner (Desktop Wide Screens) */}
       <aside
         aria-label="Sponsored Content Left"
         className="hidden 2xl:flex fixed left-3 top-24 z-20 flex-col items-center pointer-events-auto"
@@ -91,7 +99,7 @@ export function SideBanners() {
         </div>
       </aside>
 
-      {/* Right Side Skyscraper/Box Banner (Wider for full 300x250 display) */}
+      {/* Right Side Skyscraper/Box Banner (Desktop Wide Screens) */}
       <aside
         aria-label="Sponsored Content Right"
         className="hidden 2xl:flex fixed right-3 top-24 z-20 flex-col items-center pointer-events-auto"

@@ -251,8 +251,8 @@ export default function FeaturesPage() {
         </Link>
       </div>
 
-      {/* 728x90 Leaderboard Banner */}
-      <AdsterraBanner type="728x90" className="mt-6" />
+      {/* Responsive Leaderboard Banner */}
+      <AdsterraBanner type="responsive" className="mt-6" />
 
       <section style={{ maxWidth: 860, marginTop: "2.25rem" }}>
         <div className="glass-card" style={{ padding: "1.75rem" }}>

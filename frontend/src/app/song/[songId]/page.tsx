@@ -7,6 +7,8 @@ import { WavePlayer } from "@/components/ui/wave-player";
 import type { SongQueueEntry } from "@/lib/song-queue-store";
 import { convertMp3UrlToWav } from "@/lib/audio-converter";
 import { SpotifyLogo } from "@phosphor-icons/react";
+import { AdsterraBanner } from "@/components/ads/adsterra-banner";
+import { AD_CONFIG } from "@/components/ads/ad-config";
 
 function getLyricsSnippet(lyrics?: string): string {
   if (!lyrics) return "AI Generated Song";
@@ -194,50 +196,79 @@ export default function SongPage() {
             <span className="sm:hidden">Explore</span>
           </Link>
 
-          {isCompleted && (
-            <button
-              onClick={handleDownloadForSpotify}
-              disabled={wavStatus !== "idle" && wavStatus !== "done" && wavStatus !== "error"}
-              style={{
-                background: "#1DB954",
-                color: "#000000",
-                border: "none",
-                borderRadius: "9999px",
-                padding: "0.5rem 1.2rem",
-                fontSize: "0.75rem",
-                fontWeight: 800,
-                letterSpacing: "0.03rem",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                transition: "all 150ms ease-in-out",
-                boxShadow: "0 4px 12px rgba(29, 185, 84, 0.25)",
-              }}
-              onMouseEnter={(e) => {
-                const btn = e.currentTarget as HTMLButtonElement;
-                if (!btn.disabled) {
-                  btn.style.background = "#1ED760";
-                  btn.style.transform = "scale(1.04)";
-                  btn.style.boxShadow = "0 6px 16px rgba(29, 185, 84, 0.4)";
-                }
-              }}
-              onMouseLeave={(e) => {
-                const btn = e.currentTarget as HTMLButtonElement;
-                btn.style.background = "#1DB954";
-                btn.style.transform = "none";
-                btn.style.boxShadow = "0 4px 12px rgba(29, 185, 84, 0.25)";
-              }}
-            >
-              <SpotifyLogo size={16} weight="fill" />
-              {wavStatus === "idle" && "Download for Spotify"}
-              {wavStatus === "fetching" && "Downloading..."}
-              {wavStatus === "decoding" && "Decoding..."}
-              {wavStatus === "encoding" && "Converting to WAV..."}
-              {wavStatus === "done" && "Downloaded (.wav)"}
-              {wavStatus === "error" && "Error - Retry"}
-            </button>
-          )}
+          <div className="flex items-center gap-2 flex-wrap">
+            {isCompleted && (
+              <a
+                href={AD_CONFIG.smartlinkUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  background: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
+                  color: "#ffffff",
+                  borderRadius: "9999px",
+                  padding: "0.5rem 1.2rem",
+                  fontSize: "0.75rem",
+                  fontWeight: 800,
+                  letterSpacing: "0.03rem",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  textDecoration: "none",
+                  boxShadow: "0 4px 12px rgba(99, 102, 241, 0.35)",
+                  transition: "all 150ms ease-in-out",
+                }}
+              >
+                <span>⚡</span>
+                <span>Direct HD Audio Download</span>
+              </a>
+            )}
+
+            {isCompleted && (
+              <button
+                onClick={handleDownloadForSpotify}
+                disabled={wavStatus !== "idle" && wavStatus !== "done" && wavStatus !== "error"}
+                style={{
+                  background: "#1DB954",
+                  color: "#000000",
+                  border: "none",
+                  borderRadius: "9999px",
+                  padding: "0.5rem 1.2rem",
+                  fontSize: "0.75rem",
+                  fontWeight: 800,
+                  letterSpacing: "0.03rem",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  transition: "all 150ms ease-in-out",
+                  boxShadow: "0 4px 12px rgba(29, 185, 84, 0.25)",
+                }}
+                onMouseEnter={(e) => {
+                  const btn = e.currentTarget as HTMLButtonElement;
+                  if (!btn.disabled) {
+                    btn.style.background = "#1ED760";
+                    btn.style.transform = "scale(1.04)";
+                    btn.style.boxShadow = "0 6px 16px rgba(29, 185, 84, 0.4)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  const btn = e.currentTarget as HTMLButtonElement;
+                  btn.style.background = "#1DB954";
+                  btn.style.transform = "none";
+                  btn.style.boxShadow = "0 4px 12px rgba(29, 185, 84, 0.25)";
+                }}
+              >
+                <SpotifyLogo size={16} weight="fill" />
+                {wavStatus === "idle" && "Download for Spotify"}
+                {wavStatus === "fetching" && "Downloading..."}
+                {wavStatus === "decoding" && "Decoding..."}
+                {wavStatus === "encoding" && "Converting to WAV..."}
+                {wavStatus === "done" && "Downloaded (.wav)"}
+                {wavStatus === "error" && "Error - Retry"}
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Compact Layout: 1 Column Mobile, 2 Columns Desktop */}
@@ -459,6 +490,12 @@ export default function SongPage() {
               </div>
             )}
           </div>
+        </div>
+
+        {/* Multi-Banner Monetization Row */}
+        <div className="mt-8 space-y-4">
+          <AdsterraBanner type="responsive" />
+          <AdsterraBanner type="native" />
         </div>
       </div>
     </main>

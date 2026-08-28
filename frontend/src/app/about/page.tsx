@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { buildBreadcrumbSchema } from "@/lib/structured-data";
+import { AdsterraBanner } from "@/components/ads/adsterra-banner";
 
 export const metadata: Metadata = buildMetadata({
   title: "About Singify — Free Text to Song Generator & AI Song Maker",
@@ -52,6 +53,9 @@ export default function AboutPage() {
           The product is intentionally broad enough for creators and teams, but narrow enough that the core use case stays clear: use our <strong style={{ color: "var(--text-primary)" }}>text to song converter online free</strong> to turn text into useful audio without forcing users through a heavy learning curve. Whether you need a <strong style={{ color: "var(--text-primary)" }}>text to song maker</strong>, a <strong style={{ color: "var(--text-primary)" }}>text to rap song</strong> creator, or a <strong style={{ color: "var(--text-primary)" }}>text to audio song</strong> tool, Singify delivers.
         </p>
       </div>
+
+      {/* Top Responsive Leaderboard Banner */}
+      <AdsterraBanner type="responsive" className="my-6 max-w-[860px]" />
 
       {/* Values */}
       <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", maxWidth: 860 }}>
@@ -114,6 +118,10 @@ export default function AboutPage() {
           </p>
         </div>
       </section>
+
+      {/* In-Feed Native Banner */}
+      <AdsterraBanner type="native" className="mt-8 max-w-[860px]" />
+
       <section style={{ maxWidth: 860, marginTop: "2rem" }}>
         <div className="glass-card" style={{ padding: "1.75rem" }}>
           <h2 style={{ fontSize: "1.05rem", fontWeight: 600, color: "var(--text-primary)", marginBottom: "0.85rem" }}>Our Mission: Making Music Creation Accessible to Everyone</h2>

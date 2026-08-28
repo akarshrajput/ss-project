@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { LibraryClient } from "@/components/library/library-client";
+import { AdsterraBanner } from "@/components/ads/adsterra-banner";
 
 export const metadata: Metadata = buildMetadata({
   title: "Your Library: Singify",
@@ -35,7 +36,13 @@ export default function LibraryPage() {
           </p>
         </div>
 
+        {/* Top Responsive Leaderboard Banner */}
+        <AdsterraBanner type="responsive" className="my-4" />
+
         <LibraryClient />
+
+        {/* Bottom Banner */}
+        <AdsterraBanner type="native" className="mt-8" />
 
         <section style={{ display: "none" }}>
           <h2 style={{ fontSize: "1.5rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "1rem" }}>

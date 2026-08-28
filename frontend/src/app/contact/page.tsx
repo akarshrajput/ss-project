@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { buildBreadcrumbSchema } from "@/lib/structured-data";
+import { AdsterraBanner } from "@/components/ads/adsterra-banner";
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact — Text to Song Generator Support & Partnerships",
@@ -42,6 +43,9 @@ export default function ContactPage() {
           Please include your use case, timeline, and any workflow constraints in the first message. That helps us route the request faster and keeps the response specific instead of generic.
         </p>
       </div>
+
+      {/* Responsive Leaderboard Banner */}
+      <AdsterraBanner type="responsive" className="mt-8 max-w-[860px]" />
 
       <div style={{ display: "grid", gap: "1rem", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", maxWidth: 860 }}>
         {contacts.map((c) => (
